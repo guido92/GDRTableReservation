@@ -16,6 +16,7 @@ export async function POST(request: Request) {
         const buffer = Buffer.from(await file.arrayBuffer());
         const filename = `${uuidv4()}.webp`;
         const uploadDir = path.join(process.cwd(), 'public/uploads');
+        await fs.mkdir(uploadDir, { recursive: true });
         const filepath = path.join(uploadDir, filename);
 
         await sharp(buffer)
