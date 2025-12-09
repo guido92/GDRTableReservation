@@ -24,7 +24,7 @@ export default function Footer() {
                             <div style={{ position: 'relative', width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden' }}>
                                 <Image src="/logo.jpg" alt="Dama Cafè Logo" fill style={{ objectFit: 'cover' }} />
                             </div>
-                            <span style={{ fontWeight: 700, fontSize: '1.25rem' }} className="text-gradient">Tavoli GDR</span>
+                            <span style={{ fontWeight: 700, fontSize: '1.25rem' }} className="text-gradient">Dama Cafè</span>
                         </div>
                         <p style={{ color: 'var(--foreground-muted)', fontSize: '0.875rem', lineHeight: '1.6' }}>
                             La piattaforma per gestire le tue serate di gioco di ruolo e da tavolo al Dama Cafè.

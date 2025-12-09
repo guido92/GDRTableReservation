@@ -6,17 +6,17 @@ export default function Navbar() {
         <nav className={styles.navbar}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
                 <Link href="/" className={styles.logo}>
-                    Tavoli GDR
+                    Dama Cafè
                 </Link>
                 <div className={styles.links}>
                     <Link href="/" className={styles.link}>
                         Giocate
                     </Link>
-                    <Link href="/contacts" className={styles.link}>
-                        Contatti
-                    </Link>
                     <Link href="/create" className={styles.link}>
                         Organizza
+                    </Link>
+                    <Link href="/contacts" className={styles.link}>
+                        Contatti
                     </Link>
                 </div>
             </div>
