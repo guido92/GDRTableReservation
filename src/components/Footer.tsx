@@ -59,9 +59,18 @@ export default function Footer() {
                     borderTop: '1px solid var(--border)',
                     textAlign: 'center',
                     color: 'var(--foreground-muted)',
-                    fontSize: '0.75rem'
+                    fontSize: '0.75rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.5rem',
+                    alignItems: 'center'
                 }}>
-                    &copy; {new Date().getFullYear()} Tavoli GDR - Dama Cafè. Tutti i diritti riservati.
+                    <div>
+                        &copy; {new Date().getFullYear()} Tavoli GDR - Dama Cafè. Tutti i diritti riservati.
+                    </div>
+                    <Link href="/privacy" style={{ color: 'var(--foreground-muted)', textDecoration: 'underline' }}>
+                        Privacy & Cookie Policy
+                    </Link>
                 </div>
             </div>
         </footer>

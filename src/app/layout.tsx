@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import Footer from '@/components/Footer';
+import CookieBanner from '@/components/CookieBanner';
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={`${outfit.variable}`}>
         {children}
         <Footer />
+        <CookieBanner />
       </body>
     </html>
   );
