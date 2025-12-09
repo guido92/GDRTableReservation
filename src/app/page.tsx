@@ -44,9 +44,6 @@ export default async function Home() {
         )}
       </div>
 
-      <footer style={{ textAlign: 'center', padding: '2rem', color: 'var(--foreground-muted)', fontSize: '0.875rem', borderTop: '1px solid var(--border)' }}>
-        &copy; {new Date().getFullYear()} Tavoli GDR. Tutti i diritti riservati.
-      </footer>
     </main>
   );
 }

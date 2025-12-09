@@ -12,6 +12,9 @@ export default function Navbar() {
                     <Link href="/" className={styles.link}>
                         Giocate
                     </Link>
+                    <Link href="/contacts" className={styles.link}>
+                        Contatti
+                    </Link>
                     <Link href="/create" className={styles.link}>
                         Organizza
                     </Link>
