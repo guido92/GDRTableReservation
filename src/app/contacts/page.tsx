@@ -43,6 +43,10 @@ export default function ContactsPage() {
                         <div>
                             <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--secondary)' }}>Seguici sui Social</h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <a href="https://chat.whatsapp.com/KQZOoeLaVNWJh2HtXNJCKV" target="_blank" rel="noopener noreferrer"
+                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--foreground)', textDecoration: 'none', padding: '0.5rem', borderRadius: 'var(--radius-md)', background: 'rgba(37, 211, 102, 0.1)', transition: 'background 0.2s', border: '1px solid rgba(37, 211, 102, 0.2)' }}>
+                                    <span style={{ color: '#25D366', fontWeight: 'bold' }}>WA</span> Community WhatsApp
+                                </a>
                                 <a href="https://www.facebook.com/profile.php?id=61572923820400" target="_blank" rel="noopener noreferrer"
                                     style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--foreground)', textDecoration: 'none', padding: '0.5rem', borderRadius: 'var(--radius-md)', background: 'rgba(255,255,255,0.05)', transition: 'background 0.2s' }}>
                                     <span style={{ color: '#1877F2', fontWeight: 'bold' }}>f</span> Facebook

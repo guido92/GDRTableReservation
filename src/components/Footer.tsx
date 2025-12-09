@@ -45,6 +45,9 @@ export default function Footer() {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         <h3 style={{ fontWeight: 600, color: 'var(--foreground)' }}>Seguici</h3>
                         <div style={{ display: 'flex', gap: '1rem' }}>
+                            <a href="https://chat.whatsapp.com/KQZOoeLaVNWJh2HtXNJCKV" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--foreground-muted)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#25D366'} onMouseOut={e => e.currentTarget.style.color = 'var(--foreground-muted)'}>
+                                WhatsApp
+                            </a>
                             <a href="https://www.facebook.com/profile.php?id=61572923820400" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--foreground-muted)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#1877F2'} onMouseOut={e => e.currentTarget.style.color = 'var(--foreground-muted)'}>
                                 Facebook
                             </a>
