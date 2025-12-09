@@ -6,6 +6,17 @@ const DB_PATH = path.join(process.cwd(), 'src/data/db.json');
 
 export async function getSessions(): Promise<Session[]> {
     try {
+        // Ensure directory exists
+        await fs.mkdir(path.dirname(DB_PATH), { recursive: true });
+
+        try {
+            await fs.access(DB_PATH);
+        } catch {
+            // File doesn't exist, create it
+            await fs.writeFile(DB_PATH, JSON.stringify({ sessions: [] }, null, 2));
+            return [];
+        }
+
         const data = await fs.readFile(DB_PATH, 'utf-8');
         let sessions: Session[] = JSON.parse(data).sessions;
 

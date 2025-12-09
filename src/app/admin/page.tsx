@@ -93,20 +93,58 @@ function AdminContent() {
                     {sessions.map(session => {
                         const isExpired = new Date(session.date) < new Date(new Date().setHours(0, 0, 0, 0));
                         return (
-                            <div key={session.id} className="glass-panel" style={{ padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', opacity: isExpired ? 0.7 : 1 }}>
-                                <div>
-                                    <h3 style={{ fontWeight: 700, marginBottom: '0.25rem' }}>{session.title}</h3>
-                                    <div style={{ fontSize: '0.875rem', color: 'var(--foreground-muted)' }}>
-                                        {formatDate(session.date)} - {session.masterName} {isExpired && <span style={{ color: 'var(--secondary)', fontWeight: 'bold', marginLeft: '0.5rem' }}>(SCADUTA)</span>}
+                            <div key={session.id} className="glass-panel" style={{ padding: '1.5rem', opacity: isExpired ? 0.7 : 1 }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                                    <div>
+                                        <h3 style={{ fontWeight: 700, marginBottom: '0.25rem' }}>{session.title}</h3>
+                                        <div style={{ fontSize: '0.875rem', color: 'var(--foreground-muted)' }}>
+                                            {formatDate(session.date)} - {session.masterName} {isExpired && <span style={{ color: 'var(--secondary)', fontWeight: 'bold', marginLeft: '0.5rem' }}>(SCADUTA)</span>}
+                                        </div>
                                     </div>
+                                    <button
+                                        onClick={() => handleDelete(session.id)}
+                                        className="btn"
+                                        style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.3)' }}
+                                    >
+                                        Elimina Sessione
+                                    </button>
                                 </div>
-                                <button
-                                    onClick={() => handleDelete(session.id)}
-                                    className="btn"
-                                    style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.3)' }}
-                                >
-                                    Elimina
-                                </button>
+
+                                {/* Player List */}
+                                <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
+                                    <h4 style={{ fontSize: '0.875rem', fontWeight: 600, marginBottom: '0.5rem', color: 'var(--foreground-muted)' }}>
+                                        Giocatori ({session.currentPlayers.length}/{session.maxPlayers})
+                                    </h4>
+                                    {session.currentPlayers.length > 0 ? (
+                                        <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                            {session.currentPlayers.map(player => (
+                                                <li key={player.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.875rem', background: 'rgba(255,255,255,0.05)', padding: '0.5rem', borderRadius: '4px' }}>
+                                                    <span>{player.name} {player.notes && <span style={{ opacity: 0.7 }}>({player.notes})</span>}</span>
+                                                    <button
+                                                        onClick={async () => {
+                                                            if (!confirm(`Rimuovere ${player.name}?`)) return;
+                                                            try {
+                                                                const res = await fetch(`/api/sessions/${session.id}/players/${player.id}`, { method: 'DELETE' });
+                                                                if (res.ok) {
+                                                                    setSessions(sessions.map(s => s.id === session.id ? { ...s, currentPlayers: s.currentPlayers.filter(p => p.id !== player.id) } : s));
+                                                                } else {
+                                                                    alert('Errore durante la rimozione');
+                                                                }
+                                                            } catch (e) {
+                                                                console.error(e);
+                                                            }
+                                                        }}
+                                                        style={{ color: '#fca5a5', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '0.75rem', textDecoration: 'underline' }}
+                                                    >
+                                                        Rimuovi
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p style={{ fontSize: '0.875rem', color: 'var(--foreground-muted)', fontStyle: 'italic' }}>Nessun giocatore iscritto.</p>
+                                    )}
+                                </div>
                             </div>
                         );
                     })}
