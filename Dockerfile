@@ -53,7 +53,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/src/data ./src/data
 # Create uploads directory
 RUN mkdir -p public/uploads && chown nextjs:nodejs public/uploads
 
-USER nextjs
+# USER nextjs
 
 EXPOSE 3000
 
