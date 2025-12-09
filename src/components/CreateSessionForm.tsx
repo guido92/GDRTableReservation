@@ -120,7 +120,7 @@ export default function CreateSessionForm() {
                 </div>
                 {formData.imageUrl && (
                     <div style={{ marginTop: '0.5rem', position: 'relative', width: '100%', height: '200px', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
-                        <Image src={formData.imageUrl} alt="Preview" fill style={{ objectFit: 'cover' }} />
+                        <Image src={formData.imageUrl} alt="Preview" fill style={{ objectFit: 'cover' }} unoptimized />
                     </div>
                 )}
                 <input type="hidden" name="imageUrl" value={formData.imageUrl} />

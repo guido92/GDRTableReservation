@@ -23,7 +23,7 @@ export default async function SessionPage({ params }: { params: Promise<{ id: st
                     <div style={{ gridColumn: 'span 2' }}>
                         <div style={{ position: 'relative', height: '400px', borderRadius: 'var(--radius-lg)', overflow: 'hidden', marginBottom: '2rem' }}>
                             {session.imageUrl ? (
-                                <Image src={session.imageUrl} alt={session.title} fill style={{ objectFit: 'cover' }} />
+                                <Image src={session.imageUrl} alt={session.title} fill style={{ objectFit: 'cover' }} unoptimized />
                             ) : (
                                 <div style={{ width: '100%', height: '100%', background: 'var(--surface)' }} />
                             )}

@@ -21,6 +21,7 @@ export default function SessionCard({ session }: SessionCardProps) {
                         alt={session.title}
                         fill
                         className={styles.image}
+                        unoptimized
                     />
                 ) : (
                     <div style={{ width: '100%', height: '100%', background: 'var(--surface)' }} />
