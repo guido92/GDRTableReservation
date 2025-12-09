@@ -30,6 +30,22 @@ export async function getSessions(): Promise<Session[]> {
         });
 
         if (validSessions.length !== sessions.length) {
+            // Find expired sessions to delete their images
+            const expiredSessions = sessions.filter(s => !validSessions.includes(s));
+            for (const session of expiredSessions) {
+                if (session.imageUrl) {
+                    try {
+                        const filename = session.imageUrl.split('/').pop();
+                        if (filename) {
+                            const imagePath = path.join(process.cwd(), 'public/uploads', filename);
+                            await fs.unlink(imagePath).catch(() => console.log(`Failed to delete expired image: ${imagePath}`));
+                        }
+                    } catch (e) {
+                        console.error("Error deleting expired image:", e);
+                    }
+                }
+            }
+
             await fs.writeFile(DB_PATH, JSON.stringify({ sessions: validSessions }, null, 2));
             sessions = validSessions;
         }
