@@ -17,4 +17,5 @@ export interface Session {
     description: string;
     imageUrl?: string;
     location: string;
+    type: 'GDR' | 'BOARDGAME';
 }

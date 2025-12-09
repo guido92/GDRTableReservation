@@ -28,7 +28,20 @@ export default function SessionCard({ session }: SessionCardProps) {
                 )}
             </div>
             <div className={styles.content}>
-                <div className={styles.system}>{session.system}</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <div className={styles.system}>{session.system}</div>
+                    <span style={{
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '999px',
+                        background: session.type === 'BOARDGAME' ? 'rgba(236, 72, 153, 0.2)' : 'rgba(59, 130, 246, 0.2)',
+                        color: session.type === 'BOARDGAME' ? '#f472b6' : '#60a5fa',
+                        border: `1px solid ${session.type === 'BOARDGAME' ? 'rgba(236, 72, 153, 0.3)' : 'rgba(59, 130, 246, 0.3)'}`
+                    }}>
+                        {session.type === 'BOARDGAME' ? '🎲 BOARD' : '🐉 GDR'}
+                    </span>
+                </div>
                 <h3 className={styles.title}>{session.title}</h3>
 
                 <div className={styles.details}>

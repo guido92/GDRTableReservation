@@ -4,20 +4,21 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-export default function CreateSessionForm() {
+export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' }) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
-        system: '',
+        system: type === 'BOARDGAME' ? 'Board Game' : '',
         masterName: '',
         date: '',
         time: '',
         maxPlayers: 4,
         description: '',
         location: '',
-        imageUrl: ''
+        imageUrl: '',
+        type: type
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -77,18 +78,20 @@ export default function CreateSessionForm() {
         <form onSubmit={handleSubmit} className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
                 <div className="form-group">
-                    <label>Titolo Avventura</label>
-                    <input name="title" required value={formData.title} onChange={handleChange} placeholder="Es. La tomba degli orrori" />
+                    <label>{type === 'GDR' ? 'Titolo Avventura' : 'Nome Gioco'}</label>
+                    <input name="title" required value={formData.title} onChange={handleChange} placeholder={type === 'GDR' ? "Es. La tomba degli orrori" : "Es. Catan, Ticket to Ride..."} />
                 </div>
-                <div className="form-group">
-                    <label>Sistema di Gioco</label>
-                    <input name="system" required value={formData.system} onChange={handleChange} placeholder="Es. D&D 5e" />
-                </div>
+                {type === 'GDR' && (
+                    <div className="form-group">
+                        <label>Sistema di Gioco</label>
+                        <input name="system" required value={formData.system} onChange={handleChange} placeholder="Es. D&D 5e" />
+                    </div>
+                )}
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
                 <div className="form-group">
-                    <label>Master</label>
+                    <label>{type === 'GDR' ? 'Master' : 'Organizzatore'}</label>
                     <input name="masterName" required value={formData.masterName} onChange={handleChange} placeholder="Il tuo nome" />
                 </div>
                 <div className="form-group">
@@ -128,11 +131,11 @@ export default function CreateSessionForm() {
 
             <div className="form-group">
                 <label>Descrizione</label>
-                <textarea name="description" required value={formData.description} onChange={handleChange} rows={5} placeholder="Descrivi l'avventura..." />
+                <textarea name="description" required value={formData.description} onChange={handleChange} rows={5} placeholder={type === 'GDR' ? "Descrivi l'avventura..." : "Descrivi il gioco e il tipo di serata..."} />
             </div>
 
             <button type="submit" className="btn btn-primary" disabled={loading || uploading}>
-                {loading ? 'Creazione...' : 'Crea Giocata'}
+                {loading ? 'Creazione...' : (type === 'GDR' ? 'Crea Sessione GDR' : 'Crea Tavolo Gioco')}
             </button>
 
             <style jsx>{`
