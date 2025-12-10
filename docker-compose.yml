@@ -14,3 +14,5 @@ services:
       - ./public/uploads:/app/public/uploads
     environment:
       - NODE_ENV=production
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}

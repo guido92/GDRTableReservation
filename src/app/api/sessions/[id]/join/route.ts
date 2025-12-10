@@ -33,6 +33,12 @@ export async function POST(
     const apiKey = process.env.RESEND_API_KEY;
     const recipientEmail = session.masterEmail || process.env.ADMIN_EMAIL;
 
+    console.log('[DEBUG] Join Notification:', {
+        hasApiKey: !!apiKey,
+        recipient: recipientEmail,
+        sessionTitle: session.title
+    });
+
     if (apiKey && recipientEmail) {
         try {
             const { Resend } = await import('resend');
