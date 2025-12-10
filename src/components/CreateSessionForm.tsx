@@ -12,6 +12,7 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
         title: '',
         system: type === 'BOARDGAME' ? 'Board Game' : '',
         masterName: '',
+        masterEmail: '',
         date: '',
         time: '',
         maxPlayers: 4,
@@ -93,6 +94,10 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
                 <div className="form-group">
                     <label>{type === 'GDR' ? 'Master' : 'Organizzatore'}</label>
                     <input name="masterName" required value={formData.masterName} onChange={handleChange} placeholder="Il tuo nome" />
+                </div>
+                <div className="form-group">
+                    <label>Email {type === 'GDR' ? 'Master' : 'Organizzatore'} (per notifiche)</label>
+                    <input type="email" name="masterEmail" value={formData.masterEmail || ''} onChange={handleChange} placeholder="tua@email.com" />
                 </div>
                 <div className="form-group">
                     <label>Luogo</label>

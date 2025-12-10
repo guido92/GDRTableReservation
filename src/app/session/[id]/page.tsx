@@ -4,6 +4,7 @@ import JoinSessionForm from '@/components/JoinSessionForm';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { formatDate } from '@/lib/utils';
+import AddToCalendar from '@/components/AddToCalendar';
 
 export default async function SessionPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -45,6 +46,7 @@ export default async function SessionPage({ params }: { params: Promise<{ id: st
                                     <div style={{ fontSize: '1.125rem', fontWeight: 600 }}>
                                         {formatDate(session.date)} alle {session.time}
                                     </div>
+                                    <AddToCalendar session={session} />
                                 </div>
                                 <div>
                                     <div style={{ color: 'var(--foreground-muted)', fontSize: '0.875rem' }}>Luogo</div>
@@ -76,6 +78,32 @@ export default async function SessionPage({ params }: { params: Promise<{ id: st
                                 </ul>
                             ) : (
                                 <p style={{ color: 'var(--foreground-muted)', fontStyle: 'italic' }}>Nessun partecipante ancora.</p>
+                            )}
+
+                            {/* WhatsApp Master Helper */}
+                            {session.currentPlayers.length > 0 && (
+                                <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
+                                    <a
+                                        href={`https://wa.me/?text=${encodeURIComponent(
+                                            `Ciao a tutti! Vi scrivo per la sessione "${session.title}" del ${formatDate(session.date)} alle ${session.time}. Ci siete tutti?`
+                                        )}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="btn"
+                                        style={{
+                                            background: '#25D366', // WhatsApp Green
+                                            color: 'white',
+                                            width: '100%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: '0.5rem',
+                                            fontSize: '0.875rem'
+                                        }}
+                                    >
+                                        💬 Avvisa Gruppo su WhatsApp
+                                    </a>
+                                </div>
                             )}
                         </div>
                     </div>

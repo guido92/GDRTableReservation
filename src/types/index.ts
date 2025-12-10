@@ -3,6 +3,7 @@ export interface Player {
     name: string;
     email?: string;
     notes?: string;
+    contactInfo?: string; // WhatsApp/Phone/Email for notifications
 }
 
 export interface Session {
@@ -10,6 +11,7 @@ export interface Session {
     title: string;
     system: string;
     masterName: string;
+    masterEmail?: string; // For notifications
     date: string;
     time: string;
     maxPlayers: number;
