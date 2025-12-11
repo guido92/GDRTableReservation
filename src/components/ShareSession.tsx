@@ -11,8 +11,7 @@ export default function ShareSession({ session }: { session: Session }) {
         setPageUrl(window.location.href);
     }, []);
 
-    const shareText = `\uD83C\uDFB2 Nuova giocata organizzata!\n\n*${session.title}*\n\uD83D\uDCC5 ${formatDate(session.date)} alle ${session.time}\n\uD83D\uDCCD ${session.location}\n\nIscriviti qui: ${pageUrl}`;
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+    const whatsappUrl = `https://wa.me/?text=%F0%9F%8E%B2%20Nuova%20giocata%20organizzata!%0A%0A*${encodeURIComponent(session.title)}*%0A%F0%9F%93%85%20${encodeURIComponent(formatDate(session.date))}%20alle%20${encodeURIComponent(session.time)}%0A%F0%9F%93%8D%20${encodeURIComponent(session.location)}%0A%0AIscriviti%20qui%3A%20${encodeURIComponent(pageUrl)}`;
 
     if (!pageUrl) return null; // Avoid hydration mismatch or empty links
 
