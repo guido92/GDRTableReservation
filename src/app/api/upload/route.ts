@@ -24,7 +24,7 @@ export async function POST(request: Request) {
             .webp({ quality: 80 })
             .toFile(filepath);
 
-        const publicUrl = `/uploads/${filename}`;
+        const publicUrl = `/api/uploads/${filename}`;
 
         return NextResponse.json({ url: publicUrl });
     } catch (error) {

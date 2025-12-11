@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { formatDate } from '@/lib/utils';
 import AddToCalendar from '@/components/AddToCalendar';
+import ShareSession from '@/components/ShareSession';
 
 export default async function SessionPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -61,6 +62,14 @@ export default async function SessionPage({ params }: { params: Promise<{ id: st
 
                     {/* Right Column: Sidebar */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', minWidth: '300px' }}>
+                        <div className="glass-panel" style={{ padding: '1.5rem', textAlign: 'center' }}>
+                            <h3 style={{ marginBottom: '0.5rem', fontSize: '1.25rem' }}>Organizzatore?</h3>
+                            <p style={{ fontSize: '0.875rem', color: 'var(--foreground-muted)', marginBottom: '1rem' }}>
+                                Condividi il link nel gruppo per raccogliere iscrizioni!
+                            </p>
+                            <ShareSession session={session} />
+                        </div>
+
                         <JoinSessionForm session={session} />
 
                         <div className="glass-panel" style={{ padding: '1.5rem' }}>
@@ -80,7 +89,7 @@ export default async function SessionPage({ params }: { params: Promise<{ id: st
                                 <p style={{ color: 'var(--foreground-muted)', fontStyle: 'italic' }}>Nessun partecipante ancora.</p>
                             )}
 
-                            {/* WhatsApp Master Helper */}
+                            {/* WhatsApp Master Helper for confirmed players */}
                             {session.currentPlayers.length > 0 && (
                                 <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
                                     <a
@@ -91,8 +100,9 @@ export default async function SessionPage({ params }: { params: Promise<{ id: st
                                         rel="noopener noreferrer"
                                         className="btn"
                                         style={{
-                                            background: '#25D366', // WhatsApp Green
-                                            color: 'white',
+                                            background: 'var(--surface)',
+                                            border: '1px solid #25D366',
+                                            color: '#25D366',
                                             width: '100%',
                                             display: 'flex',
                                             alignItems: 'center',
@@ -101,7 +111,7 @@ export default async function SessionPage({ params }: { params: Promise<{ id: st
                                             fontSize: '0.875rem'
                                         }}
                                     >
-                                        💬 Avvisa Gruppo su WhatsApp
+                                        💬 Chat Gruppo
                                     </a>
                                 </div>
                             )}

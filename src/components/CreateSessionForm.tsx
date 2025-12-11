@@ -65,7 +65,8 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
             });
 
             if (res.ok) {
-                router.push('/');
+                const data = await res.json();
+                router.push(`/session/${data.id}`);
                 router.refresh();
             }
         } catch (error) {
