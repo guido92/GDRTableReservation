@@ -11,10 +11,14 @@ export async function getSessions(): Promise<Session[]> {
 
         try {
             await fs.access(DB_PATH);
-        } catch {
-            // File doesn't exist, create it
-            await fs.writeFile(DB_PATH, JSON.stringify({ sessions: [] }, null, 2));
-            return [];
+        } catch (error: any) {
+            // Only create if file doesn't exist. If permission error, FAIL instead of overwriting!
+            if (error.code === 'ENOENT') {
+                await fs.writeFile(DB_PATH, JSON.stringify({ sessions: [] }, null, 2));
+                return [];
+            }
+            console.error('Database access error:', error);
+            throw error;
         }
 
         const data = await fs.readFile(DB_PATH, 'utf-8');
