@@ -118,8 +118,18 @@ function AdminContent() {
                                     {session.currentPlayers.length > 0 ? (
                                         <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                             {session.currentPlayers.map(player => (
-                                                <li key={player.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.875rem', background: 'rgba(255,255,255,0.05)', padding: '0.5rem', borderRadius: '4px' }}>
-                                                    <span>{player.name} {player.notes && <span style={{ opacity: 0.7 }}>({player.notes})</span>}</span>
+                                                <li key={player.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.875rem', background: 'rgba(255,255,255,0.05)', padding: '0.75rem', borderRadius: '4px' }}>
+                                                    <div>
+                                                        <span style={{ fontWeight: 600, display: 'block' }}>{player.name}</span>
+                                                        <div style={{ fontSize: '0.75rem', color: 'var(--foreground-muted)', marginTop: '0.25rem' }}>
+                                                            {player.contactInfo ? (
+                                                                <span style={{ color: 'var(--primary)', marginRight: '0.5rem' }}>📞 {player.contactInfo}</span>
+                                                            ) : (
+                                                                <span style={{ opacity: 0.5, marginRight: '0.5rem' }}>Nessun contatto</span>
+                                                            )}
+                                                            {player.notes && <span style={{ fontStyle: 'italic' }}>📝 {player.notes}</span>}
+                                                        </div>
+                                                    </div>
                                                     <button
                                                         onClick={async () => {
                                                             if (!confirm(`Rimuovere ${player.name}?`)) return;
