@@ -15,7 +15,7 @@ export async function GET(request: Request) {
         toolProficiencies: b.toolProficiencies,
         languageProficiencies: b.languageProficiencies,
         startingEquipment: b.startingEquipment,
-        feature: b.entries?.find((e: any) => e.name?.includes('Feature')) // heuristic to find feature
+        feature: (b.entries as any[])?.find(e => e.name?.includes('Feature')) // heuristic to find feature
     }));
 
     return NextResponse.json({ backgrounds: mapped });

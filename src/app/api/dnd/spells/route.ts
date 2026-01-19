@@ -40,7 +40,7 @@ export async function GET(request: Request) {
             school: Plutonium.translate(s.school || 'U', 'exact') || s.school,
             source: s.source,
             classes: s.classes?.fromClassList?.map((c: any) => c.name) || [],
-            description: Plutonium.cleanText(s.entries?.[0] || ''),
+            description: Plutonium.cleanText((s.entries?.[0] as string) || ''),
         }));
 
         return NextResponse.json({ spells: responseData, count: responseData.length });

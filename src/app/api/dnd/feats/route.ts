@@ -12,7 +12,7 @@ export async function GET(request: Request) {
         originalName: f.name,
         source: f.source,
         prerequisite: f.prerequisite,
-        description: f.entries.map(e => typeof e === 'string' ? e : e.name).join('\n') // Simplified description
+        description: (f.entries as any[]).map(e => typeof e === 'string' ? e : e.name || '').join('\n') // Simplified description
     }));
 
     return NextResponse.json({ feats: mapped });
