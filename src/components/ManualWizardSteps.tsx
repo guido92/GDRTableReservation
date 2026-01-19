@@ -1,10 +1,10 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CLASSES, RACES, FEATS, BACKGROUNDS, PERSONALITY_TRAITS, IDEALS, BONDS, FLAWS } from '@/data/dnd-data';
 import { SPELLS } from '@/data/spells';
 import { AbilityScores, CharacterData } from '@/types/dnd';
-import { Shield, Brain, BicepsFlexed, Tangent, Sparkles, Scroll, Book } from 'lucide-react';
+import { Shield, Brain, BicepsFlexed, Tangent, Sparkles, Scroll, Book, Dices } from 'lucide-react';
 
 // --- HELPER: SPELL PROGRESSION & LIMITS ---
 
@@ -188,7 +188,7 @@ export function AbilityScoreStep({ data, updateData }: { data: CharacterData, up
             </div>
 
             {mode === 'pointBuy' && (
-                <div style={{ textAlign: 'center', marginBottom: '1rem', color: points >= 0 ? '#4ade80' : '#ef4444' }}>
+                <div style={{ textAlign: 'center' as const, marginBottom: '1rem', color: points >= 0 ? '#4ade80' : '#ef4444' }}>
                     Punti Rimanenti: {points} / 27
                 </div>
             )}
@@ -243,6 +243,114 @@ export function AbilityScoreStep({ data, updateData }: { data: CharacterData, up
                     );
                 })}
             </div>
+
+            {/* HP & HIT DICE MANAGEMENT */}
+            <div style={{ marginTop: '2rem', padding: '1.5rem', background: 'rgba(239, 68, 68, 0.1)', borderRadius: '1rem', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
+                <h4 style={{ margin: '0 0 1rem 0', color: '#fca5a5', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{ padding: '0.25rem', background: '#ef4444', borderRadius: '0.25rem', color: 'black' }}>HP & Dadi Vita</div>
+                    Punti Ferita
+                </h4>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', alignItems: 'start' }}>
+
+                    {/* LEVEL & HIT DICE */}
+                    <div>
+                        <label style={{ ...labelStyle, color: '#fca5a5' }}>Livello & Dadi Vita</label>
+                        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
+                            <div style={{ textAlign: 'center' }}>
+                                <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Livello</span>
+                                <input
+                                    type="number"
+                                    min={1}
+                                    max={20}
+                                    value={data.level || 1}
+                                    onChange={(e) => {
+                                        const lvl = Math.max(1, parseInt(e.target.value) || 1);
+                                        const cls = CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, ''));
+                                        const hdDie = `d${cls?.hitDie || 8}`;
+                                        updateData('level', lvl);
+                                        updateData('hitDice', { total: lvl, die: hdDie });
+                                    }}
+                                    style={{ ...inputStyle, width: '60px', textAlign: 'center', borderColor: '#ef4444' }}
+                                />
+                            </div>
+                            <div style={{ fontSize: '1.25rem', color: '#cbd5e1' }}>
+                                ×
+                            </div>
+                            <div style={{ textAlign: 'center' }}>
+                                <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Dado Vita</span>
+                                <div style={{ fontSize: '1.25rem', color: 'white', fontWeight: 700 }}>
+                                    {data.hitDice?.die || (CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, ''))?.hitDie ? `d${CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, ''))?.hitDie}` : 'd8')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ACTIONS */}
+                    <div>
+                        <label style={{ ...labelStyle, color: '#fca5a5' }}>Calcolo HP</label>
+                        <p style={{ fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '0.5rem' }}>
+                            Mod. Costituzione: <strong>{Math.floor(((data.abilities.CON + (racialBonuses.CON || 0)) - 10) / 2) > 0 ? '+' : ''}{Math.floor(((data.abilities.CON + (racialBonuses.CON || 0)) - 10) / 2)}</strong>
+                        </p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                            <button
+                                onClick={() => {
+                                    // Calculate Average
+                                    const cls = CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, ''));
+                                    const hd = cls?.hitDie || 8;
+                                    const conMod = Math.floor(((data.abilities.CON + (racialBonuses.CON || 0)) - 10) / 2);
+                                    const level = data.level || 1;
+                                    const avg = Math.floor(hd / 2) + 1;
+
+                                    const total = (hd + conMod) + (Math.max(0, level - 1) * (avg + conMod));
+                                    updateData('hp', { current: total, max: total, temp: 0 });
+                                }}
+                                style={{ ...tabStyle, background: 'rgba(239, 68, 68, 0.3)', border: '1px solid #ef4444' }}
+                            >
+                                Usa Media (Standard)
+                            </button>
+                            <button
+                                onClick={() => {
+                                    // Roll HP
+                                    const cls = CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, ''));
+                                    const hd = cls?.hitDie || 8;
+                                    const conMod = Math.floor(((data.abilities.CON + (racialBonuses.CON || 0)) - 10) / 2);
+                                    const level = data.level || 1;
+
+                                    // Lvl 1: Max
+                                    let total = hd + conMod;
+                                    let rolls = [];
+
+                                    // Lvl 2+: Roll
+                                    for (let i = 0; i < level - 1; i++) {
+                                        const roll = Math.floor(Math.random() * hd) + 1;
+                                        rolls.push(roll);
+                                        total += (roll + conMod);
+                                    }
+
+                                    updateData('hp', { current: total, max: total, temp: 0 });
+                                    alert(`Dadi lanciati per ${level - 1} livelli: [${rolls.join(', ')}]\nTotale con CON: ${total}`);
+                                }}
+                                style={{ ...tabStyle, background: '#ef4444', fontWeight: 600 }}
+                            >
+                                <Dices size={16} style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+                                Tira Dadi Vita
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* RESULT */}
+                    <div style={{ justifySelf: 'center', textAlign: 'center' }}>
+                        <label style={{ fontSize: '0.75rem', color: '#fca5a5', marginBottom: '0.25rem', display: 'block' }}>Massimi HP</label>
+                        <input
+                            type="number"
+                            value={data.hp?.max || 0}
+                            onChange={(e) => updateData('hp', { ...data.hp, max: parseInt(e.target.value) || 0, current: parseInt(e.target.value) || 0 })}
+                            style={{ ...inputStyle, width: '100px', fontSize: '2rem', textAlign: 'center', color: '#fca5a5', borderColor: '#ef4444' }}
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
@@ -258,14 +366,23 @@ export function SkillsStep({ data, updateData }: { data: CharacterData, updateDa
     const cls = CLASSES.find(c => c.name === baseClass);
     const availableSkills = cls?.proficiencies?.skills || [];
 
+    // Background Skills
+    const baseBg = data.background.split(' (')[0];
+    const bg = BACKGROUNDS.find(b => b.name === baseBg);
+    const bgSkills = bg?.skillProficiencies || [];
+
     // Determine # of picks (Simple heuristic)
     const pickCount = baseClass === 'Ladro' ? 4 : (baseClass === 'Bardo' || baseClass === 'Ranger') ? 3 : 2;
 
     const toggleSkill = (skill: string) => {
+        if (bgSkills.includes(skill)) return; // Cannot toggle background skills
+
         const current = data.skills || [];
         if (current.includes(skill)) {
             updateData('skills', current.filter(s => s !== skill));
         } else {
+            // Check limits (excluding BG skills, assuming data.skills ONLY tracks class picks? 
+            // Wait, if hydrate merges them later, data.skills MUST NOT contain BG skills during this step)
             if (current.length < pickCount) {
                 updateData('skills', [...current, skill]);
             }
@@ -275,25 +392,34 @@ export function SkillsStep({ data, updateData }: { data: CharacterData, updateDa
     return (
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '0.5rem' }}>Abilità</h3>
-            <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>Scegli {pickCount} abilità in cui sei competente.</p>
+            <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>Scegli {pickCount} abilità extra oltre a quelle garantite dal Background.</p>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.75rem' }}>
-                {availableSkills.map(skill => (
-                    <div
-                        key={skill}
-                        onClick={() => toggleSkill(skill)}
-                        style={{
-                            padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: 'pointer',
-                            background: data.skills.includes(skill) ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255,255,255,0.05)',
-                            borderColor: data.skills.includes(skill) ? '#10b981' : 'rgba(255,255,255,0.05)',
-                            color: data.skills.includes(skill) ? '#d1fae5' : '#94a3b8',
-                            display: 'flex', justifyContent: 'space-between', alignItems: 'center'
-                        }}
-                    >
-                        <span>{skill}</span>
-                        {data.skills.includes(skill) && <Sparkles size={14} />}
-                    </div>
-                ))}
+                {availableSkills.map(skill => {
+                    const isBgSkill = bgSkills.includes(skill);
+                    const isSelected = data.skills.includes(skill);
+
+                    return (
+                        <div
+                            key={skill}
+                            onClick={() => toggleSkill(skill)}
+                            style={{
+                                padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: isBgSkill ? 'default' : 'pointer',
+                                background: (isSelected || isBgSkill) ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255,255,255,0.05)',
+                                borderColor: (isSelected || isBgSkill) ? '#10b981' : 'rgba(255,255,255,0.05)',
+                                color: (isSelected || isBgSkill) ? '#d1fae5' : '#94a3b8',
+                                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                opacity: isBgSkill ? 0.7 : 1
+                            }}
+                        >
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <span>{skill}</span>
+                                {isBgSkill && <span style={{ fontSize: '0.65rem', color: '#6ee7b7' }}>(Background)</span>}
+                            </div>
+                            {(isSelected || isBgSkill) && <Sparkles size={14} />}
+                        </div>
+                    );
+                })}
             </div>
             {availableSkills.length === 0 && (
                 <div style={{ color: '#ef4444', textAlign: 'center' }}>
@@ -308,67 +434,223 @@ export function SkillsStep({ data, updateData }: { data: CharacterData, updateDa
 }
 
 // --- FEATS & SPELLS STEP ---
-export function AdvancedOptionsStep({ data, updateData }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void }) {
+export function AdvancedOptionsStep({ data, updateData, activeSources = ['PHB', 'XGE', 'TCE'] }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void, activeSources?: string[] }) {
     // Check if Feats available
-    // Variant Human gets a feat at Lv1. Everyone gets at Lv 4, 8, 12, 16, 19
-    const isVarHuman = data.race === 'Umano' && data.subclass === 'Variante'; // Assuming handling
+    const isVarHuman = data.race === 'Umano' && data.subclass === 'Variante';
     const hasFeat = isVarHuman || data.level >= 4;
 
     // Check Spells
     const casterClasses = ['Bardo', 'Chierico', 'Druido', 'Mago', 'Stregone', 'Warlock', 'Artefice', 'Paladino', 'Ranger'];
-    const baseClass = data.class.split(' (')[0];
-    const isCaster = casterClasses.some(c => data.class.includes(c)); // Simple check
+    const baseClass = data.class.replace(/ *\(.*\)/, '').replace(/[0-9]/g, '').trim();
 
-    // Limits
-    const limits = getSpellLimits(baseClass, data.subclass || '', data.level, data.abilities);
-    const currentCantrips = data.spells.filter(s => s.level === 0);
-    const currentLeveled = data.spells.filter(s => s.level > 0);
+    // Normalize English/Italian Names
+    const normalizeClass = (c: string) => {
+        if (c === 'Paladin') return 'Paladino';
+        if (c === 'Cleric') return 'Chierico';
+        if (c === 'Sorcerer') return 'Stregone';
+        if (c === 'Wizard') return 'Mago';
+        if (c === 'Bard') return 'Bardo';
+        if (c === 'Druid') return 'Druido';
+        if (c === 'Fighter') return 'Guerriero';
+        if (c === 'Barbarian') return 'Barbaro';
+        if (c === 'Rogue') return 'Ladro';
+        if (c === 'Monk') return 'Monaco';
+        return c;
+    }
+    const safeBaseClass = normalizeClass(baseClass);
+    const isCaster = casterClasses.some(c => safeBaseClass.includes(c));
 
-    // Filter spells (Level 0 and 1 for starters)
-    const classSpells = SPELLS.filter(s => s.classes.some(c => data.class.includes(c)) && s.level <= (data.level === 1 ? 1 : 9)); // Simplified
+    // Calculate Max Feats / ASIs
+    const calculateMaxFeats = () => {
+        let count = 0;
+        if (isVarHuman) count += 1;
+        const levels = [4, 8, 12, 16, 19];
+        // Note: Fighter/Rogue logic added in previous chunk or here
+        if (safeBaseClass === 'Guerriero') levels.push(6, 14);
+        if (safeBaseClass === 'Ladro') levels.push(10);
+        return count + levels.filter(l => data.level >= l).length;
+    };
+    const maxFeats = calculateMaxFeats();
 
-    const toggleSpell = (spellName: string) => {
+
+    const currentFeats = data.features.filter(f => f.source !== 'Class' && f.source !== 'Race' && f.source !== 'Background').length;
+    // ^ Heuristic: data.features mixes everything. 
+    // Ideally we track feats separately or tag them. 
+    // But since we add them via 'addFeat', they naturally append.
+    // However, existing features from Race/Class might not be tagged 'source'.
+    // `addFeat` adds them with `source: feat.source`.
+    // Let's rely on user count for now or just show "Slot Disponibili".
+    // Better: Show "Slot sbloccati per livello: X".
+
+
+
+    // --- ASYNC FEATS LOGIC ---
+    const [apiFeats, setApiFeats] = useState<any[]>([]);
+    const [loadingFeats, setLoadingFeats] = useState(false);
+    const [featSearch, setFeatSearch] = useState('');
+
+    useEffect(() => {
+        if (!hasFeat) return;
+        async function loadFeats() {
+            setLoadingFeats(true);
+            try {
+                const srcParam = activeSources.join(',');
+                const res = await fetch(`/api/dnd/feats?sources=${srcParam}`);
+                const json = await res.json();
+                if (json.feats) setApiFeats(json.feats);
+            } catch (e) {
+                console.error("Failed to load feats", e);
+            } finally {
+                setLoadingFeats(false);
+            }
+        }
+        loadFeats();
+    }, [hasFeat, activeSources]);
+
+
+    const filteredFeats = React.useMemo(() => {
+        if (!featSearch) return apiFeats;
+        return apiFeats.filter(f => f.name.toLowerCase().includes(featSearch.toLowerCase()));
+    }, [apiFeats, featSearch]);
+
+    const addFeat = (featName: string) => {
+        const feat = apiFeats.find(f => f.name === featName);
+        if (!feat) return;
+        // Check if already added
+        if (data.features.some(f => f.name === feat.name)) return;
+
+        const newFeatFeature = {
+            name: feat.name,
+            level: data.level, // Acquired at current level
+            source: feat.source,
+            description: feat.description || ''
+        };
+        updateData('features', [...data.features, newFeatFeature]);
+    };
+
+    const removeFeat = (featName: string) => {
+        updateData('features', data.features.filter(f => f.name !== featName));
+    };
+
+
+    // --- ASYNC SPELLS LOGIC ---
+    const [apiSpells, setApiSpells] = useState<any[]>([]);
+    const [loadingSpells, setLoadingSpells] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const maxSpellLevel = React.useMemo(() => {
+        let max = 0;
+        if (['Paladino', 'Ranger'].includes(safeBaseClass)) max = Math.ceil(data.level / 2);
+        else if (['Bardo', 'Chierico', 'Druido', 'Mago', 'Stregone'].includes(safeBaseClass)) max = Math.ceil(data.level / 2);
+        else if (safeBaseClass === 'Warlock') { max = Math.ceil(data.level / 2); if (max > 5) max = 5; }
+        else if (safeBaseClass === 'Artefice') max = Math.ceil(data.level / 2);
+
+        if (max > 9) max = 9;
+        if (max < 1 && isCaster) max = 1;
+        return max;
+    }, [safeBaseClass, data.level, isCaster]);
+
+    useEffect(() => {
+        if (!isCaster) return;
+        async function load() {
+            setLoadingSpells(true);
+            try {
+                const srcParam = activeSources.join(',');
+                const res = await fetch(`/api/dnd/spells?sources=${srcParam}`);
+                const json = await res.json();
+                if (json.spells) {
+                    setApiSpells(json.spells);
+                }
+            } catch (e) {
+                console.error("Failed to fetch spells", e);
+            } finally {
+                setLoadingSpells(false);
+            }
+        }
+        load();
+    }, [activeSources, isCaster]);
+
+    // Limit to 9
+    // Filter Logic
+    const displayedSpells = React.useMemo(() => {
+        let spells = apiSpells;
+        // Filter by Level
+        spells = spells.filter(s => s.level <= maxSpellLevel);
+
+        // Filter by Search
+        if (searchTerm) {
+            spells = spells.filter(s => s.name.toLowerCase().includes(searchTerm.toLowerCase()));
+        }
+
+        return spells;
+    }, [apiSpells, maxSpellLevel, searchTerm]);
+
+    // Group by Level
+    const spellsByLevel: Record<number, any[]> = {};
+    displayedSpells.forEach(s => {
+        if (!spellsByLevel[s.level]) spellsByLevel[s.level] = [];
+        spellsByLevel[s.level].push(s);
+    });
+
+    const toggleSpell = (spellName: string, level: number) => {
         const current = data.spells || [];
         const exists = current.find(s => s.name === spellName);
         if (exists) {
             updateData('spells', current.filter(s => s.name !== spellName));
         } else {
-            const spell = SPELLS.find(s => s.name === spellName);
-            if (spell) updateData('spells', [...current, { name: spell.name, level: spell.level, prepared: true }]);
+            // New spell structure from API
+            updateData('spells', [...current, { name: spellName, level: level, prepared: true }]);
         }
     };
 
-    const addFeat = (featName: string) => {
-        const feat = FEATS.find(f => f.name === featName);
-        if (!feat) return;
-        // Add to features if not present
-        const currentFeats = data.features.filter(f => f.source !== 'FEAT');
-        // We'll tag it or just append
-        const newFeatFeature = { name: feat.name, level: 1, source: 'PHB14', description: feat.description || '' };
-        // Remove old feat if we are replacing (basic logic: assumes 1 feat choice for now in this UI)
-        // complex logic required for multiple feats.
-        // Let's just append for simplicity in this V2
-        updateData('features', [...data.features, newFeatFeature]);
-    };
+    // Limits Definitions (Re-added for Display)
+    const limits = getSpellLimits(safeBaseClass, data.subclass || '', data.level, data.abilities);
+    const currentCantrips = data.spells.filter(s => s.level === 0);
+    const currentLeveled = data.spells.filter(s => s.level > 0);
 
     return (
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             {hasFeat && (
                 <div style={{ marginBottom: '3rem' }}>
                     <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '1rem' }}>Talento</h3>
-                    <select style={inputStyle} onChange={(e) => addFeat(e.target.value)}>
-                        <option value="">Seleziona un Talento...</option>
-                        {FEATS.map(f => (
-                            <option key={f.name} value={f.name}>{f.name}</option>
+                    <div style={{ marginBottom: '1rem' }}>
+                        <input
+                            type="text"
+                            placeholder="Cerca Talento..."
+                            value={featSearch}
+                            onChange={e => setFeatSearch(e.target.value)}
+                            style={{ ...inputStyle, width: '100%' }}
+                        />
+                    </div>
+                    {loadingFeats ? (
+                        <div style={{ color: '#a78bfa' }}>Caricamento Talenti...</div>
+                    ) : (
+                        <select style={inputStyle} onChange={(e) => addFeat(e.target.value)} value="">
+                            <option value="">Seleziona un Talento da aggiungere...</option>
+                            {filteredFeats.map(f => (
+                                <option key={f.name} value={f.name}>
+                                    {f.name} {f.source !== 'PHB' && `[${f.source}]`}
+                                </option>
+                            ))}
+                        </select>
+                    )}
+
+                    {/* Show selected feats that are NOT class features (heuristic: source is strict) */}
+                    <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                        {data.features.filter(f => !['Class', 'Race'].includes(f.source || '') && filteredFeats.some(api => api.name === f.name)).map(f => (
+                            <div key={f.name} style={{ background: '#4c1d95', padding: '0.5rem 1rem', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '0.5rem', border: '1px solid #8b5cf6' }}>
+                                <span>{f.name}</span>
+                                <button onClick={() => removeFeat(f.name)} style={{ background: 'none', border: 'none', color: '#fca5a5', cursor: 'pointer', fontWeight: 'bold' }}>Ã—</button>
+                            </div>
                         ))}
-                    </select>
+                    </div>
                 </div>
             )}
 
             {isCaster && (
                 <div>
                     <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '1rem' }}>
-                        Incantesimi
+                        Incantesimi (Database Esteso)
                     </h3>
 
                     {/* LIMITS DISPLAY */}
@@ -383,66 +665,87 @@ export function AdvancedOptionsStep({ data, updateData }: { data: CharacterData,
                         )}
                         {limits.type === 'prepared' && (
                             <div style={{ color: currentLeveled.length > limits.prepared ? '#ef4444' : '#94a3b8' }}>
-                                <span style={{ fontWeight: 700, color: 'white' }}>Preparati (Giornalieri):</span> {currentLeveled.length} / {limits.prepared}
+                                <span style={{ fontWeight: 700, color: 'white' }}>Preparati:</span> {currentLeveled.length} / {limits.prepared}
                             </div>
                         )}
                         {baseClass === 'Mago' && (
                             <div style={{ marginLeft: 'auto', fontSize: '0.8rem', color: '#64748b' }}>
-                                *Per il Mago, seleziona i Preparati. Il Libro ne contiene di più (6 + 2/liv).
+                                *Per il Mago, seleziona i Preparati. Il Libro ne contiene di piÃ¹ (6 + 2/liv).
                             </div>
                         )}
                     </div>
 
-                    <div style={{ height: '400px', overflowY: 'auto', paddingRight: '1rem' }}>
-                        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(lvl => {
-                            const spellsAtLevel = classSpells.filter(s => s.level === lvl);
-                            if (spellsAtLevel.length === 0) return null;
-
-                            return (
-                                <div key={lvl} style={{ marginBottom: '1.5rem' }}>
-                                    <h4 style={{ color: '#a78bfa', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.25rem', marginBottom: '0.5rem' }}>
-                                        {lvl === 0 ? 'Trucchetti (Livello 0)' : `Livello ${lvl}`}
-                                    </h4>
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '0.5rem' }}>
-                                        {spellsAtLevel.map(s => {
-                                            const isSelected = data.spells.find(x => x.name === s.name);
-                                            // Disable logic:
-                                            // If lvl 0: disable if max reached AND not selected
-                                            // If lvl > 0: disable if max (known/prepared) reached AND not selected
-                                            const isCantrip = s.level === 0;
-                                            const cantripFull = currentCantrips.length >= limits.cantrips;
-                                            const leveledFull = limits.type === 'known'
-                                                ? currentLeveled.length >= limits.known
-                                                : currentLeveled.length >= limits.prepared;
-
-                                            const disabled = !isSelected && (isCantrip ? cantripFull : leveledFull);
-
-                                            return (
-                                                <div
-                                                    key={s.name}
-                                                    onClick={() => !disabled && toggleSpell(s.name)}
-                                                    style={{
-                                                        padding: '0.75rem', borderRadius: '0.5rem', cursor: disabled ? 'not-allowed' : 'pointer',
-                                                        opacity: disabled ? 0.5 : 1,
-                                                        background: isSelected ? 'rgba(124, 58, 237, 0.2)' : 'rgba(255,255,255,0.05)',
-                                                        border: '1px solid',
-                                                        borderColor: isSelected ? '#7c3aed' : 'rgba(255,255,255,0.05)',
-                                                        display: 'flex', flexDirection: 'column'
-                                                    }}
-                                                >
-                                                    <div style={{ fontWeight: 600, color: 'white', display: 'flex', justifyContent: 'space-between' }}>
-                                                        {s.name}
-                                                        {isSelected && <Sparkles size={14} color="#a78bfa" />}
-                                                    </div>
-                                                    <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.25rem' }}>{s.description.slice(0, 60)}...</div>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            );
-                        })}
+                    {/* SEARCH BOX */}
+                    <div style={{ marginBottom: '1.5rem' }}>
+                        <input
+                            type="text"
+                            placeholder="Cerca incantesimo (es. 'Fireball')..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{ ...inputStyle, width: '100%' }}
+                        />
+                        <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.5rem' }}>
+                            Nota: Incluso contenuto da {activeSources.join(', ')}.
+                        </div>
                     </div>
+
+                    {loadingSpells ? (
+                        <div style={{ color: '#a78bfa', textAlign: 'center', padding: '2rem' }}>Caricamento Incantesimi Plutonium...</div>
+                    ) : (
+                        <div>
+                            {/* Always show levels 0 to MAX */}
+                            {Array.from({ length: maxSpellLevel + 1 }).map((_, level) => {
+                                const list = spellsByLevel[level] || [];
+
+                                return (
+                                    <div key={level} style={{ marginBottom: '2rem' }}>
+                                        <h4 style={{ color: '#a78bfa', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem', marginBottom: '1rem' }}>
+                                            {level === 0 ? 'Trucchetti (Livello 0)' : `Livello ${level}`}
+                                        </h4>
+                                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.5rem' }}>
+                                            {list.length > 0 ? list.map((spell: any) => {
+                                                const isSelected = data.spells.some(s => s.name === spell.name);
+                                                // Enable selection logic (Optional: Disable if full)
+                                                const isCantrip = spell.level === 0;
+                                                const cantripFull = currentCantrips.length >= limits.cantrips;
+                                                const leveledFull = limits.type === 'known'
+                                                    ? currentLeveled.length >= limits.known
+                                                    : currentLeveled.length >= limits.prepared;
+                                                const disabled = !isSelected && (isCantrip ? cantripFull : leveledFull);
+
+                                                return (
+                                                    <button
+                                                        key={spell.name}
+                                                        onClick={() => !disabled && toggleSpell(spell.name, level)}
+                                                        style={{
+                                                            padding: '0.5rem',
+                                                            borderRadius: '0.25rem',
+                                                            border: '1px solid',
+                                                            borderColor: isSelected ? '#a78bfa' : 'rgba(255,255,255,0.1)',
+                                                            background: isSelected ? 'rgba(167, 139, 250, 0.2)' : 'transparent',
+                                                            color: isSelected ? 'white' : disabled ? '#475569' : '#cbd5e1',
+                                                            cursor: disabled ? 'not-allowed' : 'pointer',
+                                                            textAlign: 'left',
+                                                            fontSize: '0.9rem',
+                                                            whiteSpace: 'nowrap',
+                                                            overflow: 'hidden',
+                                                            textOverflow: 'ellipsis'
+                                                        }}
+                                                        title={spell.description || spell.name}
+                                                    >
+                                                        {spell.name}
+                                                        {spell.source !== 'PHB' && <span style={{ marginLeft: '0.5rem', fontSize: '0.7em', color: '#64748b' }}>[{spell.source}]</span>}
+                                                    </button>
+                                                );
+                                            }) : (
+                                                <div style={{ color: '#64748b', fontSize: '0.8rem', fontStyle: 'italic' }}>Nessun incantesimo trovato.</div>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -456,10 +759,31 @@ export function AdvancedOptionsStep({ data, updateData }: { data: CharacterData,
     );
 }
 
+export function EquipmentStep({ data, updateData, activeSources = ['PHB', 'XGE', 'TCE'] }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void, activeSources?: string[] }) {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [apiItems, setApiItems] = useState<any[]>([]);
+    const [loadingItems, setLoadingItems] = useState(false);
+    const [showResults, setShowResults] = useState(false);
 
-// --- EQUIPMENT STEP ---
-export function EquipmentStep({ data, updateData }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void }) {
-    const [newItem, setNewItem] = useState('');
+    // Fetch Items on Init (or when sources change)
+    useEffect(() => {
+        async function load() {
+            setLoadingItems(true);
+            try {
+                const srcParam = activeSources.join(',');
+                const res = await fetch(`/api/dnd/items?sources=${srcParam}`);
+                const json = await res.json();
+                if (json.items) {
+                    setApiItems(json.items);
+                }
+            } catch (e) {
+                console.error("Failed to load items", e);
+            } finally {
+                setLoadingItems(false);
+            }
+        }
+        load();
+    }, [activeSources]);
 
     // Default Equipment Loading (One-time)
     useEffect(() => {
@@ -471,10 +795,11 @@ export function EquipmentStep({ data, updateData }: { data: CharacterData, updat
         }
     }, []);
 
-    const addItem = () => {
-        if (newItem.trim()) {
-            updateData('equipment', [...data.equipment, newItem.trim()]);
-            setNewItem('');
+    const addItem = (itemName: string) => {
+        if (itemName.trim()) {
+            updateData('equipment', [...data.equipment, itemName.trim()]);
+            setSearchTerm('');
+            setShowResults(false);
         }
     };
 
@@ -484,97 +809,135 @@ export function EquipmentStep({ data, updateData }: { data: CharacterData, updat
         updateData('equipment', newEq);
     };
 
+    const filteredItems = React.useMemo(() => {
+        if (!searchTerm) return [];
+        return apiItems.filter(i => i.name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 10);
+    }, [searchTerm, apiItems]);
+
     return (
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '0.5rem' }}>Equipaggiamento</h3>
-            <p style={{ color: '#94a3b8', marginBottom: '1.5rem' }}>Gestisci il tuo inventario. Abbiamo aggiunto l'equipaggiamento standard della tua classe.</p>
+            <p style={{ color: '#94a3b8', marginBottom: '1.5rem' }}>Gestisci il tuo inventario. Cerca oggetti dal database o aggiungi equipaggiamento personalizzato.</p>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-                {/* Left: Inventory List */}
+                {/* Left: Search & Add */}
                 <div>
-                    <h4 style={{ color: '#a78bfa', marginBottom: '1rem' }}>Zaino</h4>
-                    <div style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '0.5rem', padding: '0.5rem', minHeight: '200px' }}>
-                        {data.equipment.map((item, idx) => (
-                            <div key={idx} style={{ padding: '0.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'white' }}>
-                                <span>{item}</span>
-                                <button onClick={() => removeItem(idx)} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }}>×</button>
+                    <h4 style={{ color: '#a78bfa', marginBottom: '1rem' }}>Aggiungi Oggetto</h4>
+                    <div style={{ position: 'relative' }}>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={(e) => { setSearchTerm(e.target.value); setShowResults(true); }}
+                                placeholder="Cerca oggetto (es. 'Spada Lunga')..."
+                                style={{ ...inputStyle, flex: 1 }}
+                                onFocus={() => setShowResults(true)}
+                            />
+                            <button
+                                onClick={() => addItem(searchTerm)} // Fallback for custom items
+                                style={{ padding: '0.5rem 1rem', background: '#7c3aed', color: 'white', border: 'none', borderRadius: '0.5rem', cursor: 'pointer' }}
+                            >
+                                +
+                            </button>
+                        </div>
+
+                        {/* Autocomplete Dropdown */}
+                        {showResults && searchTerm && (
+                            <div style={{
+                                position: 'absolute', top: '100%', left: 0, right: 0,
+                                background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)',
+                                borderRadius: '0.5rem', maxHeight: '200px', overflowY: 'auto', zIndex: 10,
+                                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)'
+                            }}>
+                                {loadingItems ? (
+                                    <div style={{ padding: '0.5rem', color: '#94a3b8' }}>Caricamento...</div>
+                                ) : filteredItems.length > 0 ? (
+                                    filteredItems.map(item => (
+                                        <div
+                                            key={item.name + item.source}
+                                            onClick={() => addItem(item.name)}
+                                            style={{
+                                                padding: '0.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)',
+                                                cursor: 'pointer', color: '#e2e8f0', display: 'flex', justifyContent: 'space-between'
+                                            }}
+                                            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                                            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                        >
+                                            <span>{item.name}</span>
+                                            {item.source !== 'PHB' && <span style={{ fontSize: '0.7rem', color: '#64748b' }}>[{item.source}]</span>}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div style={{ padding: '0.5rem', color: '#94a3b8' }}>
+                                        Nessun risultato. Premi + per aggiungere come personalizzato.
+                                    </div>
+                                )}
                             </div>
-                        ))}
-                        {data.equipment.length === 0 && <div style={{ color: '#64748b', padding: '1rem', textAlign: 'center' }}>Zaino vuoto</div>}
+                        )}
                     </div>
-                    <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
-                        <input
-                            type="text"
-                            value={newItem}
-                            onChange={(e) => setNewItem(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && addItem()}
-                            placeholder="Aggiungi oggetto..."
-                            style={inputStyle}
-                        />
-                        <button onClick={addItem} style={{ ...tabStyle, background: '#7c3aed' }}>+</button>
+
+                    <div style={{ marginTop: '1rem', fontSize: '0.8rem', color: '#64748b' }}>
+                        Nota: La ricerca include oggetti da: {activeSources.join(', ')}.
                     </div>
                 </div>
 
-                {/* Right: Combat Stats (Simplified) */}
+                {/* Right: Inventory List */}
                 <div>
-                    <h4 style={{ color: '#a78bfa', marginBottom: '1rem' }}>Statistiche di Combattimento</h4>
-                    <div style={cardStyle}>
-                        <div style={{ marginBottom: '1rem' }}>
-                            <label style={labelStyle}>Classe Armatura (AC)</label>
-                            <input
-                                type="number"
-                                value={data.armorClass}
-                                onChange={(e) => updateData('armorClass', parseInt(e.target.value) || 10)}
-                                style={inputStyle}
-                            />
-                            <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.25rem' }}>Valore base. Modificatori da scudo/magia vanno calcolati a parte.</div>
-                        </div>
-
-                        <div style={{ marginBottom: '1rem' }}>
-                            <label style={labelStyle}>Punti Ferita Attuali (HP)</label>
-                            <input
-                                type="number"
-                                value={data.hp.max}
-                                onChange={(e) => updateData('hp', { ...data.hp, max: parseInt(e.target.value) || 1, current: parseInt(e.target.value) || 1 })}
-                                style={inputStyle}
-                            />
-                        </div>
-
-                        <div>
-                            <label style={labelStyle}>Velocità (m)</label>
-                            <input
-                                type="number"
-                                value={data.speed}
-                                onChange={(e) => updateData('speed', parseInt(e.target.value) || 9)}
-                                style={inputStyle}
-                            />
-                        </div>
+                    <h4 style={{ color: '#a78bfa', marginBottom: '1rem' }}>Zaino</h4>
+                    <div style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '0.5rem', padding: '0.5rem', minHeight: '300px', maxHeight: '400px', overflowY: 'auto' }}>
+                        {data.equipment.map((item, idx) => (
+                            <div key={idx} style={{ padding: '0.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'white' }}>
+                                <span>{item}</span>
+                                <button onClick={() => removeItem(idx)} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }}>Ã—</button>
+                            </div>
+                        ))}
+                        {data.equipment.length === 0 && (
+                            <div style={{ padding: '1rem', textAlign: 'center', color: '#64748b', fontStyle: 'italic' }}>
+                                Lo zaino Ã¨ vuoto.
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
         </div>
+
+
+
     );
 }
 
 // --- BIO STEP ---
 export function BioStep({ data, updateData }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void }) {
-
     const randomTrait = (pool: readonly string[], field: keyof typeof data.personality) => {
         const pick = pool[Math.floor(Math.random() * pool.length)];
         updateData('personality', { ...data.personality, [field]: pick });
     };
+
 
     return (
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '0.5rem' }}>Dettagli Personali</h3>
             <p style={{ color: '#94a3b8', marginBottom: '1.5rem' }}>Dai vita al tuo personaggio. Chi è? Cosa vuole?</p>
 
+            <div style={{ marginBottom: '2rem' }}>
+                <label style={labelStyle}>Nome Eroe</label>
+                <input
+                    type="text"
+                    value={data.characterName}
+                    onChange={(e) => updateData('characterName', e.target.value)}
+                    placeholder="Il nome della tua leggenda..."
+                    style={{ ...inputStyle, fontSize: '1.25rem', fontWeight: 700 }}
+                />
+            </div>
+
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                             <label style={labelStyle}>Tratti della Personalità</label>
-                            <button onClick={() => randomTrait(PERSONALITY_TRAITS, 'traits')} style={{ fontSize: '0.7rem', color: '#a78bfa', background: 'none', border: 'none', cursor: 'pointer' }}>🎲 Random</button>
+                            <button onClick={() => randomTrait(PERSONALITY_TRAITS, 'traits')} style={{ fontSize: '0.7rem', color: '#a78bfa', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                <Dices size={12} style={{ marginRight: '4px' }} /> Casuale
+                            </button>
                         </div>
                         <textarea
                             value={data.personality.traits}
@@ -585,7 +948,9 @@ export function BioStep({ data, updateData }: { data: CharacterData, updateData:
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                             <label style={labelStyle}>Ideali</label>
-                            <button onClick={() => randomTrait(IDEALS, 'ideals')} style={{ fontSize: '0.7rem', color: '#a78bfa', background: 'none', border: 'none', cursor: 'pointer' }}>🎲 Random</button>
+                            <button onClick={() => randomTrait(IDEALS, 'ideals')} style={{ fontSize: '0.7rem', color: '#a78bfa', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                <Dices size={12} style={{ marginRight: '4px' }} /> Casuale
+                            </button>
                         </div>
                         <textarea
                             value={data.personality.ideals}
@@ -596,7 +961,9 @@ export function BioStep({ data, updateData }: { data: CharacterData, updateData:
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                             <label style={labelStyle}>Legami</label>
-                            <button onClick={() => randomTrait(BONDS, 'bonds')} style={{ fontSize: '0.7rem', color: '#a78bfa', background: 'none', border: 'none', cursor: 'pointer' }}>🎲 Random</button>
+                            <button onClick={() => randomTrait(BONDS, 'bonds')} style={{ fontSize: '0.7rem', color: '#a78bfa', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                <Dices size={12} style={{ marginRight: '4px' }} /> Casuale
+                            </button>
                         </div>
                         <textarea
                             value={data.personality.bonds}
@@ -607,7 +974,9 @@ export function BioStep({ data, updateData }: { data: CharacterData, updateData:
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                             <label style={labelStyle}>Difetti</label>
-                            <button onClick={() => randomTrait(FLAWS, 'flaws')} style={{ fontSize: '0.7rem', color: '#a78bfa', background: 'none', border: 'none', cursor: 'pointer' }}>🎲 Random</button>
+                            <button onClick={() => randomTrait(FLAWS, 'flaws')} style={{ fontSize: '0.7rem', color: '#a78bfa', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                <Dices size={12} style={{ marginRight: '4px' }} /> Casuale
+                            </button>
                         </div>
                         <textarea
                             value={data.personality.flaws}
@@ -648,6 +1017,93 @@ export function BioStep({ data, updateData }: { data: CharacterData, updateData:
                     </div>
                 </div>
             </div>
+        </div>
+    );
+}
+
+// --- BACKGROUND STEP ---
+export function BackgroundStep({ data, updateData, activeSources = ['PHB', 'XGE', 'TCE'] }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void, activeSources?: string[] }) {
+    const [backgrounds, setBackgrounds] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        async function load() {
+            setLoading(true);
+            try {
+                const srcParam = activeSources.join(',');
+                const res = await fetch(`/api/dnd/backgrounds?sources=${srcParam}`);
+                const json = await res.json();
+                if (json.backgrounds) setBackgrounds(json.backgrounds);
+            } catch (e) {
+                console.error("Failed to load backgrounds", e);
+            } finally {
+                setLoading(false);
+            }
+        }
+        load();
+    }, [activeSources]);
+
+    const filtered = backgrounds.filter(b => b.name.toLowerCase().includes(search.toLowerCase()));
+
+    const selectBackground = (bg: any) => {
+        // Update background name
+        // Note: generic proficiencies in json are tricky (e.g. "choose two from...").
+        // For now, let's just save the background name and name-based skills if distinct.
+        // Actually, Plutonium data often has concrete skills or "choose 2".
+
+        updateData('background', bg.name);
+        // updateData('skills', newSkills); // Optional: Auto-add skills? Might conflict with manual picks logic. 
+        // Better to just set background and let user pick skills manually in next step if they want, 
+        // OR separate background skills.
+
+        // For now, simpliest: Set Name.
+        // Feature?
+        if (bg.feature) {
+            const feat = {
+                name: bg.feature.name,
+                source: bg.source,
+                level: 1,
+                description: bg.feature.entries ? JSON.stringify(bg.feature.entries) : ''
+            };
+            // Remove old background feature?
+            const cleanFeatures = data.features.filter(f => f.source !== 'Background');
+            updateData('features', [...cleanFeatures, { ...feat, source: 'Background' }]);
+        }
+    };
+
+    return (
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '1rem' }}>Background (Avventura)</h3>
+            <div style={{ marginBottom: '1rem' }}>
+                <input
+                    type="text"
+                    placeholder="Cerca Background..."
+                    value={search} onChange={e => setSearch(e.target.value)}
+                    style={{ ...inputStyle, width: '100%' }}
+                />
+            </div>
+            {loading ? <div style={{ color: '#a78bfa' }}>Caricamento...</div> : (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+                    {filtered.map(bg => (
+                        <div
+                            key={bg.name}
+                            onClick={() => selectBackground(bg)}
+                            style={{
+                                padding: '1rem',
+                                border: '1px solid',
+                                borderColor: data.background === bg.name ? '#10b981' : 'rgba(255,255,255,0.1)',
+                                background: data.background === bg.name ? 'rgba(16, 185, 129, 0.1)' : 'rgba(255,255,255,0.05)',
+                                borderRadius: '0.5rem',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            <div style={{ fontWeight: 'bold', color: 'white' }}>{bg.name}</div>
+                            <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>{bg.source}</div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

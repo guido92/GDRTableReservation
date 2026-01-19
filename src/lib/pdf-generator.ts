@@ -11,21 +11,12 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
     const form = pdfDoc.getForm();
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-    // CRITICAL FIX: Force Acrobat/Preview/Chrome to re-render fields
-    form.acroForm.dict.set(PDFName.of('NeedAppearances'), PDFBool.True);
+    // REMOVED: NeedAppearances (Causes Auto-Size issues)
+    // We will use updateFieldAppearances at the end instead.
 
     // --- HELPER FUNCTIONS ---
 
-    // Force Re-render helper
-    const forceRender = (field: any) => {
-        try {
-            if (field.acroField && field.acroField.getWidgets) {
-                field.acroField.getWidgets().forEach((w: any) => {
-                    w.dict.delete(PDFName.of('AP'));
-                });
-            }
-        } catch (e) { }
-    };
+    // --- HELPER FUNCTIONS ---
 
     // Calculate Modifiers
     const getMod = (score: number) => Math.floor((score - 10) / 2);
@@ -51,11 +42,8 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
                 try {
                     field.setFontSize(size);
                     field.setText(valToSet);
-                    forceRender(field); // Delete AP to force NeedAppearances
                 } catch (e) {
-                    // Fallback for missing DA
-                    field.acroField.setValue(PDFString.of(valToSet));
-                    forceRender(field);
+                    field.setText(valToSet);
                 }
             }
         } catch (e) { console.warn(`Error setField ${name}:`, e); }
@@ -69,11 +57,8 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
                 try {
                     field.setFontSize(size);
                     field.setText(valToSet);
-                    forceRender(field);
                 } catch (e) {
-                    // Fallback for missing DA
-                    field.acroField.setValue(PDFString.of(valToSet));
-                    forceRender(field);
+                    field.setText(valToSet);
                 }
             } else {
                 console.warn(`Field ${name} not found for MultiLine`);
@@ -96,7 +81,6 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
             if (box) {
                 if (checked) box.check();
                 else box.uncheck();
-                forceRender(box);
             }
         } catch (e) { console.warn(`Error setChecked ${name}:`, e); }
     };
@@ -109,7 +93,7 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
     setField('Background', data.background);
     setField('Alignment', data.alignment);
     setField('PlayerName', data.playerName);
-    setField('XP', data.level.toString());
+    setField('XP', (data.level || 1).toString());
 
     // --- 2. ABILITIES & MODS ---
     const stats: { [key: string]: number } = {
@@ -130,13 +114,19 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
     // --- 3. COMBAT STATS ---
     const profBonus = Math.ceil(data.level / 4) + 1;
     setField('ProfBonus', `+${profBonus}`);
-    setField('AC', data.armorClass.toString());
+    setField('AC', (data.armorClass || 10).toString());
     setField('Initiative', fmtMod(mods.DEX));
-    setField('Speed', data.speed.toString());
-    setField('HPMax', data.hp.max.toString());
-    setField('HPCurrent', data.hp.current.toString());
-    setField('HDTotal', data.hitDice.total.toString());
-    setField('HD', data.hitDice.die);
+    setField('Speed', (data.speed || 30).toString());
+
+    const hpMax = data.hp?.max || 1;
+    const hpCurr = data.hp?.current || 1;
+    setField('HPMax', hpMax.toString());
+    setField('HPCurrent', hpCurr.toString());
+
+    const hdTotal = data.hitDice?.total || data.level || 1;
+    const hdDie = data.hitDice?.die || 'd8';
+    setField('HDTotal', hdTotal.toString());
+    setField('HD', hdDie);
 
     // Saving Throws
     setField('ST Strength', fmtMod(mods.STR));
@@ -175,7 +165,7 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
         if (isProficient) setChecked(config.box, true);
     });
 
-    setField('Passive', (10 + mods.WIS + ((data.skills || []).some(s => s.includes('Percezione')) ? profBonus : 0)).toString(), 8);
+    setField('Passive', String(10 + (mods.WIS || 0) + ((data.skills || []).some(s => s.includes('Percezione')) ? profBonus : 0)), 8);
 
     // --- 5. ATTACKS ---
     let attackCount = 1;
@@ -208,7 +198,7 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
 
     // --- 6. FEATURES & TEXTS ---
     let featuresText = (data.features || []).map(f => `${f.name}: ${f.description}`).join('\n\n');
-    setMultiLine('Features and Traits', featuresText, 7); // Reduced font size
+    setMultiLine('Features and Traits', featuresText, 10); // Standard readable size
 
     const profs = [];
     if (data.proficiencies?.armor?.length) profs.push(`Armature: ${data.proficiencies.armor.join(', ')}`);
@@ -219,26 +209,19 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
     // Skills are already checked, but a summary is nice.
     // profs.push(`Abilità: ${data.skills.join(', ')}`); 
 
-    setMultiLine('ProficienciesLang', profs.join('\n\n'), 7); // Clean formatting
-    setMultiLine('Equipment', (data.equipment || []).join('\n'), 7); // Reduced
+    setMultiLine('ProficienciesLang', profs.join('\n\n'), 10); // Increased to 10
+    setMultiLine('Equipment', (data.equipment || []).join('\n'), 10); // Increased to 10
 
-    const p = data.personality;
-    setMultiLine('PersonalityTraits ', p.traits, 7);
-    setMultiLine('Ideals', p.ideals || '', 7);
-    setMultiLine('Bonds', p.bonds || '', 7);
-    setMultiLine('Flaws', p.flaws || '', 7);
+    const p = data.personality || { traits: '', ideals: '', bonds: '', flaws: '', backstory: '' };
+    setMultiLine('PersonalityTraits ', p.traits || '', 10);
+    setMultiLine('Ideals', p.ideals || '', 10);
+    setMultiLine('Bonds', p.bonds || '', 10);
+    setMultiLine('Flaws', p.flaws || '', 10);
 
     // Page 2 - Reduced Font
-    setMultiLine('Backstory', p.backstory || '', 8); // Slightly bigger than 7 but manageable, user said "enorme" so 9 was too big. 7 is tiny. 8 is okay.
-    // Retrying with standard sizing logic. If setFontSize(size) is called, it should work.
-    // User said "enorme" meaning it was likely Auto (0) which fills the box. explicitly setting it fixes it.
-    // previous run set it to 7. Let's keep it 7 or look at Logic.
-    // Actually, "font enorme" usually means it's auto-scaled to fill a mostly empty box.
-    // By providing more text (previous step), it naturally shrinks. 
-    // By setting font size explicitly, it stops being giant. 
-    setMultiLine('Backstory', p.backstory || '', 8);
-    setMultiLine('Allies', "Compagni di Avventura / Fazioni sconosciute", 7); // Forced to 7
-    setMultiLine('Treasure', `10 Monete d'oro\nZaino\nSacco a pelo\nRazion da viaggio\n${(data.equipment || []).join('\n')}`, 7);
+    setMultiLine('Backstory', p.backstory || '', 11); // Good reading size
+    setMultiLine('Allies', "Compagni di Avventura / Fazioni sconosciute", 11); // Consistent
+    setMultiLine('Treasure', `10 Monete d'oro\nZaino\nSacco a pelo\nRazion da viaggio\n${(data.equipment || []).join('\n')}`, 10);
 
     setField('Age', "25");
     setField('Height', "1.80m");
@@ -266,7 +249,7 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
         if (csl.includes('paladino') || csl.includes('stregone') || csl.includes('warlock') || csl.includes('bardo')) castStat = 'CHA';
 
         const castMod = mods[castStat];
-        const saveDC = 8 + profBonus + castMod;
+        const saveDC = 8 + profBonus + (castMod || 0);
         const atkBonus = profBonus + castMod;
 
         setField('SpellcastingAbility 2', castStat);
@@ -274,14 +257,70 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
         setField('SpellAtkBonus 2', fmtMod(atkBonus));
 
         // Spell Slots Calculation
-        const getSlots = (lvl: number, cls: string) => {
-            const isHalf = cls.includes('paladino') || cls.includes('ranger');
-            const isWarlock = cls.includes('warlock');
-            if (isWarlock) {
-                // Simplified Warlock Placeholder
-                return { 1: 0, 2: 0, 3: 0, 4: 0, 5: 2, 6: 0, 7: 0, 8: 0, 9: 0 };
+        // Spell Slots Calculation (Advanced Multiclass Analysis)
+        const getSlots = (fullClassStr: string) => {
+            const finalSlots = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
+
+            // Parse classes: "Paladino 13 / Warlock 2"
+            // Regex to find "Name Level" pairs
+            const matches = [...fullClassStr.matchAll(/([a-zA-Z\u00C0-\u00FF]+)\s*(\d+)/g)];
+
+            let effectiveCasterLevel = 0;
+            let warlockSlots = 0;
+            let warlockSlotLevel = 0;
+
+            if (matches.length === 0) {
+                // Fallback if no digits found, assume single class = data.level
+                const csl = fullClassStr.toLowerCase();
+                // ... reuse old logic or just assume 1 class
+                // But since we have data.level passed in main function, we can use that if single class.
+                // Let's assume regex failed, try treating whole string as one class at data.level
+                // Fallback: Mock a RegExpExecArray-like object
+                const mockMatch = [fullClassStr, fullClassStr, String(data.level)];
+                // @ts-ignore
+                matches.push(mockMatch);
             }
 
+            matches.forEach(m => {
+                const className = m[1].toLowerCase();
+                const lvl = parseInt(m[2]);
+
+                if (className.includes('warlock')) {
+                    // Pact Magic (Independent)
+                    // Determine slot level and count based on Warlock Table
+                    // LVL 1: 1@1st, LVL 2: 2@1st, LVL 3: 2@2nd...
+                    // Simplified Warlock Logic
+                    const wSlotLvl = Math.ceil(lvl / 2); // Roughly caps at 5th
+                    const cappedLvl = wSlotLvl > 5 ? 5 : wSlotLvl;
+
+                    let count = 0;
+                    if (lvl === 1) count = 1;
+                    else if (lvl >= 2 && lvl <= 10) count = 2;
+                    else if (lvl >= 11 && lvl <= 16) count = 3;
+                    else if (lvl >= 17) count = 4;
+
+                    // Add to final slots directly? Usually Warlocks are separate.
+                    // But Character Sheets often just sum them or put them together.
+                    // We will ADD them to the corresponding slot level.
+                    // @ts-ignore
+                    finalSlots[cappedLvl] += count;
+
+                } else if (className.includes('paladin') || className.includes('ranger') || className.includes('artificer')) { // Artificer is 1/2 rounded up actually, Paladin is 1/2 rounded down? No, Paladin starts at 2.
+                    // Paladin: Level / 2 (floor)
+                    // Ranger: Level / 2 (floor)
+                    // Artificer: Level / 2 (ceil) - treat as half for now
+                    effectiveCasterLevel += Math.floor(lvl / 2);
+                } else if (className.includes('fighter') && (className.includes('eldritch') || className.includes('cavaliere'))) { // Arcane Trickster too
+                    effectiveCasterLevel += Math.floor(lvl / 3);
+                } else if (className.includes('rogue') && (className.includes('arcane') || className.includes('mistificatore'))) {
+                    effectiveCasterLevel += Math.floor(lvl / 3);
+                } else if (['bard', 'bardo', 'cleric', 'chierico', 'druid', 'druido', 'sorcerer', 'stregone', 'wizard', 'mago'].some(k => className.includes(k))) {
+                    effectiveCasterLevel += lvl;
+                }
+            });
+
+            // Calculate slots for effectiveCasterLevel (Standard Table)
+            // ... (Use the fullSlots array from before)
             const fullSlots = [
                 [2, 0, 0, 0, 0, 0, 0, 0, 0], // Lv 1
                 [3, 0, 0, 0, 0, 0, 0, 0, 0], // Lv 2
@@ -305,19 +344,19 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
                 [4, 3, 3, 3, 3, 2, 2, 1, 1], // Lv 20
             ];
 
-            let effectiveLvl = lvl;
-            if (isHalf) effectiveLvl = Math.ceil(lvl / 2);
-            if (effectiveLvl < 1) effectiveLvl = 1;
-            if (effectiveLvl > 20) effectiveLvl = 20;
+            if (effectiveCasterLevel > 0) {
+                if (effectiveCasterLevel > 20) effectiveCasterLevel = 20;
+                const s = fullSlots[effectiveCasterLevel - 1];
+                for (let i = 1; i <= 9; i++) {
+                    // @ts-ignore
+                    finalSlots[i] += (s[i - 1] || 0);
+                }
+            }
 
-            const s = fullSlots[effectiveLvl - 1] || [];
-            return {
-                1: s[0] || 0, 2: s[1] || 0, 3: s[2] || 0, 4: s[3] || 0, 5: s[4] || 0,
-                6: s[5] || 0, 7: s[6] || 0, 8: s[7] || 0, 9: s[8] || 0
-            };
+            return finalSlots;
         };
 
-        const slots = getSlots(data.level, csl);
+        const slots = getSlots(`${data.class} ${data.level}`); // Pass the combined string for regex logic
 
         // Map Level to Slot Field ID (SlotsTotal X)
         const slotFieldIds: { [key: number]: number } = {
@@ -327,7 +366,7 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
         Object.entries(slotFieldIds).forEach(([lvlStr, fieldId]) => {
             const lvl = parseInt(lvlStr);
             // @ts-ignore
-            const count = slots[lvl];
+            const count = slots[lvl] || 0;
             if (count > 0) {
                 setField(`SlotsTotal ${fieldId}`, count.toString(), 10); // Forced 10
                 setField(`SlotsRemaining ${fieldId}`, count.toString(), 10); // Forced 10
@@ -372,33 +411,34 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
     }
 
     // --- SAVING THROWS (Inferred) ---
-    // Standard 5e Sheet: Str=11, Dex=18, Con=19, Int=20, Wis=21, Cha=22 (Usually)
-    // But observed dump sequence: 11, 12, 13... let's try 11-16 sequence which is also common in alternats.
-    // Let's safe bet: The user complained.
+    // Extract base class from "Paladin 13 / Warlock 2" -> "Paladin"
+    // Handle Italian "Paladino" or English "Paladin"
+    const baseClass = data.class.split(/[\s/0-9]/)[0].trim();
+
     // We will Map Class -> Saves.
     const classSaves: { [key: string]: string[] } = {
         'Barbaro': ['STR', 'CON'], 'Bardo': ['DEX', 'CHA'], 'Chierico': ['WIS', 'CHA'],
         'Druido': ['INT', 'WIS'], 'Guerriero': ['STR', 'CON'], 'Monaco': ['STR', 'DEX'],
         'Paladino': ['WIS', 'CHA'], 'Ranger': ['STR', 'DEX'], 'Ladro': ['DEX', 'INT'],
-        'Stregone': ['CON', 'CHA'], 'Mago': ['INT', 'WIS'], 'Warlock': ['WIS', 'CHA']
+        'Stregone': ['CON', 'CHA'], 'Mago': ['INT', 'WIS'], 'Warlock': ['WIS', 'CHA'],
+        // English fallbacks
+        'Barbarian': ['STR', 'CON'], 'Bard': ['DEX', 'CHA'], 'Cleric': ['WIS', 'CHA'],
+        'Druid': ['INT', 'WIS'], 'Fighter': ['STR', 'CON'], 'Monk': ['STR', 'DEX'],
+        'Paladin': ['WIS', 'CHA'], 'Rogue': ['DEX', 'INT'], 'Sorcerer': ['CON', 'CHA'],
+        'Wizard': ['INT', 'WIS']
     };
-    const mySaves = classSaves[data.class] || [];
+
+    const mySaves = classSaves[baseClass] || classSaves[Object.keys(classSaves).find(k => baseClass.includes(k)) || ''] || [];
 
     // Attempt standard checkboxes 11, 18, 19, 20, 21, 22 (WotC standard)
-    // If that fails, the ticks won't show, but better than nothing.
     const saveBoxMap: { [key: string]: string } = {
         'STR': 'Check Box 11', 'DEX': 'Check Box 18', 'CON': 'Check Box 19',
         'INT': 'Check Box 20', 'WIS': 'Check Box 21', 'CHA': 'Check Box 22'
     };
 
-    // Also try simple sequential 11-16 just in case (Some IT sheets)
-    // Str 11, Dex 12, Con 13, Int 14, Wis 15, Cha 16
-
     mySaves.forEach(stat => {
-        // Try WotC standard
         setChecked(saveBoxMap[stat], true);
-
-        // Also try sequential logic if standard fails (double tap)
+        // Also try sequential logic if standard fails (double tap for variants)
         const seqMap: { [key: string]: string } = {
             'STR': 'Check Box 11', 'DEX': 'Check Box 12', 'CON': 'Check Box 13',
             'INT': 'Check Box 14', 'WIS': 'Check Box 15', 'CHA': 'Check Box 16'

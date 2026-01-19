@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { Send, User, Sparkles, Scroll } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -99,7 +100,16 @@ export default function AiChatBuilder({ onFinish, onCancel }: AiChatBuilderProps
                             }}
                         >
                             {m.role === 'model' && <span style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, marginBottom: '0.25rem', color: '#a78bfa' }}>Dungeon Master</span>}
-                            {m.text}
+                            <ReactMarkdown
+                                components={{
+                                    p: ({ node, ...props }) => <p style={{ margin: 0, marginBottom: '0.5rem' }} {...props} />,
+                                    ul: ({ node, ...props }) => <ul style={{ margin: 0, paddingLeft: '1.2rem', marginBottom: '0.5rem' }} {...props} />,
+                                    li: ({ node, ...props }) => <li style={{ marginBottom: '0.25rem' }} {...props} />,
+                                    strong: ({ node, ...props }) => <strong style={{ color: m.role === 'model' ? '#e9d5ff' : 'white' }} {...props} />
+                                }}
+                            >
+                                {m.text}
+                            </ReactMarkdown>
                         </motion.div>
                     ))}
                     {loading && (

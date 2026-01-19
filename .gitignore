@@ -40,3 +40,13 @@ src/data/db.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated
+schede dnd/
+*.pdf
+
+# local debug
+error.json
+scripts/test-*.js
+plutonium/
+

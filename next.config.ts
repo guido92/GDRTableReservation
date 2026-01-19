@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  /* experimental: {
+    allowedDevOrigins: ['dev.gridottihome.it', 'localhost:3000'],
+  }, */
 };
 
 export default nextConfig;

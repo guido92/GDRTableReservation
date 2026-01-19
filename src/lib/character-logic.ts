@@ -1,5 +1,5 @@
 import { CharacterData, AbilityScores, Feature } from '@/types/dnd';
-import { CLASSES, RACES, BACKGROUNDS, ALIGNMENTS, PERSONALITY_TRAITS, IDEALS, BONDS, FLAWS, Option } from '@/data/dnd-data';
+import { CLASSES, RACES, BACKGROUNDS, ALIGNMENTS, PERSONALITY_TRAITS, IDEALS, BONDS, FLAWS, Option, ITEMS } from '@/data/dnd-data';
 
 export class CharacterLogic {
 
@@ -41,7 +41,7 @@ export class CharacterLogic {
     }
 
     static getSpells(className: string, level: number, mentalStatMod: number): any[] {
-        const { SPELLS } = require('@/data/spells');
+        const SPELLS = require('@/data/spells').SPELLS;
         const knownSpells: any[] = [];
 
         // Simplified Logic for slots/known
@@ -52,7 +52,6 @@ export class CharacterLogic {
         const isFull = ["Bardo", "Chierico", "Druido", "Mago", "Stregone"].includes(className);
         const isHalf = ["Paladino", "Ranger"].includes(className);
         const isWarlock = className === "Warlock";
-        const isThird = ["Guerriero", "Ladro"].includes(className); // Eldritch Knight / Arcane Trickster - ignoring for simple fallback
 
         if (!isFull && !isHalf && !isWarlock) return [];
 
@@ -84,8 +83,6 @@ export class CharacterLogic {
             const levelSpells = SPELLS.filter((s: any) => s.level === l && s.classes.includes(className));
             if (levelSpells.length === 0) continue;
 
-            // Generous selection: Take up to 6 spells per level to fill the sheet options
-            // Use 'slice' to limit if needed, but given the list size, taking them all (filtered by class) is often safer to ensure completeness.
             const numToPick = 6;
 
             for (let i = 0; i < numToPick; i++) {
@@ -111,22 +108,18 @@ export class CharacterLogic {
      */
     static validateSpellLevels(spells: any[]): any[] {
         if (!spells || !Array.isArray(spells)) return [];
-        const { SPELLS } = require('@/data/spells');
+        const SPELLS = require('@/data/spells').SPELLS;
 
         return spells.map(spell => {
             const cleanName = spell.name.replace(/\(.*\)/, '').trim().toLowerCase();
 
             // Find canonical spell (Fuzzy Match)
-            // 1. Exact match of clean name
-            // 2. DB name is contained in AI name (e.g. "Dardo di Fuoco (Mago)" contains "Dardo di Fuoco")
-            // 3. AI name is contained in DB name (rare)
             const match = SPELLS.find((s: any) => {
                 const dbName = s.name.trim().toLowerCase();
                 return dbName === cleanName || cleanName.includes(dbName) || dbName.includes(cleanName);
             });
 
             if (match) {
-                // Force the correct level from DB
                 return { ...spell, level: match.level };
             }
 
@@ -140,11 +133,10 @@ export class CharacterLogic {
     }
 
     static generateQuickCharacter(level: number, sources: string[], overrides?: { race?: string, class?: string }): CharacterData {
-        // ... (existing selection logic)
         // Filter options based on available sources
-        const validClasses = CLASSES.filter(c => sources.includes(c.source));
-        const validRaces = RACES.filter(r => sources.includes(r.source));
-        const validBackgrounds = BACKGROUNDS.filter(b => sources.includes(b.source));
+        const validClasses = CLASSES.filter(c => !c.source || sources.includes(c.source));
+        const validRaces = RACES.filter(r => !r.source || sources.includes(r.source));
+        const validBackgrounds = BACKGROUNDS.filter(b => !b.source || sources.includes(b.source));
 
         // Random Selection or Override
         let rClass = this.getRandomItem(validClasses);
@@ -168,7 +160,7 @@ export class CharacterLogic {
             'Bardo': ['CHA', 'DEX', 'CON', 'WIS', 'INT', 'STR'],
             'Chierico': ['WIS', 'CON', 'STR', 'CHA', 'INT', 'DEX'],
             'Druido': ['WIS', 'CON', 'DEX', 'INT', 'CHA', 'STR'],
-            'Guerriero': ['STR', 'CON', 'DEX', 'WIS', 'INT', 'CHA'], // Str fighter default
+            'Guerriero': ['STR', 'CON', 'DEX', 'WIS', 'INT', 'CHA'],
             'Monaco': ['DEX', 'WIS', 'CON', 'STR', 'INT', 'CHA'],
             'Paladino': ['STR', 'CHA', 'CON', 'WIS', 'INT', 'DEX'],
             'Ranger': ['DEX', 'WIS', 'CON', 'STR', 'INT', 'CHA'],
@@ -182,13 +174,11 @@ export class CharacterLogic {
         const abilities: AbilityScores = { STR: 10, DEX: 10, CON: 10, INT: 10, WIS: 10, CHA: 10 };
 
         priorities.forEach((stat, index) => {
-            // @ts-ignore
-            abilities[stat] = rolls[index];
+            (abilities as any)[stat] = rolls[index];
         });
 
         // Consistent Personality
         const rIdeal = this.getRandomItem(IDEALS);
-        // Parse ideal alignment: "Giustizia. (Legale)" -> "Legale"
         const idealAlignMatch = rIdeal.match(/\((.*?)\)/);
         let validAlignments = ALIGNMENTS;
 
@@ -197,7 +187,7 @@ export class CharacterLogic {
             if (constraint !== "Qualsiasi") {
                 validAlignments = ALIGNMENTS.filter(a => a.includes(constraint) || (constraint === 'Neutrale' && a === 'Neutrale Puro'));
                 if (validAlignments.length === 0) validAlignments = [constraint + " Neutrale", "Neutrale " + constraint];
-                // Simple mapping fallback if exact text mismatch
+
                 if (constraint === 'Legale') validAlignments = ALIGNMENTS.filter(a => a.includes('Legale'));
                 if (constraint === 'Caotico') validAlignments = ALIGNMENTS.filter(a => a.includes('Caotico'));
                 if (constraint === 'Buono') validAlignments = ALIGNMENTS.filter(a => a.includes('Buono'));
@@ -205,7 +195,6 @@ export class CharacterLogic {
             }
         }
 
-        // Safety check
         if (validAlignments.length === 0) validAlignments = ALIGNMENTS;
         const rAlign = this.getRandomItem(validAlignments);
 
@@ -213,7 +202,7 @@ export class CharacterLogic {
         let subclass: Option | undefined;
         let subclassName = "";
         if (level >= 3 && rClass.suboptions) {
-            const validSub = rClass.suboptions.filter(s => sources.includes(s.source));
+            const validSub = rClass.suboptions.filter(s => !s.source || sources.includes(s.source));
             if (validSub.length > 0) {
                 subclass = this.getRandomItem(validSub);
                 subclassName = subclass.name;
@@ -260,7 +249,6 @@ export class CharacterLogic {
         const skills: string[] = [];
         if (rClass.proficiencies && rClass.proficiencies.skills) {
             const available = [...rClass.proficiencies.skills];
-            // Pick 2 skills (standard for most classes)
             for (let i = 0; i < 2; i++) {
                 if (available.length === 0) break;
                 const idx = Math.floor(Math.random() * available.length);
@@ -276,12 +264,11 @@ export class CharacterLogic {
         if (equipment.some(e => e.includes('Scaglie'))) ac = 14 + (dexMod > 2 ? 2 : dexMod);
         if (equipment.some(e => e.includes('Scudo'))) ac += 2;
 
-        // Unarmored Defenses
         if (rClass.name === 'Barbaro' && !equipment.some(e => e.includes('Armatura'))) ac = 10 + dexMod + conMod;
         if (rClass.name === 'Monaco' && !equipment.some(e => e.includes('Armatura'))) ac = 10 + dexMod + this.getModifier(abilities.WIS);
 
 
-        const hp = this.calculateHP(level, conMod, rClass.hitDie || 'd8');
+        const hp = this.calculateHP(level, conMod, rClass.hitDie ? `d${rClass.hitDie}` : 'd8');
 
         // Attacks
         const attacks = [];
@@ -294,7 +281,6 @@ export class CharacterLogic {
         if (equipment.some(e => e.includes('Arco') || e.includes('Balestra') || e.includes('Dardo'))) {
             attacks.push({ name: 'Arma a Distanza', bonus: `+${dexMod + prof}`, damage: `1d6+${dexMod}` });
         }
-        // Unarmed for Monk
         if (rClass.name === "Monaco") {
             attacks.push({ name: 'Arti Marziali', bonus: `+${dexMod + prof}`, damage: `1d4+${dexMod}` });
         }
@@ -332,7 +318,8 @@ export class CharacterLogic {
             proficiencies: {
                 armor: rClass.proficiencies?.armor || [],
                 weapons: rClass.proficiencies?.weapons || [],
-                tools: rClass.proficiencies?.tools || []
+                tools: rClass.proficiencies?.tools || [],
+                savingThrows: rClass.proficiencies?.savingThrows || []
             },
             equipment,
             features,
@@ -340,11 +327,167 @@ export class CharacterLogic {
             hp,
             armorClass: ac,
             initiative: dexMod,
-            speed: 9,
-            hitDice: { total: level, die: rClass.hitDie || 'd8' },
+            speed: 30, // Changed from 9 to 30 (User probably wants Speed 30 for standard)
+            hitDice: { total: level, die: rClass.hitDie ? `d${rClass.hitDie}` : 'd8' },
             personality,
             spells,
             is2024: sources.includes('PHB24')
         };
+    }
+
+    /**
+     * Hydrates a partially filled character (from Manual Wizard) with full features and stats 
+     * based on the selected Class/Race/Background names.
+     */
+    static hydrateCharacter(data: CharacterData): CharacterData {
+        const newData = { ...data };
+        const level = newData.level || 1;
+
+        // Resolve Objects
+        const rClass = CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, '')) || CLASSES[0];
+        const rRace = RACES.find(r => r.name === data.race.replace(/ *\(.*\)/, '')) || RACES[0];
+        const rBg = BACKGROUNDS.find(b => b.name === data.background.replace(/ *\(.*\)/, '')) || BACKGROUNDS[0];
+
+        // Resolve Suboptions
+        const subclassName = data.class.match(/\((.*?)\)/)?.[1];
+        const subclass = subclassName ? rClass.suboptions?.find(s => s.name === subclassName) : undefined;
+
+        const subraceName = data.race.match(/\((.*?)\)/)?.[1];
+        const subrace = subraceName ? rRace.suboptions?.find(s => s.name === subraceName) : undefined;
+
+        // Features
+        const features: Feature[] = [...(newData.features || [])];
+
+        // 1. Race Features
+        if (rRace.features) {
+            rRace.features.filter(f => !f.level || f.level <= level).forEach(f => {
+                if (!features.find(ef => ef.name === f.name)) features.push({ ...f, name: `(Razza) ${f.name}` });
+            });
+        }
+        if (subrace && subrace.features) {
+            subrace.features.filter(f => !f.level || f.level <= level).forEach(f => {
+                if (!features.find(ef => ef.name === f.name)) features.push({ ...f, name: `(Razza) ${f.name}` });
+            });
+        }
+
+        // 2. Class Features
+        if (rClass.features) {
+            rClass.features.filter(f => f.level <= level).forEach(f => {
+                if (!features.find(ef => ef.name === f.name || ef.name === `(Classe) ${f.name}`)) {
+                    features.push({ ...f, name: `(Classe) ${f.name}` });
+                }
+            });
+        }
+        if (subclass && subclass.features) {
+            subclass.features.filter(f => f.level <= level).forEach(f => {
+                if (!features.find(ef => ef.name === f.name || ef.name === `(Archetipo) ${f.name}`)) {
+                    features.push({ ...f, name: `(Archetipo) ${f.name}` });
+                }
+            });
+        }
+
+        // 3. Background Features
+        if (rBg.features) {
+            rBg.features.filter(f => !f.level || f.level <= level).forEach(f => {
+                if (!features.find(ef => ef.name === f.name)) features.push({ ...f, name: `(Background) ${f.name}` });
+            });
+        }
+
+        newData.features = features;
+
+        // HP Calculation (if default)
+        if (newData.hp.max === 10 && rClass.hitDie && rClass.hitDie !== 10) {
+            const conMod = this.getModifier(newData.abilities.CON);
+            const hpCalc = this.calculateHP(level, conMod, `d${rClass.hitDie}`);
+            newData.hp = hpCalc;
+            newData.hitDice = { total: level, die: `d${rClass.hitDie}` };
+        }
+
+        // 4. Equipment Aggregation (if empty)
+        if (newData.equipment.length === 0) {
+            if (rClass.equipment) newData.equipment.push(...rClass.equipment);
+            if (rBg.equipment) newData.equipment.push(...rBg.equipment);
+            // Default Pack if missing
+            if (newData.equipment.length === 0) newData.equipment.push("Zaino da Esploratore");
+        }
+
+        // 5. Proficiencies Aggregation (Merge Unique)
+        const mergeUnique = (arr1: string[] = [], arr2: string[] = []) => Array.from(new Set([...arr1, ...arr2]));
+
+        newData.proficiencies = {
+            armor: mergeUnique(newData.proficiencies?.armor, rClass.proficiencies?.armor),
+            weapons: mergeUnique(newData.proficiencies?.weapons, rClass.proficiencies?.weapons),
+            tools: mergeUnique(newData.proficiencies?.tools, rClass.proficiencies?.tools),
+            savingThrows: mergeUnique(newData.proficiencies?.savingThrows, rClass.proficiencies?.savingThrows)
+        };
+
+        // Merge Skills (Unique)
+        newData.skills = mergeUnique(newData.skills, rBg.skillProficiencies || []);
+
+        // 6. HP Calculation (Safe Fallback)
+        if ((!newData.hp.max || newData.hp.max === 0) && rClass.hitDie) {
+            const conMod = this.getModifier(newData.abilities.CON);
+            const hpCalc = this.calculateHP(level, conMod, `d${rClass.hitDie}`);
+            newData.hp = hpCalc;
+            newData.hitDice = { total: level, die: `d${rClass.hitDie}` };
+        }
+
+        // Ensure HitDice are correct even if HP was manual
+        if (!newData.hitDice?.die) {
+            newData.hitDice = { total: level, die: rClass.hitDie ? `d${rClass.hitDie}` : 'd8' };
+        }
+
+        // 7. Generate Attacks from Equipment
+        if (!newData.attacks || newData.attacks.length === 0) {
+            newData.attacks = [];
+            const strMod = this.getModifier(newData.abilities.STR);
+            const dexMod = this.getModifier(newData.abilities.DEX);
+            const profBonus = Math.ceil((level) / 4) + 1;
+
+            newData.equipment.forEach(itemStr => {
+                // Handle "Spada Lunga (2)" or similar
+                const itemName = itemStr.replace(/x[0-9]+/, '').trim();
+                // Find in DB (Case insensitive)
+                const item = ITEMS.find(i => itemName.toLowerCase().includes(i.name.toLowerCase()));
+
+                if (item && item.type === 'Weapon' && item.damage) {
+                    const props = (item.properties || []).join(' ').toLowerCase();
+                    const isFinesse = props.includes('accurata') || props.includes('finesse');
+                    const isRanged = props.includes('arco') || props.includes('balestra') || props.includes('lancio') || item.name.toLowerCase().includes('arco');
+
+                    // Determine Stat
+                    let useDex = isRanged;
+                    if (isFinesse) useDex = dexMod > strMod;
+
+                    const mod = useDex ? dexMod : strMod;
+
+                    // Simple Proficiency check (Assumed proficient with class weapons)
+                    const atkBonus = mod + profBonus;
+                    const dmg = `${item.damage}${mod >= 0 ? '+' : ''}${mod}`;
+                    const dmgType = item.damageType ? ` (${item.damageType})` : '';
+
+                    newData.attacks.push({
+                        name: item.name,
+                        bonus: atkBonus >= 0 ? `+${atkBonus}` : `${atkBonus}`,
+                        damage: `${dmg}${dmgType}`
+                    });
+                }
+            });
+
+            // Default fallback if still empty
+            if (newData.attacks.length === 0) {
+                newData.attacks.push({ name: 'Colpo Disarmato', bonus: `+${strMod + profBonus}`, damage: `1+${strMod}` });
+            }
+        }
+
+        // 8. Spells (if empty and caster)
+        if (newData.spells.length === 0) {
+            let castStatMod = this.getModifier(newData.abilities.INT);
+            if (["Chierico", "Druido", "Ranger", "Monaco"].includes(rClass.name)) castStatMod = this.getModifier(newData.abilities.WIS);
+            if (["Bardo", "Paladino", "Stregone", "Warlock"].includes(rClass.name)) castStatMod = this.getModifier(newData.abilities.CHA);
+            newData.spells = this.getSpells(rClass.name, level, castStatMod);
+        }
+
+        return newData;
     }
 }

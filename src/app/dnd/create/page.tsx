@@ -36,7 +36,7 @@ export default function CharactermancerV2() {
     const [step, setStep] = useState(0); // 0 = Intro/QuickBuild choice
     const [data, setData] = useState<CharacterData>(INITIAL_DATA);
     const [loading, setLoading] = useState(false);
-    const [activeSources, setActiveSources] = useState<Source[]>(['PHB14', 'PHB24', 'TCE', 'XGE']);
+    const [activeSources, setActiveSources] = useState<Source[]>(['PHB', 'PHB24', 'TCE', 'XGE']);
 
     const updateData = (field: keyof CharacterData, value: any) => {
         setData((prev) => ({ ...prev, [field]: value }));
@@ -49,7 +49,7 @@ export default function CharactermancerV2() {
     };
 
     const filterOptions = (options: Option[]) => {
-        return options.filter(o => activeSources.includes(o.source));
+        return options.filter(o => !o.source || activeSources.includes(o.source));
     };
 
     // Quick Build Generator (AI Powered)
@@ -69,8 +69,12 @@ export default function CharactermancerV2() {
             }
 
             const aiData = await response.json();
-            setData(aiData);
-            generatePDF(aiData); // Auto generate PDF
+
+            // Enforce Rules: Hydrate AI data with official features/stats to ensure accuracy
+            const strictData = CharacterLogic.hydrateCharacter(aiData);
+
+            setData(strictData);
+            generatePDF(strictData); // Auto generate PDF
 
         } catch (error) {
             console.warn(error);
@@ -87,40 +91,20 @@ export default function CharactermancerV2() {
         }
     };
 
-    // Manual Build Finalizer (AI Powered)
+    // Manual Build Finalizer (Deterministic)
     const finishManualBuild = async () => {
         setLoading(true);
-        const payload = {
-            level: data.level,
-            sourceFilter: activeSources,
-            race: data.race,
-            class: data.class,
-            background: data.background,
-            characterName: data.characterName
-        };
-
         try {
-            const response = await fetch('/api/dnd/ai-generate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) throw new Error('AI Generation failed');
-
-            const aiData = await response.json();
-            // Merge AI data but keep user name if set? AI prompt already handles it.
-            setData(aiData);
-            generatePDF(aiData);
+            // Use local logic to hydrate features/stats based on selections
+            // This ensures 100% accuracy for manual builds without AI hallucinations
+            const finalData = CharacterLogic.hydrateCharacter(data);
+            setData(finalData);
+            await generatePDF(finalData);
         } catch (e) {
             console.error(e);
-            // Fallback: Use what we have + Logic for stats?
-            // Since Logic generator is random, we can't easily instruct it to respect choices yet without refactor.
-            // For now, alert and try basic generation.
-            alert("AI Error. Generazione PDF standard.");
-            generatePDF(data);
+            alert("Errore nella generazione del personaggio.");
         } finally {
-            // setLoading(false); handled in generatePDF
+            setLoading(false);
         }
     };
 
@@ -190,13 +174,13 @@ export default function CharactermancerV2() {
                         {SOURCES_CONFIG.map(src => (
                             <button
                                 key={src.id}
-                                onClick={() => toggleSource(src.id as Source)}
+                                onClick={() => toggleSource(src.id)}
                                 style={{
                                     padding: '0.25rem 0.75rem', fontSize: '0.75rem', fontWeight: 600, borderRadius: '0.5rem',
                                     border: '1px solid', transition: 'all 0.2s',
-                                    background: activeSources.includes(src.id as Source) ? 'rgba(168, 85, 247, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                                    borderColor: activeSources.includes(src.id as Source) ? '#a855f7' : 'rgba(255, 255, 255, 0.1)',
-                                    color: activeSources.includes(src.id as Source) ? '#d8b4fe' : '#64748b'
+                                    background: activeSources.includes(src.id) ? 'rgba(168, 85, 247, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                                    borderColor: activeSources.includes(src.id) ? '#a855f7' : 'rgba(255, 255, 255, 0.1)',
+                                    color: activeSources.includes(src.id) ? '#d8b4fe' : '#64748b'
                                 }}
                             >
                                 {src.name.split(' (')[0]}
@@ -321,6 +305,7 @@ export default function CharactermancerV2() {
 import {
     AbilityScoreStep,
     SkillsStep,
+    BackgroundStep,
     AdvancedOptionsStep,
     EquipmentStep,
     BioStep
@@ -338,6 +323,7 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
     const steps = [
         { title: "Origini", subtitle: "Scegli la tua stirpe e vocazione" },
         { title: "Statistiche", subtitle: "Definisci il tuo potenziale" },
+        { title: "Background", subtitle: "Le tue origini e competenze" },
         { title: "Competenze", subtitle: "Cosa sai fare meglio" },
         { title: "Talenti & Magia", subtitle: "Poteri speciali e incantesimi" },
         { title: "Equipaggiamento", subtitle: "Armi, armature e oggetti" },
@@ -382,18 +368,28 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                             <div>
                                 <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <Sparkles size={18} color="#f87171" />
-                                    <h3 style={{ fontWeight: 600, color: 'white' }}>Classe</h3>
+                                    <h3 style={{ fontWeight: 600, color: 'white' }}>Classe ({CLASSES.length})</h3>
                                 </div>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.5rem', maxHeight: '300px', overflowY: 'auto' }}>
-                                    {filterOptions(CLASSES).map((c: any) => (
-                                        <div key={c.name} onClick={() => updateData('class', c.name)}
+
+                                    {CLASSES.map((c: any) => (
+                                        <div key={c.name} onClick={() => {
+                                            updateData('class', c.name);
+                                            // Update Hit Die
+                                            const hd = c.hitDie ? `d${c.hitDie}` : 'd8';
+                                            updateData('hitDice', { total: data.level, die: hd });
+                                        }}
                                             style={{
                                                 padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s',
                                                 background: data.class.includes(c.name) ? 'rgba(139, 92, 246, 0.2)' : 'rgba(255,255,255,0.05)',
                                                 borderColor: data.class.includes(c.name) ? '#8b5cf6' : 'rgba(255,255,255,0.05)',
-                                                color: data.class.includes(c.name) ? '#ddd6fe' : '#94a3b8'
+                                                color: data.class.includes(c.name) ? '#ddd6fe' : '#94a3b8',
+                                                opacity: (!c.source || activeSources.includes(c.source)) ? 1 : 0.3
                                             }}>
-                                            <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{c.name}</div>
+                                            <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
+                                                {c.name}
+                                                {c.source && c.source !== 'PHB' && <span style={{ marginLeft: '4px', fontSize: '0.65rem', color: '#fca5a5', border: '1px solid #fca5a5', borderRadius: '4px', padding: '0 4px' }}>{c.source}</span>}
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
@@ -411,8 +407,8 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                                             style={inputStyle}
                                         >
                                             <option value="">Seleziona...</option>
-                                            {filterOptions(CLASSES.find((c: any) => c.name === data.class.replace(/ *\(.*\)/, ''))!.suboptions!).map((sub: any) => (
-                                                <option key={sub.name} value={sub.name}>{sub.name}</option>
+                                            {CLASSES.find((c: any) => c.name === data.class.replace(/ *\(.*\)/, ''))?.suboptions?.filter((s: any) => !s.source || activeSources.includes(s.source)).map((s: any) => (
+                                                <option key={s.name} value={s.name}>{s.name} {s.source && `[${s.source}]`}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -426,34 +422,38 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                                     <h3 style={{ fontWeight: 600, color: 'white' }}>Razza</h3>
                                 </div>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.5rem', maxHeight: '300px', overflowY: 'auto' }}>
-                                    {filterOptions(RACES).map((r: any) => (
+                                    {RACES.map((r: any) => (
                                         <div key={r.name} onClick={() => updateData('race', r.name)}
                                             style={{
                                                 padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s',
-                                                background: data.race.startsWith(r.name) ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255,255,255,0.05)',
-                                                borderColor: data.race.startsWith(r.name) ? '#10b981' : 'rgba(255,255,255,0.05)',
-                                                color: data.race.startsWith(r.name) ? '#d1fae5' : '#94a3b8'
+                                                background: data.race.includes(r.name) ? 'rgba(59, 130, 246, 0.2)' : 'rgba(255,255,255,0.05)',
+                                                borderColor: data.race.includes(r.name) ? '#3b82f6' : 'rgba(255,255,255,0.05)',
+                                                color: data.race.includes(r.name) ? '#bfdbfe' : '#94a3b8',
+                                                opacity: (!r.source || activeSources.includes(r.source)) ? 1 : 0.3
                                             }}>
-                                            <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{r.name}</div>
+                                            <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
+                                                {r.name}
+                                                {r.source && r.source !== 'PHB' && <span style={{ marginLeft: '4px', fontSize: '0.65rem', color: '#93c5fd', border: '1px solid #93c5fd', borderRadius: '4px', padding: '0 4px' }}>{r.source}</span>}
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
                                 {/* Subrace */}
-                                {RACES.find((r: any) => r.name === data.race.replace(/ *\(.*\)/, ''))?.suboptions && (
+                                {RACES.find((r: any) => r.name === data.race.split(' (')[0])?.suboptions && (
                                     <div style={{ marginTop: '1rem' }}>
                                         <label style={labelStyle}>Sottorazza</label>
                                         <select
                                             value={data.race.includes('(') ? data.race.match(/\((.*?)\)/)?.[1] || '' : ''}
                                             onChange={(e) => {
-                                                const base = data.race.replace(/ *\(.*\)/, '');
+                                                const base = data.race.split(' (')[0];
                                                 const sub = e.target.value;
                                                 updateData('race', sub ? `${base} (${sub})` : base);
                                             }}
                                             style={inputStyle}
                                         >
                                             <option value="">Seleziona...</option>
-                                            {filterOptions(RACES.find((r: any) => r.name === data.race.replace(/ *\(.*\)/, ''))!.suboptions!).map((sub: any) => (
-                                                <option key={sub.name} value={sub.name}>{sub.name}</option>
+                                            {RACES.find((r: any) => r.name === data.race.split(' (')[0])?.suboptions?.filter((s: any) => !s.source || activeSources.includes(s.source)).map((s: any) => (
+                                                <option key={s.name} value={s.name}>{s.name} {s.source && `[${s.source}]`}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -478,12 +478,13 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                     )}
 
                     {wizardStep === 1 && <AbilityScoreStep data={data} updateData={updateData} />}
-                    {wizardStep === 2 && <SkillsStep data={data} updateData={updateData} />}
-                    {wizardStep === 3 && <AdvancedOptionsStep data={data} updateData={updateData} />}
-                    {wizardStep === 4 && <EquipmentStep data={data} updateData={updateData} />}
+                    {wizardStep === 2 && <BackgroundStep data={data} updateData={updateData} activeSources={activeSources} />}
+                    {wizardStep === 3 && <SkillsStep data={data} updateData={updateData} />}
+                    {wizardStep === 4 && <AdvancedOptionsStep data={data} updateData={updateData} activeSources={activeSources} />}
+                    {wizardStep === 5 && <EquipmentStep data={data} updateData={updateData} activeSources={activeSources} />}
 
-                    {/* STEP 5: BIO & REVIEW */}
-                    {wizardStep === 5 && (
+                    {/* STEP 6: BIO & REVIEW */}
+                    {wizardStep === 6 && (
                         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                             <BioStep data={data} updateData={updateData} />
 
@@ -509,7 +510,7 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                 {/* Footer Navigation */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '1.5rem', marginTop: '1rem' }}>
                     {wizardStep === 0 ? <button onClick={onCancel} style={{ ...navBtnStyle, color: '#ef4444' }}>Annulla</button> : <button onClick={prev} style={navBtnStyle}>&larr; Indietro</button>}
-                    {wizardStep < 5 && <button onClick={next} style={{ ...navBtnStyle, background: 'white', color: 'black' }}>Avanti &rarr;</button>}
+                    {wizardStep < 6 && <button onClick={next} style={{ ...navBtnStyle, background: 'white', color: 'black' }}>Avanti &rarr;</button>}
                 </div>
 
             </div>

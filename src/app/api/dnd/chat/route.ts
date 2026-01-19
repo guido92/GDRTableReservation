@@ -33,6 +33,13 @@ export async function POST(req: NextRequest) {
             
             2.  **Generazione**: Quando hai abbastanza informazioni, o l'utente ti chiede di creare la scheda, crea la scheda.
             
+            3.  **TERMINOLOGIA UFFICIALE**:
+                - Usa SOLO termini ufficiali D&D 5e in Italiano.
+                - Incantesimi: "Palla di Fuoco" (NO "Fireball"), "Cura Ferite" (NO "Cure Wounds").
+                - Abilità: "Furtività" (NO "Stealth"), "Rapidità di Mano" (NO "Sleight of Hand").
+                - Caratteristiche: "Attacco Furtivo" (NO "Sneak Attack").
+                - Oggetti: "Spada Lunga" (NO "Longsword").
+            
             3.  **Formato Finale**: Se devi generare la scheda, il tuo ultimo messaggio DEVE essere un blocco JSON STRETTAMENTE formattato:
             
             \`\`\`json
@@ -44,12 +51,12 @@ export async function POST(req: NextRequest) {
                 "background": "...",
                 "alignment": "...",
                 "abilities": { "STR": 10, "DEX": 10, "CON": 10, "INT": 10, "WIS": 10, "CHA": 10 },
-                "skills": ["Furtività", "Persuasione"], // Solo abilità con competenza (in Italiano)
+                "skills": ["Furtività", "Persuasione"], // Solo abilità con competenza (in Italiano Ufficiale)
                 "languages": ["Comune", "Elfico"],
                 "equipment": ["Spada lunga", "Scudo"],
                 "features": [{ "name": "Azione Astuta", "description": "...", "level": 2, "source": "PHB" }],
-                "spells": [{ "level": 0, "name": "Dardo di Fuoco", "prepared": true }], // OBBLIGATORIO per incantatori
-                "attacks": [{ "name": "Spada lunga", "bonus": "+5", "damage": "1d8+3 Tagliente" }], // OBBLIGATORIO (min 2)
+                "spells": [{ "level": 0, "name": "Dardo di Fuoco", "prepared": true }], // Nomi in ITALIANO
+                "attacks": [{ "name": "Spada lunga", "bonus": "+5", "damage": "1d8+3 Tagliente" }], // Nomi in ITALIANO
                 "hp": { "current": 10, "max": 10, "temp": 0 },
                 "armorClass": 10,
                 "initiative": 0,
@@ -60,10 +67,14 @@ export async function POST(req: NextRequest) {
             }
             \`\`\`
             
+            \`\`\`
+            
             IMPORTANTE:
-            - **Spells**: Se è un incantatore, riempi 'spells' con una lista valida (inclusi Trucchetti).
+            - **Spells**: Se è un incantatore, DEVI riempire 'spells' con UNA LISTA COMPLETA per il livello (es. Paladino 15 ha accesso a incantesimi di 4° livello). NON METTERNE SOLO 2 O 3. RIEMPI GLI SLOT!
+            - **Personality**: I campi 'ideals', 'bonds', 'flaws' SONO OBBLIGATORI. Non lasciarli vuoti. Inventali basandoti sul background.
             - **Background**: Inventa una storia coerente in italiano.
             - **Attacchi**: Calcola bonus e danni.
+            - **Completezza**: Il tuo output DEVE essere completo. Se manca qualcosa, inventala coerentemente.
             
             **Linee Guida Chat**:
             - Non scrivere muri di testo. Usa **elenchi puntati**.

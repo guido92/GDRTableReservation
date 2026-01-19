@@ -9,7 +9,7 @@ export type AbilityScores = {
 
 export type Feature = {
     name: string;
-    source: string;
+    source?: string;
     description: string;
     level: number;
 };
@@ -37,6 +37,7 @@ export type CharacterData = {
         armor: string[];
         weapons: string[];
         tools: string[];
+        savingThrows: string[];
     };
     features: Feature[]; // Class features, racial traits, etc.
     hp: {

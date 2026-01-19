@@ -34,8 +34,12 @@ export async function POST(req: NextRequest) {
         1.  **LINGUA**: TUTTO DEVE ESSERE IN ITALIANO (Nomi abilità, incantesimi, descrizioni).
         2.  **COMPLETEZZA**: Non lasciare MAI campi vuoti o placeholder. Se manca un dato, INVENTALO coerentemente.
         3.  **FONTI**: Usa le regole ufficiali 5e (PHB, Xanathar, Tasha) come riferimento principale.
-        4.  **INCANTATORI**: Se la classe usa magia, DEVI compilare l'array 'spells' con incantesimi validi per il livello e la classe.
-        5.  **EQUIPAGGIAMENTO**: Includi equipaggiamento di classe e background.
+        4.  **TERMINOLOGIA UFFICIALE**: Usa ESCLUSIVAMENTE termini italiani ufficiali D&D 5e:
+            - Incantesimi: "Fireball" -> "Palla di Fuoco", "Healing Word" -> "Parola Guaritrice".
+            - Abilità: "Stealth" -> "Furtività", "Investigation" -> "Indagare".
+            - Oggetti: "Longsword" -> "Spada Lunga", "Chain Mail" -> "Cotta di Maglia".
+        5.  **INCANTATORI**: Se la classe usa magia, DEVI compilare l'array 'spells' con nomi ITALIANI validi per il livello.
+        6.  **EQUIPAGGIAMENTO**: Includi equipaggiamento di classe e background (in Italiano).
         
         Struttura JSON (RISPETTARE TASSATIVAMENTE):
         {
@@ -48,14 +52,14 @@ export async function POST(req: NextRequest) {
             "background": "Nome Background",
             "alignment": "Allineamento (es. Caotico Buono)",
             "abilities": { "STR": 10, "DEX": 10, "CON": 10, "INT": 10, "WIS": 10, "CHA": 10 },
-            "skills": ["Furtività", "Arcano"], // SOLO le abilità con competenza (in Italiano)
+            "skills": ["Furtività", "Arcano"], // SOLO le abilità con competenza (in Italiano Ufficiale)
             "languages": ["Comune", "Elfico"],
             "equipment": ["Spada Corta", "Focus Arcano", "Zaino da Esploratore"],
             "features": [
-                { "name": "Nome Privilegio", "source": "PHB", "description": "Descrizione COMPLETA dell'effetto.", "level": 1 }
+                { "name": "Nome Privilegio", "source": "PHB", "description": "Descrizione COMPLETA in ITALIANO.", "level": 1 }
             ],
             "spells": [
-                { "level": 0, "name": "Dardo di Fuoco", "prepared": true }, // Trucchetti
+                { "level": 0, "name": "Dardo di Fuoco", "prepared": true }, // Trucchetti in Italiano
                 { "level": 1, "name": "Scudo", "prepared": true }
             ],
             "attacks": [
