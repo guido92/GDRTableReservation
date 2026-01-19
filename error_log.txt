@@ -1,0 +1,11 @@
+Quick Build Failed: fetch failed
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:14900:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testQuickBuild (C:\Progetti\PrenotazioneTavoli\scripts\test-ai-models.js:33:21)
+    at async C:\Progetti\PrenotazioneTavoli\scripts\test-ai-models.js:87:5Chat Mode Failed: fetch failed
+TypeError: fetch failed
+    at node:internal/deps/undici/undici:14900:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testChatMode (C:\Progetti\PrenotazioneTavoli\scripts\test-ai-models.js:58:21)
+    at async C:\Progetti\PrenotazioneTavoli\scripts\test-ai-models.js:88:5

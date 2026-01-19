@@ -4,12 +4,14 @@ import { useState, useEffect, Suspense } from 'react';
 import { Session } from '@/types';
 import Navbar from '@/components/Navbar';
 import { formatDate } from '@/lib/utils';
+import { Edit, X } from 'lucide-react';
 
 function AdminContent() {
     const [pin, setPin] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [sessions, setSessions] = useState<Session[]>([]);
     const [loading, setLoading] = useState(false);
+    const [editingSession, setEditingSession] = useState<Session | null>(null);
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,6 +53,30 @@ function AdminContent() {
             }
         } catch (error) {
             console.error(error);
+        }
+    };
+
+    const handleUpdate = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!editingSession) return;
+
+        try {
+            const res = await fetch(`/api/sessions/${editingSession.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(editingSession)
+            });
+
+            if (res.ok) {
+                alert('Sessione aggiornata con successo!');
+                setEditingSession(null);
+                fetchSessions(); // Refresh list
+            } else {
+                alert('Errore durante l\'aggiornamento');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Errore di rete');
         }
     };
 
@@ -101,13 +127,24 @@ function AdminContent() {
                                             {formatDate(session.date)} - {session.masterName} {isExpired && <span style={{ color: 'var(--secondary)', fontWeight: 'bold', marginLeft: '0.5rem' }}>(SCADUTA)</span>}
                                         </div>
                                     </div>
-                                    <button
-                                        onClick={() => handleDelete(session.id)}
-                                        className="btn"
-                                        style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.3)' }}
-                                    >
-                                        Elimina Sessione
-                                    </button>
+                                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                        <button
+                                            onClick={() => setEditingSession(session)}
+                                            className="btn"
+                                            style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#60a5fa', border: '1px solid rgba(59, 130, 246, 0.3)', padding: '0.5rem' }}
+                                            title="Modifica"
+                                        >
+                                            <Edit size={16} />
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(session.id)}
+                                            className="btn"
+                                            style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '0.5rem' }}
+                                            title="Elimina"
+                                        >
+                                            <X size={16} />
+                                        </button>
+                                    </div>
                                 </div>
 
                                 {/* Player List */}
@@ -159,6 +196,130 @@ function AdminContent() {
                         );
                     })}
                     {sessions.length === 0 && <p>Nessuna sessione trovata.</p>}
+                </div>
+            )}
+
+            {/* Edit Modal */}
+            {editingSession && (
+                <div style={{
+                    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                    background: 'rgba(0,0,0,0.8)', zIndex: 50,
+                    display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1rem'
+                }}>
+                    <div className="glass-panel" style={{ width: '100%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto', padding: '2rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                            <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Modifica Sessione</h2>
+                            <button onClick={() => setEditingSession(null)} style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>
+                                <X size={24} />
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Titolo</label>
+                                <input
+                                    type="text"
+                                    value={editingSession.title}
+                                    onChange={e => setEditingSession({ ...editingSession, title: e.target.value })}
+                                    className="input-field"
+                                    required
+                                    style={{ width: '100%', padding: '0.75rem', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border)', borderRadius: '0.5rem', color: 'white' }}
+                                />
+                            </div>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                <div>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Master</label>
+                                    <input
+                                        type="text"
+                                        value={editingSession.masterName}
+                                        onChange={e => setEditingSession({ ...editingSession, masterName: e.target.value })}
+                                        className="input-field"
+                                        required
+                                        style={{ width: '100%', padding: '0.75rem', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border)', borderRadius: '0.5rem', color: 'white' }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Sistema</label>
+                                    <input
+                                        type="text"
+                                        value={editingSession.system}
+                                        onChange={e => setEditingSession({ ...editingSession, system: e.target.value })}
+                                        className="input-field"
+                                        required
+                                        style={{ width: '100%', padding: '0.75rem', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border)', borderRadius: '0.5rem', color: 'white' }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                <div>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Data</label>
+                                    <input
+                                        type="date"
+                                        value={editingSession.date}
+                                        onChange={e => setEditingSession({ ...editingSession, date: e.target.value })}
+                                        className="input-field"
+                                        required
+                                        style={{ width: '100%', padding: '0.75rem', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border)', borderRadius: '0.5rem', color: 'white' }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Ora</label>
+                                    <input
+                                        type="time"
+                                        value={editingSession.time}
+                                        onChange={e => setEditingSession({ ...editingSession, time: e.target.value })}
+                                        className="input-field"
+                                        required
+                                        style={{ width: '100%', padding: '0.75rem', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border)', borderRadius: '0.5rem', color: 'white' }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                <div>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Luogo</label>
+                                    <input
+                                        type="text"
+                                        value={editingSession.location}
+                                        onChange={e => setEditingSession({ ...editingSession, location: e.target.value })}
+                                        className="input-field"
+                                        required
+                                        style={{ width: '100%', padding: '0.75rem', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border)', borderRadius: '0.5rem', color: 'white' }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Max Giocatori</label>
+                                    <input
+                                        type="number"
+                                        value={editingSession.maxPlayers}
+                                        onChange={e => setEditingSession({ ...editingSession, maxPlayers: parseInt(e.target.value) })}
+                                        className="input-field"
+                                        required
+                                        min={1}
+                                        style={{ width: '100%', padding: '0.75rem', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border)', borderRadius: '0.5rem', color: 'white' }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Descrizione</label>
+                                <textarea
+                                    value={editingSession.description}
+                                    onChange={e => setEditingSession({ ...editingSession, description: e.target.value })}
+                                    className="input-field"
+                                    required
+                                    rows={4}
+                                    style={{ width: '100%', padding: '0.75rem', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border)', borderRadius: '0.5rem', color: 'white' }}
+                                />
+                            </div>
+
+                            <button type="submit" className="btn btn-primary" style={{ marginTop: '1rem', width: '100%' }}>
+                                Salva Modifiche
+                            </button>
+                        </form>
+                    </div>
                 </div>
             )}
         </div>

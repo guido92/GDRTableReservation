@@ -1,4 +1,6 @@
 import { getSessions } from '@/lib/db';
+import { Scroll } from 'lucide-react';
+import Link from 'next/link';
 import SessionCard from '@/components/SessionCard';
 import Navbar from '@/components/Navbar';
 
@@ -29,6 +31,11 @@ export default async function Home() {
           <p style={{ color: 'var(--foreground-muted)', fontSize: '1.125rem', maxWidth: '600px', margin: '0 auto' }}>
             Prenota il tuo posto al tavolo. Scegli la tua avventura e unisciti alla community.
           </p>
+
+
+          <div style={{ marginTop: '3rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
+            {/* Banner removed as per user request */}
+          </div>
         </header>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>

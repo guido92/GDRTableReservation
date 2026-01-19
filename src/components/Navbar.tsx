@@ -15,6 +15,9 @@ export default function Navbar() {
                     <Link href="/create" className={styles.link}>
                         Organizza
                     </Link>
+                    <Link href="/dnd/create" className={styles.link}>
+                        Schede
+                    </Link>
                     <Link href="/contacts" className={styles.link}>
                         Contatti
                     </Link>

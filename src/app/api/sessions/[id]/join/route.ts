@@ -29,34 +29,34 @@ export async function POST(
     session.currentPlayers.push(player);
     await updateSession(session);
 
-    // Send Email Notification to Master (if API Key exists)
-    const apiKey = process.env.RESEND_API_KEY;
-    const recipientEmail = session.masterEmail || process.env.ADMIN_EMAIL;
+    // Send Email Notification to Master and Player
+    // Prepare data for email service
+    const emailData = {
+        emailOrganizzatore: session.masterEmail || process.env.ADMIN_EMAIL,
+        nomeOrganizzatore: session.masterName,
+        nomeGiocatore: player.name,
+        emailGiocatore: player.email, // Assuming player object has email
+        telefonoGiocatore: player.contactInfo,
+        nomeTavolo: session.title,
+        descrizioneGioco: session.system, // Using system as description
+        data: session.date,
+        ora: session.time,
+        numeroPostiPrenotati: 1,
+        note: player.notes
+    };
 
-    if (apiKey && recipientEmail) {
-        try {
-            const { Resend } = await import('resend');
-            const resend = new Resend(apiKey);
+    try {
+        const { inviaEmailPrenotazioneTavolo, inviaEmailConfermaGiocatore } = await import('@/lib/emailService');
 
-            await resend.emails.send({
-                from: 'Prenotazione Tavoli <onboarding@resend.dev>', // Default Resend test sender
-                to: recipientEmail,
-                subject: `Nuova Iscrizione: ${session.title}`,
-                html: `
-                    <h1>Un nuovo giocatore si è unito!</h1>
-                    <p><strong>Giocatore:</strong> ${player.name}</p>
-                    <p><strong>Contatto:</strong> ${player.contactInfo || 'Non specificato'}</p>
-                    <p><strong>Note:</strong> ${player.notes || 'Nessuna'}</p>
-                    <hr />
-                    <p><strong>Sessione:</strong> ${session.title}</p>
-                    <p><strong>Giocatori:</strong> ${session.currentPlayers.length}/${session.maxPlayers}</p>
-                `
-            });
-            console.log('Email notification sent');
-        } catch (error) {
-            console.error('Failed to send email notification:', error);
-            // Don't fail the request, just log error
+        // Notify Master
+        await inviaEmailPrenotazioneTavolo(emailData);
+
+        // Notify Player (if email exists)
+        if (player.email) {
+            await inviaEmailConfermaGiocatore(emailData);
         }
+    } catch (error) {
+        console.error('Failed to send email notifications:', error);
     }
 
     return NextResponse.json(session);

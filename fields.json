@@ -1,0 +1,1338 @@
+[
+  {
+    "name": "ClassLevel",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Background",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "PlayerName",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "CharacterName",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Race ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Alignment",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "XP",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Inspiration",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "STR",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "ProfBonus",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "AC",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Initiative",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Speed",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "PersonalityTraits ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "STRmod",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "HPMax",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "ST Strength",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "DEX",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "HPCurrent",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Ideals",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "DEXmod ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "HPTemp",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Bonds",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "CON",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "HDTotal",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 12",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 13",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 14",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "CONmod",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 15",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 16",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 17",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "HD",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Flaws",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "INT",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "ST Dexterity",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "ST Constitution",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "ST Intelligence",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "ST Wisdom",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "ST Charisma",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Acrobatics",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Animal",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Athletics",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Deception ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "History ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Insight",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Intimidation",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 11",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 18",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 19",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 20",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 21",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 22",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Wpn Name",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Wpn1 AtkBonus",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Wpn1 Damage",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "INTmod",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Wpn Name 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Wpn2 AtkBonus ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Wpn2 Damage ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Investigation ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "WIS",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Wpn Name 3",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Wpn3 AtkBonus  ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Arcana",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Wpn3 Damage ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Perception ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "WISmod",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "CHA",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Nature",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Performance",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Medicine",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Religion",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Stealth ",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 23",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 24",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 25",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 26",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 27",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 28",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 29",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 30",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 31",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 32",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 33",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 34",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 35",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 36",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 37",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 38",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 39",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 40",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Persuasion",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SleightofHand",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "CHamod",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Survival",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "AttacksSpellcasting",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Passive",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "CP",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "ProficienciesLang",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SP",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "EP",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "GP",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "PP",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Equipment",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Features and Traits",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "CharacterName 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Age",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Height",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Weight",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Eyes",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Skin",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Hair",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Faction Symbol Image",
+    "type": "PDFButton"
+  },
+  {
+    "name": "Allies",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "FactionName",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Backstory",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Feat+Traits",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Treasure",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "CHARACTER IMAGE",
+    "type": "PDFButton"
+  },
+  {
+    "name": "Spellcasting Class 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SpellcastingAbility 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SpellSaveDC  2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SpellAtkBonus 2",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsTotal 19",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsRemaining 19",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1014",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1015",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1016",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1017",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1018",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1019",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1020",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1021",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1022",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 314",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3031",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3032",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3033",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3034",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3035",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3036",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3037",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3038",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3039",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3040",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 321",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 320",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3060",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3061",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3062",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3063",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3064",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3065",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3066",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 315",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3041",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Spells 1023",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 251",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 309",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3010",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3011",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3012",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3013",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3014",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3015",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3016",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3017",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3018",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3019",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Spells 1024",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1025",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1026",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1027",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1028",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1029",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1030",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1031",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1032",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1033",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsTotal 20",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsRemaining 20",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1034",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1035",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1036",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1037",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1038",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1039",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1040",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1041",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1042",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1043",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1044",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1045",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1046",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsTotal 21",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsRemaining 21",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1047",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1048",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1049",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1050",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1051",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1052",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1053",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1054",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1055",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1056",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1057",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1058",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1059",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsTotal 22",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsRemaining 22",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1060",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1061",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1062",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1063",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1064",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 323",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 322",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3067",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3068",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3069",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3070",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3071",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3072",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3073",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Spells 1065",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1066",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1067",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1068",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1069",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1070",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1071",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 317",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Spells 1072",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsTotal 23",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsRemaining 23",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1073",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1074",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1075",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1076",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1077",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1078",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1079",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1080",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1081",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsTotal 24",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsRemaining 24",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1082",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1083",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1084",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1085",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1086",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1087",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1088",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1089",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1090",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsTotal 25",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsRemaining 25",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1091",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1092",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1093",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1094",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1095",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1096",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1097",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1098",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 1099",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsTotal 26",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsRemaining 26",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 10100",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 10101",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 10102",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 10103",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 316",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3042",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3043",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3044",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3045",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3046",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3047",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3048",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3049",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3050",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3051",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3052",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Spells 10104",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 325",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 324",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3074",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3075",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3076",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3077",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Spells 10105",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 10106",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 3078",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "SlotsTotal 27",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "SlotsRemaining 27",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 313",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 310",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3020",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3021",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3022",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3023",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3024",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3025",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3026",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3027",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3028",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3029",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3030",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Spells 10107",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 10108",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 10109",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 101010",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 101011",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Spells 101012",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 319",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 318",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3053",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3054",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3055",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3056",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3057",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3058",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3059",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 327",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 326",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3079",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3080",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3081",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Check Box 3082",
+    "type": "PDFCheckBox"
+  },
+  {
+    "name": "Spells 101013",
+    "type": "PDFTextField"
+  },
+  {
+    "name": "Check Box 3083",
+    "type": "PDFCheckBox"
+  }
+]
