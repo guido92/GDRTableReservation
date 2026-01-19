@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 export default function JoinSessionForm({ session }: { session: Session }) {
     const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [contactInfo, setContactInfo] = useState('');
     const [notes, setNotes] = useState('');
     const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ export default function JoinSessionForm({ session }: { session: Session }) {
             const res = await fetch(`/api/sessions/${session.id}/join`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ player: { id: crypto.randomUUID(), name, contactInfo, notes } }),
+                body: JSON.stringify({ player: { id: crypto.randomUUID(), name, email, contactInfo, notes } }),
             });
 
             if (!res.ok) {
@@ -37,6 +38,7 @@ export default function JoinSessionForm({ session }: { session: Session }) {
             router.refresh();
             setJoined(true); // Switch to success view
             setName('');
+            setEmail('');
             setContactInfo('');
             setNotes('');
         } catch (err: any) {
@@ -99,6 +101,26 @@ export default function JoinSessionForm({ session }: { session: Session }) {
                         placeholder="Inserisci il tuo nome"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        required
+                        style={{
+                            padding: '0.75rem',
+                            borderRadius: 'var(--radius-md)',
+                            border: '1px solid var(--border)',
+                            background: 'rgba(0,0,0,0.2)',
+                            color: 'var(--foreground)',
+                            outline: 'none',
+                            width: '100%'
+                        }}
+                    />
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <label style={{ fontSize: '0.875rem', color: 'var(--foreground-muted)' }}>Email Giocatore (per conferme)</label>
+                    <input
+                        type="email"
+                        placeholder="tua@email.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                         style={{
                             padding: '0.75rem',

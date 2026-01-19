@@ -48,15 +48,27 @@ export async function POST(
     try {
         const { inviaEmailPrenotazioneTavolo, inviaEmailConfermaGiocatore } = await import('@/lib/emailService');
 
+        console.log('Join API: Email Data Payload:', JSON.stringify(emailData, null, 2));
+
         // Notify Master
-        await inviaEmailPrenotazioneTavolo(emailData);
+        if (emailData.emailOrganizzatore) {
+            console.log(`Join API: Attempting to notify Master: ${emailData.emailOrganizzatore}`);
+            await inviaEmailPrenotazioneTavolo(emailData);
+        } else {
+            console.warn('Join API: No Master email found, skipping Master notification');
+        }
 
         // Notify Player (if email exists)
         if (player.email) {
+            console.log(`Join API: Attempting to notify Player: ${player.email}`);
             await inviaEmailConfermaGiocatore(emailData);
+        } else {
+            console.warn('Join API: No Player email found, skipping Player notification');
         }
+
+        console.log('Join API: Email notifications process finished');
     } catch (error) {
-        console.error('Failed to send email notifications:', error);
+        console.error('Join API: Critical Failure in Email Notifications:', error);
     }
 
     return NextResponse.json(session);

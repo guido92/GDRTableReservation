@@ -1,3 +1,27 @@
 {
-  "sessions": []
+  "sessions": [
+    {
+      "id": "37dbc14a-a50c-4db2-8a9a-20245ea4a3ea",
+      "title": "asf",
+      "system": "ada",
+      "masterName": "michael",
+      "masterEmail": "michaelguidotti92@gmail.com",
+      "date": "2026-01-22",
+      "time": "18:15",
+      "maxPlayers": 4,
+      "description": "af",
+      "location": "a",
+      "imageUrl": "",
+      "type": "GDR",
+      "currentPlayers": [
+        {
+          "id": "673f69d9-b832-4af5-b8d4-531cb06efe97",
+          "name": "Michael",
+          "email": "michaelguidotti92@gmail.com",
+          "contactInfo": "michaelguidotti92@gmail.com",
+          "notes": ""
+        }
+      ]
+    }
+  ]
 }

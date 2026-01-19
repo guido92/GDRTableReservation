@@ -1,0 +1,6 @@
+import { NextResponse } from 'next/server';
+import { Plutonium } from '@/lib/plutonium';
+
+export async function JoinSessionForm({ session }) {
+    // This is just to get the full file content for write_to_file if needed, but I'll try one more replace first.
+}

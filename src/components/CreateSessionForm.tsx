@@ -98,7 +98,7 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
                 </div>
                 <div className="form-group">
                     <label>Email {type === 'GDR' ? 'Master' : 'Organizzatore'} (per notifiche)</label>
-                    <input type="email" name="masterEmail" value={formData.masterEmail || ''} onChange={handleChange} placeholder="tua@email.com" />
+                    <input type="email" name="masterEmail" required value={formData.masterEmail || ''} onChange={handleChange} placeholder="tua@email.com" />
                 </div>
                 <div className="form-group">
                     <label>Luogo</label>

@@ -2,6 +2,7 @@ import { Session, Player } from '@/types';
 
 // Use the API Key from environment (currently stored in SMTP_PASSWORD or we can ask to rename)
 const BREVO_API_KEY = process.env.SMTP_PASSWORD || process.env.BREVO_API_KEY;
+console.log(`EmailService: API Key loaded (starts with ${BREVO_API_KEY?.substring(0, 8)}...)`);
 
 interface DatiEmail {
     emailOrganizzatore?: string;
@@ -33,7 +34,7 @@ async function sendBrevoEmail(to: string, subject: string, htmlContent: string) 
                 'content-type': 'application/json'
             },
             body: JSON.stringify({
-                sender: { name: 'Prenotazione Tavoli', email: 'prenotazione-tavoli@latavernadiguido.it' },
+                sender: { name: 'La Taverna di Guido', email: 'prenotazione-tavoli@latavernadiguido.it' },
                 to: [{ email: to }],
                 subject: subject,
                 htmlContent: htmlContent
@@ -42,14 +43,14 @@ async function sendBrevoEmail(to: string, subject: string, htmlContent: string) 
 
         if (!res.ok) {
             const err = await res.json();
-            console.error('Brevo API Error:', err);
-            throw new Error('Email send failed');
+            console.error('Brevo API Error Details:', JSON.stringify(err));
+            throw new Error(`Email send failed: ${res.status}`);
         }
 
         const data = await res.json();
-        console.log('Email sent via Brevo API:', data);
+        console.log(`Email successfully sent to ${to} (MessageId: ${data.messageId})`);
     } catch (error) {
-        console.error('Error sending email:', error);
+        console.error(`Email Service Exception for ${to}:`, error);
     }
 }
 
