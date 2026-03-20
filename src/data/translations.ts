@@ -262,7 +262,161 @@ export const SPELL_TRANSLATIONS: Record<string, string> = {
     "Vampiric Touch": "Tocco del Vampiro",
     "Water Breathing": "Respirare Sott'acqua",
     "Water Walk": "Camminare sull'Acqua",
-    "Wind Wall": "Muro di Vento"
+    "Wind Wall": "Muro di Vento",
+
+    // Level 4
+    "Banishment": "Bandire",
+    "Blight": "Ruggine",
+    "Compulsion": "Compulsione",
+    "Confusion": "Confusione",
+    "Conjure Minor Elementals": "Evoca Elementale Minore",
+    "Control Water": "Controllare Acqua",
+    "Death Ward": "Interdizione alla Morte",
+    "Dimension Door": "Porta Dimensionale",
+    "Divination": "Divinazione",
+    "Dominate Beast": "Dominare Bestia",
+    "Fabricate": "Fabbricare",
+    "Fire Shield": "Scudo di Fuoco",
+    "Freedom of Movement": "Libertà di Movimento",
+    "Greater Invisibility": "Invisibilità Superiore",
+    "Guardian of Faith": "Guardiano della Fede",
+    "Hallucinatory Terrain": "Terreno Illusorio",
+    "Ice Storm": "Tempesta di Ghiaccio",
+    "Locate Creature": "Localizzare Creatura",
+    "Phantasmal Killer": "Assassino Fantasmagorico",
+    "Polymorph": "Metamorfosi",
+    "Staggering Smite": "Punizione Barcollante",
+    "Stoneskin": "Pelle di Pietra",
+    "Wall of Fire": "Muro di Fuoco",
+
+    // Level 5
+    "Animate Objects": "Animare Oggetti",
+    "Bigby's Hand": "Mano di Bigby",
+    "Cloudkill": "Nube Mortale",
+    "Commune": "Comunione",
+    "Commune with Nature": "Comunione con la Natura",
+    "Cone of Cold": "Cono di Freddo",
+    "Conjure Elemental": "Evoca Elementale",
+    "Contagion": "Contagio",
+    "Creation": "Creazione",
+    "Destructive Wave": "Onda Distruttiva",
+    "Dispel Evil and Good": "Dissolvi Bene e Male",
+    "Dominate Person": "Dominare Persone",
+    "Dream": "Sogno",
+    "Flame Strike": "Colonna di Fuoco",
+    "Geas": "Coercizione Mistica",
+    "Greater Restoration": "Ristorare Superiore",
+    "Hold Monster": "Blocca Mostri",
+    "Insect Plague": "Piaga degli Insetti",
+    "Legend Lore": "Conoscenza delle Leggende",
+    "Mass Cure Wounds": "Cura Ferite di Massa",
+    "Mislead": "Sembrare",
+    "Modify Memory": "Modificare Memoria",
+    "Passwall": "Passaparete",
+    "Planar Binding": "Legame Planare",
+    "Raise Dead": "Rianimare Morti",
+    "Rary's Telepathic Bond": "Legame Telepatico di Rary",
+    "Scrying": "Scrutare",
+    "Seeming": "Sembianza",
+    "Telekinesis": "Telecinesi",
+    "Teleportation Circle": "Cerchio di Teletrasporto",
+    "Tree Stride": "Passo degli Alberi",
+    "Wall of Force": "Muro di Forza",
+    "Wall of Stone": "Muro di Pietra",
+
+    // Level 6
+    "Arcane Gate": "Portale Arcano",
+    "Blade Barrier": "Barriera di Lame",
+    "Chain Lightning": "Fulmine a Catena",
+    "Circle of Death": "Cerchio di Morte",
+    "Conjure Fey": "Evocare Fata",
+    "Contingency": "Contingenza",
+    "Create Undead": "Creare Non Morti",
+    "Disintegrate": "Disintegrazione",
+    "Drawmij's Instant Summons": "Evocazione Istantanea",
+    "Eyebite": "Malocchio",
+    "Find the Path": "Trovare il Cammino",
+    "Flesh to Stone": "Carne in Pietra",
+    "Forbiddance": "Interdizione",
+    "Globe of Invulnerability": "Globo di Invulnerabilità",
+    "Guards and Wards": "Guardie e Protezioni",
+    "Harm": "Ferire",
+    "Heal": "Guarire",
+    "Heroes' Feast": "Banchetto degli Eroi",
+    "Magic Jar": "Giara Magica",
+    "Mass Suggestion": "Suggestione di Massa",
+    "Move Earth": "Muovere Terra",
+    "Otiluke's Freezing Sphere": "Sfera Gelida di Otiluke",
+    "Otto's Irresistible Dance": "Danza Irresistibile di Otto",
+    "Planar Ally": "Alleato Planare",
+    "Programmed Illusion": "Illusione Programmata",
+    "Sunbeam": "Raggio Solare",
+    "Transport via Plants": "Trasporto tramite Piante",
+    "True Seeing": "Vedere il Vero",
+    "Wall of Ice": "Muro di Ghiaccio",
+    "Wall of Thorns": "Muro di Spine",
+    "Wind Walk": "Camminata nel Vento",
+    "Word of Recall": "Parola del Richiamo",
+
+    // Level 7
+    "Conjure Celestial": "Evocare Celestiale",
+    "Delayed Blast Fireball": "Palla di Fuoco Ritardata",
+    "Divine Word": "Parola Divina",
+    "Etherealness": "Forma Eterea",
+    "Finger of Death": "Dito di Morte",
+    "Fire Storm": "Tempesta di Fuoco",
+    "Forcecage": "Gabbia di Forza",
+    "Mirage Arcane": "Miraggio Arcano",
+    "Mordenkainen's Magnificent Mansion": "Magione Magnifica di Mordenkainen",
+    "Mordenkainen's Sword": "Spada di Mordenkainen",
+    "Plane Shift": "Trasferimento Planare",
+    "Prismatic Spray": "Spruzzo Prismatico",
+    "Project Image": "Immagine Proiettata",
+    "Regenerate": "Rigenerare",
+    "Resurrection": "Risurrezione",
+    "Reverse Gravity": "Gravità Invertita",
+    "Sequester": "Sequestro",
+    "Simulacrum": "Simulacro",
+    "Symbol": "Simbolo",
+    "Teleport": "Teletrasporto",
+
+    // Level 8
+    "Animal Shapes": "Forme Animali",
+    "Antimagic Field": "Campo Antimagia",
+    "Antipathy/Sympathy": "Antipatia/Simpatia",
+    "Clone": "Clonare",
+    "Control Weather": "Controllare Tempo Atmosferico",
+    "Demiplane": "Semipiano",
+    "Dominate Monster": "Dominare Mostri",
+    "Earthquake": "Terremoto",
+    "Feeblemind": "Demenza",
+    "Glibness": "Loquacità",
+    "Holy Aura": "Aura Sacra",
+    "Incendiary Cloud": "Nube Incendiaria",
+    "Maze": "Labirinto",
+    "Mind Blank": "Vuoto Mentale",
+    "Power Word Stun": "Parola del Potere: Stordire",
+    "Sunburst": "Esplosione Solare",
+    "Telepathy": "Telepatia",
+    "Tsunami": "Tsunami",
+
+    // Level 9
+    "Astral Projection": "Proiezione Astrale",
+    "Foresight": "Preveggenza",
+    "Gate": "Cancello",
+    "Imprisonment": "Imprigionamento",
+    "Mass Heal": "Guarigione di Massa",
+    "Meteor Swarm": "Sciame di Meteore",
+    "Power Word Heal": "Parola del Potere: Guarire",
+    "Power Word Kill": "Parola del Potere: Uccidere",
+    "Prismatic Wall": "Muro Prismatico",
+    "Shapechange": "Mutaforma",
+    "Storm of Vengeance": "Tempesta della Vendetta",
+    "Time Stop": "Fermare il Tempo",
+    "True Polymorph": "Metamorfosi Suprema",
+    "True Resurrection": "Risurrezione Pura",
+    "Weird": "Visione",
+    "Wish": "Desiderio"
 };
 
 export const FEAT_TRANSLATIONS: Record<string, string> = {
@@ -338,7 +492,7 @@ export const BACKGROUND_TRANSLATIONS: Record<string, string> = {
     "Sage": "Sapiente",
     "Sailor": "Marinaio",
     "Soldier": "Soldato",
-    "Urchin": "Riccio",
+    "Urchin": "Monello",
     "Spy": "Spia",
     "Gladiator": "Gladiatore",
     "Knight": "Cavaliere",
@@ -354,5 +508,297 @@ export const BACKGROUND_TRANSLATIONS: Record<string, string> = {
     "Courtier": "Cortigiano",
     "Faction Agent": "Agente di Fazione",
     "Mercenary Veteran": "Veterano Mercenario",
-    "Urban Bounty Hunter": "Cacciatore di Taglie Urbano"
+    "Urban Bounty Hunter": "Cacciatore di Taglie Urbano",
+    "Anthropologist": "Antropologo",
+    "Archaeologist": "Archeologo",
+    "City Watch (Investigator)": "Investigatore Cittadino",
+    "Fisher": "Pescatore",
+    "Marine": "Marinaio (Marine)",
+    "Shipwright": "Carpentiere Navale",
+    "Smuggler": "Contrabbandiere",
+    "Failed Merchant": "Mercante Fallito",
+    "Gambler": "Giocatore d'Azzardo",
+    "Plaintiff": "Querelante",
+    "Rival Intern": "Stagista Rivale",
+    "Grinner": "Sorridente",
+    "Volstrucker Agent": "Agente Volstrucker",
+    "Augen Trust": "Fiduciario di Augen",
+    "Feylost": "Smarrito tra le Fate",
+    "Witchlight Hand": "Mano della Luce Fatata"
 };
+
+// ========== CLASS TRANSLATIONS ==========
+export const CLASS_TRANSLATIONS: Record<string, string> = {
+    "Barbarian": "Barbaro",
+    "Bard": "Bardo",
+    "Cleric": "Chierico",
+    "Druid": "Druido",
+    "Fighter": "Guerriero",
+    "Monk": "Monaco",
+    "Paladin": "Paladino",
+    "Ranger": "Ranger",
+    "Rogue": "Ladro",
+    "Sorcerer": "Stregone",
+    "Warlock": "Warlock",
+    "Wizard": "Mago",
+    "Artificer": "Artefice",
+    "Blood Hunter": "Cacciatore di Sangue"
+};
+
+// ========== RACE TRANSLATIONS ==========
+export const RACE_TRANSLATIONS: Record<string, string> = {
+    // PHB Races
+    "Human": "Umano",
+    "Elf": "Elfo",
+    "Dwarf": "Nano",
+    "Halfling": "Halfling",
+    "Dragonborn": "Dragonide",
+    "Gnome": "Gnomo",
+    "Half-Elf": "Mezzelfo",
+    "Half-Orc": "Mezzorco",
+    "Tiefling": "Tiefling",
+    // Elf Subraces
+    "High Elf": "Alto Elfo",
+    "Wood Elf": "Elfo dei Boschi",
+    "Dark Elf": "Drow (Elfo Oscuro)",
+    "Drow": "Drow",
+    "Eladrin": "Eladrin",
+    "Sea Elf": "Elfo Marino",
+    "Shadar-kai": "Shadar-Kai",
+    // Dwarf Subraces
+    "Hill Dwarf": "Nano delle Colline",
+    "Mountain Dwarf": "Nano delle Montagne",
+    "Duergar": "Duergar (Nano Grigio)",
+    // Halfling Subraces
+    "Lightfoot Halfling": "Halfling Piedelesto",
+    "Stout Halfling": "Halfling Tozzo",
+    "Ghostwise Halfling": "Halfling Spettro",
+    // Gnome Subraces
+    "Forest Gnome": "Gnomo delle Foreste",
+    "Rock Gnome": "Gnomo delle Rocce",
+    "Deep Gnome": "Gnomo delle Profondità (Svirfneblin)",
+    "Svirfneblin": "Svirfneblin",
+    // Tiefling Variants
+    "Asmodeus Tiefling": "Tiefling di Asmodeus",
+    "Baalzebul Tiefling": "Tiefling di Baalzebul",
+    "Dispater Tiefling": "Tiefling di Dispater",
+    "Fierna Tiefling": "Tiefling di Fierna",
+    "Glasya Tiefling": "Tiefling di Glasya",
+    "Levistus Tiefling": "Tiefling di Levistus",
+    "Mammon Tiefling": "Tiefling di Mammon",
+    "Mephistopheles Tiefling": "Tiefling di Mephistopheles",
+    "Zariel Tiefling": "Tiefling di Zariel",
+    // Dragonborn Variants
+    "Chromatic Dragonborn": "Dragonide Cromatico",
+    "Metallic Dragonborn": "Dragonide Metallico",
+    "Gem Dragonborn": "Dragonide Gemma",
+    // Other Common Races
+    "Aasimar": "Aasimar",
+    "Goliath": "Goliath",
+    "Tabaxi": "Tabaxi",
+    "Kenku": "Kenku",
+    "Triton": "Tritone",
+    "Tortle": "Tortle",
+    "Firbolg": "Firbolg",
+    "Goblin": "Goblin",
+    "Hobgoblin": "Hobgoblin",
+    "Bugbear": "Bugbear",
+    "Kobold": "Coboldo",
+    "Orc": "Orco",
+    "Yuan-ti Pureblood": "Yuan-ti Purosangue",
+    "Lizardfolk": "Lucertoloide",
+    "Genasi": "Genasi",
+    "Air Genasi": "Genasi dell'Aria",
+    "Earth Genasi": "Genasi della Terra",
+    "Fire Genasi": "Genasi del Fuoco",
+    "Water Genasi": "Genasi dell'Acqua",
+    "Aarakocra": "Aarakocra",
+    "Warforged": "Warforged",
+    "Changeling": "Changeling",
+    "Shifter": "Shifter",
+    "Kalashtar": "Kalashtar",
+    "Leonin": "Leonin",
+    "Satyr": "Satiro",
+    "Centaur": "Centauro",
+    "Minotaur": "Minotauro",
+    "Loxodon": "Loxodon",
+    "Vedalken": "Vedalken",
+    "Simic Hybrid": "Ibrido Simic",
+    "Verdan": "Verdan",
+    "Locathah": "Locathah",
+    "Grung": "Grung",
+    "Fairy": "Fata",
+    "Harengon": "Harengon",
+    "Owlin": "Owlin",
+    "Autognome": "Autognomo",
+    "Giff": "Giff",
+    "Hadozee": "Hadozee",
+    "Plasmoid": "Plasmoide",
+    "Thri-kreen": "Thri-kreen"
+};
+
+// ========== SKILL TRANSLATIONS ==========
+export const SKILL_TRANSLATIONS: Record<string, string> = {
+    // 5etools lowercase skill names -> Italian
+    "acrobatics": "Acrobazia",
+    "animal handling": "Addestrare Animali",
+    "arcana": "Arcana",
+    "athletics": "Atletica",
+    "deception": "Inganno",
+    "history": "Storia",
+    "insight": "Intuizione",
+    "intimidation": "Intimidire",
+    "investigation": "Indagare",
+    "medicine": "Medicina",
+    "nature": "Natura",
+    "perception": "Percezione",
+    "performance": "Intrattenere",
+    "persuasion": "Persuasione",
+    "religion": "Religione",
+    "sleight of hand": "Rapidità di Mano",
+    "stealth": "Furtività",
+    "survival": "Sopravvivenza"
+};
+
+// ========== ARMOR TRANSLATIONS ==========
+export const ARMOR_TRANSLATIONS: Record<string, string> = {
+    // Light Armor
+    "Padded": "Imbottita",
+    "Leather": "Cuoio",
+    "Studded Leather": "Cuoio Borchiato",
+    // Medium Armor
+    "Hide": "Pelle",
+    "Chain Shirt": "Giaco di Maglia",
+    "Scale Mail": "Corazza a Scaglie",
+    "Breastplate": "Corazza di Piastre",
+    "Half Plate": "Mezza Armatura",
+    // Heavy Armor
+    "Ring Mail": "Cotta ad Anelli",
+    "Chain Mail": "Cotta di Maglia",
+    "Splint": "Armatura Smembrata",
+    "Plate": "Armatura Completa",
+    // Shield
+    "Shield": "Scudo"
+};
+
+// ========== WEAPON TRANSLATIONS ==========
+export const WEAPON_TRANSLATIONS: Record<string, string> = {
+    // Simple Melee
+    "Club": "Clava",
+    "Dagger": "Daga",
+    "Greatclub": "Randello Pesante",
+    "Handaxe": "Ascia a Mano",
+    "Javelin": "Giavellotto",
+    "Light Hammer": "Martello Leggero",
+    "Mace": "Mazza",
+    "Quarterstaff": "Bastone Ferrato",
+    "Sickle": "Falcetto",
+    "Spear": "Lancia",
+    // Simple Ranged
+    "Light Crossbow": "Balestra Leggera",
+    "Dart": "Dardo",
+    "Shortbow": "Arco Corto",
+    "Sling": "Fionda",
+    // Martial Melee
+    "Battleaxe": "Ascia da Battaglia",
+    "Flail": "Flagello",
+    "Glaive": "Falcione",
+    "Greataxe": "Ascia Bipenne",
+    "Greatsword": "Spadone",
+    "Halberd": "Alabarda",
+    "Lance": "Lancia da Cavaliere",
+    "Longsword": "Spada Lunga",
+    "Maul": "Maglio",
+    "Morningstar": "Stella del Mattino",
+    "Pike": "Picca",
+    "Rapier": "Stocco",
+    "Scimitar": "Scimitarra",
+    "Shortsword": "Spada Corta",
+    "Trident": "Tridente",
+    "War Pick": "Piccone da Guerra",
+    "Warhammer": "Martello da Guerra",
+    "Whip": "Frusta",
+    // Martial Ranged
+    "Blowgun": "Cerbottana",
+    "Hand Crossbow": "Balestra a Mano",
+    "Heavy Crossbow": "Balestra Pesante",
+    "Longbow": "Arco Lungo",
+    "Net": "Rete"
+};
+
+// ========== UTILITY FUNCTIONS ==========
+
+/**
+ * Cache for reverse translation maps (Italian -> English)
+ */
+const reverseMapCache: Map<Record<string, string>, Record<string, string>> = new Map();
+
+/**
+ * Build or retrieve cached reverse map for a dictionary
+ */
+export function buildReverseMap(dictionary: Record<string, string>): Record<string, string> {
+    if (reverseMapCache.has(dictionary)) {
+        return reverseMapCache.get(dictionary)!;
+    }
+
+    const reverseMap: Record<string, string> = {};
+    for (const [eng, ita] of Object.entries(dictionary)) {
+        reverseMap[ita.toLowerCase()] = eng;
+    }
+    reverseMapCache.set(dictionary, reverseMap);
+    return reverseMap;
+}
+
+/**
+ * Get English key from Italian value
+ * @param italianName Italian name to look up
+ * @param dictionary The translation dictionary to use
+ * @returns English key or undefined if not found
+ */
+export function getReverseTranslation(italianName: string, dictionary: Record<string, string>): string | undefined {
+    const reverseMap = buildReverseMap(dictionary);
+    return reverseMap[italianName.toLowerCase()];
+}
+
+/**
+ * Translate from English to Italian using a dictionary
+ */
+export function translate(englishName: string, dictionary: Record<string, string>): string {
+    return dictionary[englishName] || englishName;
+}
+
+/**
+ * Translate skill name from 5etools format (lowercase English) to Italian
+ */
+export function translateSkill(skillName: string): string {
+    const cleanName = skillName.toLowerCase().trim();
+    return SKILL_TRANSLATIONS[cleanName] || skillName;
+}
+
+/**
+ * Translate class name (English to Italian)
+ */
+export function translateClass(className: string): string {
+    return CLASS_TRANSLATIONS[className] || className;
+}
+
+/**
+ * Translate race name (English to Italian)
+ */
+export function translateRace(raceName: string): string {
+    return RACE_TRANSLATIONS[raceName] || raceName;
+}
+
+/**
+ * Translate background name (English to Italian)
+ */
+export function translateBackground(backgroundName: string): string {
+    return BACKGROUND_TRANSLATIONS[backgroundName] || backgroundName;
+}
+
+/**
+ * Translate spell name (English to Italian)
+ */
+export function translateSpell(spellName: string): string {
+    return SPELL_TRANSLATIONS[spellName] || spellName;
+}

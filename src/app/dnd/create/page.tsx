@@ -1,12 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Scroll, User, Dices, ChevronRight, MessageSquare } from 'lucide-react';
-import { CLASSES, RACES, BACKGROUNDS, ALIGNMENTS, SOURCES_CONFIG, Source, Option } from '@/data/dnd-data';
+import { BACKGROUNDS, ALIGNMENTS, SOURCES_CONFIG, Source, Option } from '@/data/dnd-data';
 import { CharacterData } from '@/types/dnd';
-import { CharacterLogic } from '@/lib/character-logic';
 import AiChatBuilder from '@/components/AiChatBuilder';
+
+// Types for dynamic data
+interface DynamicClass {
+    name: string;
+    nameEn: string;
+    hitDie: number;
+    source?: string;
+    subclasses: { name: string; nameEn: string; source?: string }[];
+}
+
+interface DynamicRace {
+    name: string;
+    nameEn: string;
+    speed: number;
+    source?: string;
+    abilityBonuses: Record<string, number>;
+    subraces: { name: string; nameEn: string; abilityBonuses: Record<string, number>; source?: string }[];
+}
 
 const INITIAL_DATA: CharacterData = {
     characterName: '',
@@ -38,6 +55,40 @@ export default function CharactermancerV2() {
     const [loading, setLoading] = useState(false);
     const [activeSources, setActiveSources] = useState<Source[]>(['PHB', 'PHB24', 'TCE', 'XGE']);
 
+    // Dynamic data state
+    const [classes, setClasses] = useState<DynamicClass[]>([]);
+    const [races, setRaces] = useState<DynamicRace[]>([]);
+    const [dataLoading, setDataLoading] = useState(true);
+
+    // Fetch classes and races on mount and when sources change
+    useEffect(() => {
+        async function fetchData() {
+            setDataLoading(true);
+            try {
+                const sourcesParam = activeSources.join(',');
+                const [classesRes, racesRes] = await Promise.all([
+                    fetch(`/api/dnd/classes?sources=${sourcesParam}`),
+                    fetch(`/api/dnd/races?sources=${sourcesParam}`)
+                ]);
+
+                if (classesRes.ok) {
+                    const classesData = await classesRes.json();
+                    setClasses(classesData.classes || []);
+                }
+
+                if (racesRes.ok) {
+                    const racesData = await racesRes.json();
+                    setRaces(racesData.races || []);
+                }
+            } catch (error) {
+                console.error('Failed to fetch D&D data:', error);
+            } finally {
+                setDataLoading(false);
+            }
+        }
+        fetchData();
+    }, [activeSources]);
+
     const updateData = (field: keyof CharacterData, value: any) => {
         setData((prev) => ({ ...prev, [field]: value }));
     };
@@ -57,7 +108,7 @@ export default function CharactermancerV2() {
         setLoading(true);
 
         try {
-            // Attempt AI Generaton
+            // Server handles AI generation, validation, hydration, and fallback
             const response = await fetch('/api/dnd/ai-generate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -65,29 +116,17 @@ export default function CharactermancerV2() {
             });
 
             if (!response.ok) {
-                throw new Error('AI Generation failed, falling back to local logic.');
+                throw new Error('Generazione fallita.');
             }
 
-            const aiData = await response.json();
-
-            // Enforce Rules: Hydrate AI data with official features/stats to ensure accuracy
-            const strictData = CharacterLogic.hydrateCharacter(aiData);
-
-            setData(strictData);
-            generatePDF(strictData); // Auto generate PDF
+            const charData = await response.json();
+            setData(charData);
+            generatePDF(charData);
 
         } catch (error) {
-            console.warn(error);
-            // Fallback to Local Logic
-            setTimeout(() => {
-                const newData = CharacterLogic.generateQuickCharacter(level, activeSources.map(s => s as string));
-                setData(newData);
-                generatePDF(newData);
-            }, 800);
-        } finally {
-            // Loading state cleared in generatePDF or here if needed, 
-            // but generatePDF sets it to false at end, so it's safer to not unset it here immediately if we chain.
-            // However, generatePDF is async.
+            console.error(error);
+            alert("Errore nella generazione del personaggio.");
+            setLoading(false);
         }
     };
 
@@ -95,9 +134,16 @@ export default function CharactermancerV2() {
     const finishManualBuild = async () => {
         setLoading(true);
         try {
-            // Use local logic to hydrate features/stats based on selections
-            // This ensures 100% accuracy for manual builds without AI hallucinations
-            const finalData = CharacterLogic.hydrateCharacter(data);
+            // Server-side hydration ensures official features/stats accuracy
+            const response = await fetch('/api/dnd/hydrate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) throw new Error('Hydration failed');
+
+            const finalData = await response.json();
             setData(finalData);
             await generatePDF(finalData);
         } catch (e) {
@@ -275,6 +321,9 @@ export default function CharactermancerV2() {
                             onCancel={() => setStep(0)}
                             onFinish={finishManualBuild}
                             loading={loading}
+                            classes={classes}
+                            races={races}
+                            dataLoading={dataLoading}
                         />
                     )}
 
@@ -287,9 +336,26 @@ export default function CharactermancerV2() {
                         >
                             <AiChatBuilder
                                 onCancel={() => setStep(0)}
-                                onFinish={(aiData) => {
-                                    setData(aiData);
-                                    generatePDF(aiData);
+                                onFinish={async (aiData) => {
+                                    setLoading(true);
+                                    try {
+                                        const response = await fetch('/api/dnd/hydrate', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify(aiData),
+                                        });
+                                        if (!response.ok) throw new Error('Hydration failed');
+                                        const finalData = await response.json();
+                                        setData(finalData);
+                                        await generatePDF(finalData);
+                                    } catch (e) {
+                                        console.error(e);
+                                        // Fallback: use raw AI data if hydration fails
+                                        setData(aiData);
+                                        await generatePDF(aiData);
+                                    } finally {
+                                        setLoading(false);
+                                    }
                                 }}
                             />
                         </motion.div>
@@ -314,7 +380,7 @@ import {
 // ... (CharactermancerV2 remains same until WizardFlow)
 
 // Sub-component for Wizard
-function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, onFinish, loading }: any) {
+function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, onFinish, loading, classes, races, dataLoading }: any) {
     const [wizardStep, setWizardStep] = useState(0);
 
     const next = () => setWizardStep(p => p + 1);
@@ -368,33 +434,34 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                             <div>
                                 <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <Sparkles size={18} color="#f87171" />
-                                    <h3 style={{ fontWeight: 600, color: 'white' }}>Classe ({CLASSES.length})</h3>
+                                    <h3 style={{ fontWeight: 600, color: 'white' }}>Classe ({dataLoading ? '...' : classes.length})</h3>
                                 </div>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.5rem', maxHeight: '300px', overflowY: 'auto' }}>
-
-                                    {CLASSES.map((c: any) => (
-                                        <div key={c.name} onClick={() => {
-                                            updateData('class', c.name);
-                                            // Update Hit Die
-                                            const hd = c.hitDie ? `d${c.hitDie}` : 'd8';
-                                            updateData('hitDice', { total: data.level, die: hd });
-                                        }}
-                                            style={{
-                                                padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s',
-                                                background: data.class.includes(c.name) ? 'rgba(139, 92, 246, 0.2)' : 'rgba(255,255,255,0.05)',
-                                                borderColor: data.class.includes(c.name) ? '#8b5cf6' : 'rgba(255,255,255,0.05)',
-                                                color: data.class.includes(c.name) ? '#ddd6fe' : '#94a3b8',
-                                                opacity: (!c.source || activeSources.includes(c.source)) ? 1 : 0.3
-                                            }}>
-                                            <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
-                                                {c.name}
-                                                {c.source && c.source !== 'PHB' && <span style={{ marginLeft: '4px', fontSize: '0.65rem', color: '#fca5a5', border: '1px solid #fca5a5', borderRadius: '4px', padding: '0 4px' }}>{c.source}</span>}
+                                {dataLoading ? (
+                                    <div style={{ color: '#a78bfa', padding: '1rem', textAlign: 'center' }}>Caricamento classi...</div>
+                                ) : (
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.5rem', maxHeight: '300px', overflowY: 'auto' }}>
+                                        {classes.map((c: DynamicClass) => (
+                                            <div key={c.name} onClick={() => {
+                                                updateData('class', c.name);
+                                                // Update Hit Die
+                                                const hd = c.hitDie ? `d${c.hitDie}` : 'd8';
+                                                updateData('hitDice', { total: data.level, die: hd });
+                                            }}
+                                                style={{
+                                                    padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s',
+                                                    background: data.class.includes(c.name) ? 'rgba(139, 92, 246, 0.2)' : 'rgba(255,255,255,0.05)',
+                                                    borderColor: data.class.includes(c.name) ? '#8b5cf6' : 'rgba(255,255,255,0.05)',
+                                                    color: data.class.includes(c.name) ? '#ddd6fe' : '#94a3b8'
+                                                }}>
+                                                <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
+                                                    {c.name}
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
-                                </div>
+                                        ))}
+                                    </div>
+                                )}
                                 {/* Subclass */}
-                                {CLASSES.find((c: any) => c.name === data.class.replace(/ *\(.*\)/, ''))?.suboptions && (
+                                {classes.find((c: DynamicClass) => c.name === data.class.replace(/ *\(.*\)/, ''))?.subclasses?.length > 0 && (
                                     <div style={{ marginTop: '1rem' }}>
                                         <label style={labelStyle}>Sottoclasse</label>
                                         <select
@@ -407,8 +474,8 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                                             style={inputStyle}
                                         >
                                             <option value="">Seleziona...</option>
-                                            {CLASSES.find((c: any) => c.name === data.class.replace(/ *\(.*\)/, ''))?.suboptions?.filter((s: any) => !s.source || activeSources.includes(s.source)).map((s: any) => (
-                                                <option key={s.name} value={s.name}>{s.name} {s.source && `[${s.source}]`}</option>
+                                            {classes.find((c: DynamicClass) => c.name === data.class.replace(/ *\(.*\)/, ''))?.subclasses?.map((s: { name: string; nameEn: string; source?: string }) => (
+                                                <option key={s.name} value={s.name}>{s.name}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -419,27 +486,29 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                             <div>
                                 <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <User size={18} color="#60a5fa" />
-                                    <h3 style={{ fontWeight: 600, color: 'white' }}>Razza</h3>
+                                    <h3 style={{ fontWeight: 600, color: 'white' }}>Razza ({dataLoading ? '...' : races.length})</h3>
                                 </div>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.5rem', maxHeight: '300px', overflowY: 'auto' }}>
-                                    {RACES.map((r: any) => (
-                                        <div key={r.name} onClick={() => updateData('race', r.name)}
-                                            style={{
-                                                padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s',
-                                                background: data.race.includes(r.name) ? 'rgba(59, 130, 246, 0.2)' : 'rgba(255,255,255,0.05)',
-                                                borderColor: data.race.includes(r.name) ? '#3b82f6' : 'rgba(255,255,255,0.05)',
-                                                color: data.race.includes(r.name) ? '#bfdbfe' : '#94a3b8',
-                                                opacity: (!r.source || activeSources.includes(r.source)) ? 1 : 0.3
-                                            }}>
-                                            <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
-                                                {r.name}
-                                                {r.source && r.source !== 'PHB' && <span style={{ marginLeft: '4px', fontSize: '0.65rem', color: '#93c5fd', border: '1px solid #93c5fd', borderRadius: '4px', padding: '0 4px' }}>{r.source}</span>}
+                                {dataLoading ? (
+                                    <div style={{ color: '#60a5fa', padding: '1rem', textAlign: 'center' }}>Caricamento razze...</div>
+                                ) : (
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.5rem', maxHeight: '300px', overflowY: 'auto' }}>
+                                        {races.map((r: DynamicRace) => (
+                                            <div key={r.name} onClick={() => updateData('race', r.name)}
+                                                style={{
+                                                    padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s',
+                                                    background: data.race.includes(r.name) ? 'rgba(59, 130, 246, 0.2)' : 'rgba(255,255,255,0.05)',
+                                                    borderColor: data.race.includes(r.name) ? '#3b82f6' : 'rgba(255,255,255,0.05)',
+                                                    color: data.race.includes(r.name) ? '#bfdbfe' : '#94a3b8'
+                                                }}>
+                                                <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
+                                                    {r.name}
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
-                                </div>
+                                        ))}
+                                    </div>
+                                )}
                                 {/* Subrace */}
-                                {RACES.find((r: any) => r.name === data.race.split(' (')[0])?.suboptions && (
+                                {races.find((r: DynamicRace) => r.name === data.race.split(' (')[0])?.subraces?.length > 0 && (
                                     <div style={{ marginTop: '1rem' }}>
                                         <label style={labelStyle}>Sottorazza</label>
                                         <select
@@ -452,8 +521,8 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                                             style={inputStyle}
                                         >
                                             <option value="">Seleziona...</option>
-                                            {RACES.find((r: any) => r.name === data.race.split(' (')[0])?.suboptions?.filter((s: any) => !s.source || activeSources.includes(s.source)).map((s: any) => (
-                                                <option key={s.name} value={s.name}>{s.name} {s.source && `[${s.source}]`}</option>
+                                            {races.find((r: DynamicRace) => r.name === data.race.split(' (')[0])?.subraces?.map((s: { name: string; nameEn: string; abilityBonuses: Record<string, number>; source?: string }) => (
+                                                <option key={s.name} value={s.name}>{s.name}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -477,11 +546,11 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                         </div>
                     )}
 
-                    {wizardStep === 1 && <AbilityScoreStep data={data} updateData={updateData} />}
+                    {wizardStep === 1 && <AbilityScoreStep data={data} updateData={updateData} races={races} classes={classes} />}
                     {wizardStep === 2 && <BackgroundStep data={data} updateData={updateData} activeSources={activeSources} />}
-                    {wizardStep === 3 && <SkillsStep data={data} updateData={updateData} />}
-                    {wizardStep === 4 && <AdvancedOptionsStep data={data} updateData={updateData} activeSources={activeSources} />}
-                    {wizardStep === 5 && <EquipmentStep data={data} updateData={updateData} activeSources={activeSources} />}
+                    {wizardStep === 3 && <SkillsStep data={data} updateData={updateData} classes={classes} />}
+                    {wizardStep === 4 && <AdvancedOptionsStep data={data} updateData={updateData} activeSources={activeSources} classes={classes} />}
+                    {wizardStep === 5 && <EquipmentStep data={data} updateData={updateData} activeSources={activeSources} classes={classes} />}
 
                     {/* STEP 6: BIO & REVIEW */}
                     {wizardStep === 6 && (

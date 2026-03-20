@@ -30,7 +30,7 @@ export class DataFixer {
             // Standard Average: Max at 1, Avg at others
             const max = hd + con;
             const avg = Math.floor(hd / 2) + 1 + con;
-            const total = max + ((lvl - 1) * avg);
+            const total = Math.max(1, max + ((lvl - 1) * avg));
 
             fixed.hp = { current: total, max: total, temp: 0 };
         }

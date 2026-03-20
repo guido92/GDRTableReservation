@@ -4,12 +4,21 @@ import { PDFValidator } from '@/lib/pdf-validator';
 import { DataFixer } from '@/lib/data-fixer';
 import { CharacterData } from '@/types/dnd';
 
+import { FiveToolsService } from '@/services/five-tools-service';
+
 export async function POST(req: NextRequest) {
     try {
+        await FiveToolsService.getInstance().initialize();
         let data: CharacterData = await req.json();
 
         if (!data.characterName || !data.class) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+        }
+
+        // 0. Pre-generation data validation (fixes issues in-place)
+        const preValidation = PDFValidator.validateData(data);
+        if (preValidation.issues.length > 0) {
+            console.warn("Pre-PDF Validation:", preValidation.issues);
         }
 
         // 1. Initial Generation

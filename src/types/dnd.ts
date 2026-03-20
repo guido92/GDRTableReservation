@@ -70,5 +70,13 @@ export type CharacterData = {
         source?: string;
         prepared?: boolean;
     }[];
+    appearance?: {
+        age?: string;
+        height?: string;
+        weight?: string;
+        eyes?: string;
+        skin?: string;
+        hair?: string;
+    };
     is2024: boolean;
 };

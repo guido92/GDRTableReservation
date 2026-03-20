@@ -8,10 +8,12 @@ export interface RaceOption {
         source?: Source;
         description?: string;
         features?: Feature[];
+        speed?: number;
     }[];
     abilityBonuses?: Record<string, number>;
     source?: Source;
     features?: Feature[];
+    speed?: number;
 }
 
 export const RACES: RaceOption[] = [
@@ -37,7 +39,7 @@ export const RACES: RaceOption[] = [
         source: 'PHB',
         suboptions: [
             { name: "Alto Elfo", abilityBonuses: { INT: 1 }, source: 'PHB' },
-            { name: "Elfo dei Boschi", abilityBonuses: { WIS: 1 }, source: 'PHB' },
+            { name: "Elfo dei Boschi", abilityBonuses: { WIS: 1 }, source: 'PHB', speed: 35 },
             { name: "Drow (Elfo Oscuro)", abilityBonuses: { CHA: 1 }, source: 'PHB' },
             { name: "Eladrin", abilityBonuses: { CHA: 1 }, source: 'MTOF' },
             { name: "Shadar-Kai", abilityBonuses: { CON: 1 }, source: 'MTOF' },
@@ -46,6 +48,7 @@ export const RACES: RaceOption[] = [
     },
     {
         name: 'Nano',
+        speed: 25,
         abilityBonuses: { CON: 2 },
         features: [
             { name: "Scurovisione", description: "Vedi al buio fino a 18m.", level: 1 },
@@ -61,6 +64,7 @@ export const RACES: RaceOption[] = [
     },
     {
         name: 'Halfling',
+        speed: 25,
         abilityBonuses: { DEX: 2 },
         features: [
             { name: "Fortunato", description: "Ritira 1 al d20.", level: 1 },
@@ -99,6 +103,7 @@ export const RACES: RaceOption[] = [
     },
     {
         name: 'Gnomo',
+        speed: 25,
         abilityBonuses: { INT: 2 },
         features: [
             { name: "Scurovisione", description: "Vedi al buio fino a 18m.", level: 1 },

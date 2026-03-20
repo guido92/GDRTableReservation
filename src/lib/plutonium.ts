@@ -49,11 +49,15 @@ export interface PlutoniumBackground {
     entries?: unknown[];
 }
 
+// Spell class mapping from sources.json: { "SOURCE": { "SpellName": { "class": [{ "name": "Wizard", "source": "PHB" }, ...] } } }
+export type SpellClassMapping = Record<string, Record<string, { class: { name: string; source: string }[] }>>;
+
 export class Plutonium {
     private static spellCache: PlutoniumSpell[] | null = null;
     private static itemCache: PlutoniumItem[] | null = null;
     private static featCache: PlutoniumFeat[] | null = null;
     private static backgroundCache: PlutoniumBackground[] | null = null;
+    private static spellClassCache: SpellClassMapping | null = null;
 
     /**
      * Loads all spells from available sources.
@@ -168,6 +172,61 @@ export class Plutonium {
 
     private static filterGeneric<T extends { source: string }>(list: T[], sources: string[]): T[] {
         return list.filter(i => sources.includes(i.source) || i.source === 'PHB');
+    }
+
+    /**
+     * Loads spell-to-class mappings from sources.json
+     */
+    static async getSpellClassMapping(): Promise<SpellClassMapping> {
+        if (this.spellClassCache) return this.spellClassCache;
+
+        const sourcesFile = path.join(DATA_DIR, 'spells', 'sources.json');
+        try {
+            const content = await fs.readFile(sourcesFile, 'utf-8');
+            this.spellClassCache = JSON.parse(content);
+            return this.spellClassCache!;
+        } catch (e) {
+            console.error('Failed to load spell sources.json', e);
+            return {};
+        }
+    }
+
+    /**
+     * Gets the classes for a spell by name and source.
+     * Returns English class names from sources.json.
+     */
+    static async getClassesForSpell(spellName: string, source: string = 'PHB'): Promise<string[]> {
+        const mapping = await this.getSpellClassMapping();
+        const sourceMapping = mapping[source];
+        if (!sourceMapping) return [];
+        const spellMapping = sourceMapping[spellName];
+        if (!spellMapping || !spellMapping.class) return [];
+        // Deduplicate class names (same class may appear for different source books)
+        return [...new Set(spellMapping.class.map(c => c.name))];
+    }
+
+    /**
+     * Returns spells merged with their class assignments from sources.json.
+     * Each spell gets a `classNames` field with English class names.
+     */
+    static async getSpellsWithClasses(sources: string[] = ['PHB', 'XGE', 'TCE']): Promise<(PlutoniumSpell & { classNames: string[] })[]> {
+        const spells = await this.getSpells(sources);
+        const mapping = await this.getSpellClassMapping();
+
+        return spells.map(spell => {
+            const sourceMapping = mapping[spell.source];
+            const classNames: string[] = [];
+            if (sourceMapping && sourceMapping[spell.name]?.class) {
+                const seen = new Set<string>();
+                for (const c of sourceMapping[spell.name].class) {
+                    if (!seen.has(c.name)) {
+                        seen.add(c.name);
+                        classNames.push(c.name);
+                    }
+                }
+            }
+            return { ...spell, classNames };
+        });
     }
 
     /**

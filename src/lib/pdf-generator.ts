@@ -1,8 +1,8 @@
 import { PDFDocument, PDFTextField, PDFCheckBox, StandardFonts, PDFString, PDFName, PDFBool } from 'pdf-lib';
 import fs from 'fs/promises';
 import path from 'path';
-import { CharacterData } from '@/types/dnd';
-import { SPELLS } from '../data/spells';
+import { CharacterData } from './../types/dnd';
+import { FiveToolsService } from '../services/five-tools-service';
 
 export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Array> {
     const templatePath = path.join(process.cwd(), 'public', 'templates', 'character-sheet-template.pdf');
@@ -93,7 +93,13 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
     setField('Background', data.background);
     setField('Alignment', data.alignment);
     setField('PlayerName', data.playerName);
-    setField('XP', (data.level || 1).toString());
+    // PHB XP thresholds per level
+    const xpByLevel: Record<number, number> = {
+        1: 0, 2: 300, 3: 900, 4: 2700, 5: 6500, 6: 14000, 7: 23000, 8: 34000,
+        9: 48000, 10: 64000, 11: 85000, 12: 100000, 13: 120000, 14: 140000,
+        15: 165000, 16: 195000, 17: 225000, 18: 265000, 19: 305000, 20: 355000
+    };
+    setField('XP', (xpByLevel[data.level || 1] ?? 0).toString());
 
     // --- 2. ABILITIES & MODS ---
     const stats: { [key: string]: number } = {
@@ -115,7 +121,7 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
     const profBonus = Math.ceil(data.level / 4) + 1;
     setField('ProfBonus', `+${profBonus}`);
     setField('AC', (data.armorClass || 10).toString());
-    setField('Initiative', fmtMod(mods.DEX));
+    setField('Initiative', fmtMod(data.initiative && data.initiative !== 0 ? data.initiative : mods.DEX));
     setField('Speed', (data.speed || 30).toString());
 
     const hpMax = data.hp?.max || 1;
@@ -128,13 +134,7 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
     setField('HDTotal', hdTotal.toString());
     setField('HD', hdDie);
 
-    // Saving Throws
-    setField('ST Strength', fmtMod(mods.STR));
-    setField('ST Dexterity', fmtMod(mods.DEX));
-    setField('ST Constitution', fmtMod(mods.CON));
-    setField('ST Intelligence', fmtMod(mods.INT));
-    setField('ST Wisdom', fmtMod(mods.WIS));
-    setField('ST Charisma', fmtMod(mods.CHA));
+    // Saving Throws — values written later after classSaves is computed
 
     // --- 4. SKILLS & CHECKBOXES ---
     const skillMap: { [key: string]: { field: string, stat: number, box: string } } = {
@@ -220,25 +220,34 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
 
     // Page 2 - Reduced Font
     setMultiLine('Backstory', p.backstory || '', 11); // Good reading size
-    setMultiLine('Allies', "Compagni di Avventura / Fazioni sconosciute", 11); // Consistent
-    setMultiLine('Treasure', `10 Monete d'oro\nZaino\nSacco a pelo\nRazion da viaggio\n${(data.equipment || []).join('\n')}`, 10);
+    setMultiLine('Allies', '', 11);
+    // Starting gold by level (PHB approximation)
+    const startingGold: Record<number, string> = {
+        1: '10', 2: '25', 3: '50', 4: '75', 5: '150', 6: '200', 7: '300', 8: '400',
+        9: '500', 10: '750', 11: '1000', 12: '1500', 13: '2000', 14: '3000',
+        15: '4000', 16: '5000', 17: '7500', 18: '10000', 19: '15000', 20: '20000'
+    };
+    const gold = startingGold[data.level || 1] || '10';
+    setMultiLine('Treasure', `${gold} Monete d'oro`, 10);
 
-    setField('Age', "25");
-    setField('Height', "1.80m");
-    setField('Weight', "80kg");
-    setField('Eyes', "Scuro");
-    setField('Skin', "Chiaro");
-    setField('Hair', "Scuro");
+    setField('Age', data.appearance?.age || "—");
+    setField('Height', data.appearance?.height || "—");
+    setField('Weight', data.appearance?.weight || "—");
+    setField('Eyes', data.appearance?.eyes || "—");
+    setField('Skin', data.appearance?.skin || "—");
+    setField('Hair', data.appearance?.hair || "—");
 
     // --- 7. MAGIC (PAGE 3) ---
     if (data.spells && data.spells.length > 0) {
-        // Normalize Spell Levels (Fix AI hallucinations)
-        data.spells.forEach(s => {
+        const fts = FiveToolsService.getInstance();
+        // Normalize Spell Levels (Fix AI hallucinations) — work on a copy to avoid mutating input
+        const spells = data.spells.map(s => {
             const cleanName = s.name.split(' (')[0].trim();
-            const dbSpell = SPELLS.find(d => d.name.toLowerCase() === cleanName.toLowerCase());
+            const dbSpell = fts.getSpellByName(cleanName);
             if (dbSpell) {
-                s.level = dbSpell.level;
+                return { ...s, level: dbSpell.level };
             }
+            return { ...s };
         });
 
         // Casting Stats
@@ -266,17 +275,14 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
             const matches = [...fullClassStr.matchAll(/([a-zA-Z\u00C0-\u00FF]+)\s*(\d+)/g)];
 
             let effectiveCasterLevel = 0;
-            let warlockSlots = 0;
-            let warlockSlotLevel = 0;
 
             if (matches.length === 0) {
-                // Fallback if no digits found, assume single class = data.level
-                const csl = fullClassStr.toLowerCase();
-                // ... reuse old logic or just assume 1 class
-                // But since we have data.level passed in main function, we can use that if single class.
-                // Let's assume regex failed, try treating whole string as one class at data.level
-                // Fallback: Mock a RegExpExecArray-like object
-                const mockMatch = [fullClassStr, fullClassStr, String(data.level)];
+                // Fallback: strip subclass parentheses, then treat as single class at data.level
+                const cleaned = fullClassStr.replace(/\s*\(.*?\)\s*/g, '').trim();
+                // Extract just the class name (first word of Italian letters)
+                const nameMatch = cleaned.match(/^([a-zA-Z\u00C0-\u00FF]+)/);
+                const className = nameMatch ? nameMatch[1] : cleaned;
+                const mockMatch = [className + ' ' + data.level, className, String(data.level)];
                 // @ts-ignore
                 matches.push(mockMatch);
             }
@@ -286,26 +292,40 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
                 const lvl = parseInt(m[2]);
 
                 if (className.includes('warlock')) {
-                    // Pact Magic (Independent)
-                    // Determine slot level and count based on Warlock Table
-                    // LVL 1: 1@1st, LVL 2: 2@1st, LVL 3: 2@2nd...
-                    // Simplified Warlock Logic
-                    const wSlotLvl = Math.ceil(lvl / 2); // Roughly caps at 5th
-                    const cappedLvl = wSlotLvl > 5 ? 5 : wSlotLvl;
+                    // Pact Magic (Independent) — exact PHB table
+                    // [slotLevel, slotCount] indexed by Warlock level
+                    const pactMagic: [number, number][] = [
+                        [0, 0],  // Lv 0 (unused)
+                        [1, 1],  // Lv 1: 1 slot @ 1st
+                        [1, 2],  // Lv 2: 2 slots @ 1st
+                        [2, 2],  // Lv 3: 2 slots @ 2nd
+                        [2, 2],  // Lv 4
+                        [3, 2],  // Lv 5: 2 slots @ 3rd
+                        [3, 2],  // Lv 6
+                        [4, 2],  // Lv 7: 2 slots @ 4th
+                        [4, 2],  // Lv 8
+                        [5, 2],  // Lv 9: 2 slots @ 5th
+                        [5, 2],  // Lv 10
+                        [5, 3],  // Lv 11: 3 slots @ 5th
+                        [5, 3],  // Lv 12
+                        [5, 3],  // Lv 13
+                        [5, 3],  // Lv 14
+                        [5, 3],  // Lv 15
+                        [5, 3],  // Lv 16
+                        [5, 4],  // Lv 17: 4 slots @ 5th
+                        [5, 4],  // Lv 18
+                        [5, 4],  // Lv 19
+                        [5, 4],  // Lv 20
+                    ];
 
-                    let count = 0;
-                    if (lvl === 1) count = 1;
-                    else if (lvl >= 2 && lvl <= 10) count = 2;
-                    else if (lvl >= 11 && lvl <= 16) count = 3;
-                    else if (lvl >= 17) count = 4;
+                    const clampedLvl = Math.min(lvl, 20);
+                    const [slotLevel, slotCount] = pactMagic[clampedLvl] || [0, 0];
+                    if (slotLevel > 0 && slotCount > 0) {
+                        // @ts-ignore
+                        finalSlots[slotLevel] += slotCount;
+                    }
 
-                    // Add to final slots directly? Usually Warlocks are separate.
-                    // But Character Sheets often just sum them or put them together.
-                    // We will ADD them to the corresponding slot level.
-                    // @ts-ignore
-                    finalSlots[cappedLvl] += count;
-
-                } else if (className.includes('paladin') || className.includes('ranger') || className.includes('artificer')) { // Artificer is 1/2 rounded up actually, Paladin is 1/2 rounded down? No, Paladin starts at 2.
+                } else if (className.includes('paladin') || className.includes('paladino') || className.includes('ranger') || className.includes('artificer') || className.includes('artefice')) {
                     // Paladin: Level / 2 (floor)
                     // Ranger: Level / 2 (floor)
                     // Artificer: Level / 2 (ceil) - treat as half for now
@@ -383,7 +403,7 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
         const allFields = form.getFields(); // Cache all fields for fuzzy search
 
         for (let lvl = 0; lvl <= 9; lvl++) {
-            const lvlSpells = (data.spells || []).filter(s => s.level === lvl);
+            const lvlSpells = spells.filter(s => s.level === lvl);
             const startId = spellStartIds[lvl];
             if (!startId) continue;
 
@@ -421,6 +441,7 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
         'Druido': ['INT', 'WIS'], 'Guerriero': ['STR', 'CON'], 'Monaco': ['STR', 'DEX'],
         'Paladino': ['WIS', 'CHA'], 'Ranger': ['STR', 'DEX'], 'Ladro': ['DEX', 'INT'],
         'Stregone': ['CON', 'CHA'], 'Mago': ['INT', 'WIS'], 'Warlock': ['WIS', 'CHA'],
+        'Artefice': ['CON', 'INT'],
         // English fallbacks
         'Barbarian': ['STR', 'CON'], 'Bard': ['DEX', 'CHA'], 'Cleric': ['WIS', 'CHA'],
         'Druid': ['INT', 'WIS'], 'Fighter': ['STR', 'CON'], 'Monk': ['STR', 'DEX'],
@@ -444,6 +465,17 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
             'INT': 'Check Box 14', 'WIS': 'Check Box 15', 'CHA': 'Check Box 16'
         };
         setChecked(seqMap[stat], true);
+    });
+
+    // Write Saving Throw VALUES (with proficiency bonus for proficient saves)
+    const stFieldMap: { [key: string]: string } = {
+        'STR': 'ST Strength', 'DEX': 'ST Dexterity', 'CON': 'ST Constitution',
+        'INT': 'ST Intelligence', 'WIS': 'ST Wisdom', 'CHA': 'ST Charisma'
+    };
+    Object.keys(stFieldMap).forEach(stat => {
+        const isProficient = mySaves.includes(stat);
+        const val = mods[stat] + (isProficient ? profBonus : 0);
+        setField(stFieldMap[stat], fmtMod(val));
     });
 
     try {

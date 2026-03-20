@@ -1,10 +1,32 @@
 ﻿
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { CLASSES, RACES, FEATS, BACKGROUNDS, PERSONALITY_TRAITS, IDEALS, BONDS, FLAWS } from '@/data/dnd-data';
+import { BACKGROUNDS, PERSONALITY_TRAITS, IDEALS, BONDS, FLAWS } from '@/data/dnd-data';
 import { SPELLS } from '@/data/spells';
 import { AbilityScores, CharacterData } from '@/types/dnd';
 import { Shield, Brain, BicepsFlexed, Tangent, Sparkles, Scroll, Book, Dices } from 'lucide-react';
+
+// Types for dynamic data passed from parent
+interface DynamicClass {
+    name: string;
+    nameEn: string;
+    hitDie: number;
+    source?: string;
+    numSkills?: number;
+    skillChoices?: { skills: string[]; count: number };
+    armorProficiencies?: string[];
+    weaponProficiencies?: string[];
+    subclasses: { name: string; nameEn: string; source?: string }[];
+}
+
+interface DynamicRace {
+    name: string;
+    nameEn: string;
+    speed: number;
+    source?: string;
+    abilityBonuses: Record<string, number>;
+    subraces: { name: string; nameEn: string; abilityBonuses: Record<string, number>; source?: string }[];
+}
 
 // --- HELPER: SPELL PROGRESSION & LIMITS ---
 
@@ -111,7 +133,7 @@ const labelStyle: React.CSSProperties = { display: 'block', color: '#94a3b8', fo
 const inputStyle = { width: '100%', background: '#0a0a0c', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.5rem', padding: '0.5rem', color: '#cbd5e1', outline: 'none' };
 
 // --- ABILITY SCORES STEP ---
-export function AbilityScoreStep({ data, updateData }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void }) {
+export function AbilityScoreStep({ data, updateData, races = [], classes = [] }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void, races?: DynamicRace[], classes?: DynamicClass[] }) {
     const scores = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'] as const;
     const [mode, setMode] = useState<'pointBuy' | 'standard' | 'roll'>('pointBuy');
     const [points, setPoints] = useState(27);
@@ -124,7 +146,7 @@ export function AbilityScoreStep({ data, updateData }: { data: CharacterData, up
 
         // Base Race
         const baseRaceName = data.race.split(' (')[0];
-        const race = RACES.find(r => r.name === baseRaceName);
+        const race = races.find(r => r.name === baseRaceName);
         if (race?.abilityBonuses) {
             Object.entries(race.abilityBonuses).forEach(([k, v]) => bonuses[k] += v);
         }
@@ -133,7 +155,7 @@ export function AbilityScoreStep({ data, updateData }: { data: CharacterData, up
         const match = data.race.match(/\((.*?)\)/);
         if (match) {
             const subName = match[1];
-            const sub = race?.suboptions?.find(s => s.name === subName);
+            const sub = race?.subraces?.find(s => s.name === subName);
             if (sub?.abilityBonuses) {
                 Object.entries(sub.abilityBonuses).forEach(([k, v]) => bonuses[k] += v);
             }
@@ -266,7 +288,7 @@ export function AbilityScoreStep({ data, updateData }: { data: CharacterData, up
                                     value={data.level || 1}
                                     onChange={(e) => {
                                         const lvl = Math.max(1, parseInt(e.target.value) || 1);
-                                        const cls = CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, ''));
+                                        const cls = classes.find(c => c.name === data.class.replace(/ *\(.*\)/, ''));
                                         const hdDie = `d${cls?.hitDie || 8}`;
                                         updateData('level', lvl);
                                         updateData('hitDice', { total: lvl, die: hdDie });
@@ -280,7 +302,7 @@ export function AbilityScoreStep({ data, updateData }: { data: CharacterData, up
                             <div style={{ textAlign: 'center' }}>
                                 <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Dado Vita</span>
                                 <div style={{ fontSize: '1.25rem', color: 'white', fontWeight: 700 }}>
-                                    {data.hitDice?.die || (CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, ''))?.hitDie ? `d${CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, ''))?.hitDie}` : 'd8')}
+                                    {data.hitDice?.die || (classes.find(c => c.name === data.class.replace(/ *\(.*\)/, ''))?.hitDie ? `d${classes.find(c => c.name === data.class.replace(/ *\(.*\)/, ''))?.hitDie}` : 'd8')}
                                 </div>
                             </div>
                         </div>
@@ -296,7 +318,7 @@ export function AbilityScoreStep({ data, updateData }: { data: CharacterData, up
                             <button
                                 onClick={() => {
                                     // Calculate Average
-                                    const cls = CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, ''));
+                                    const cls = classes.find(c => c.name === data.class.replace(/ *\(.*\)/, ''));
                                     const hd = cls?.hitDie || 8;
                                     const conMod = Math.floor(((data.abilities.CON + (racialBonuses.CON || 0)) - 10) / 2);
                                     const level = data.level || 1;
@@ -312,7 +334,7 @@ export function AbilityScoreStep({ data, updateData }: { data: CharacterData, up
                             <button
                                 onClick={() => {
                                     // Roll HP
-                                    const cls = CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, ''));
+                                    const cls = classes.find(c => c.name === data.class.replace(/ *\(.*\)/, ''));
                                     const hd = cls?.hitDie || 8;
                                     const conMod = Math.floor(((data.abilities.CON + (racialBonuses.CON || 0)) - 10) / 2);
                                     const level = data.level || 1;
@@ -360,19 +382,19 @@ const btnMiniStyle = { width: '24px', height: '24px', borderRadius: '50%', borde
 
 
 // --- SKILLS STEP ---
-export function SkillsStep({ data, updateData }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void }) {
+export function SkillsStep({ data, updateData, classes = [] }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void, classes?: DynamicClass[] }) {
     // Improve class matching to handle "Guerriero (Campione)"
     const baseClass = data.class.split(' (')[0];
-    const cls = CLASSES.find(c => c.name === baseClass);
-    const availableSkills = cls?.proficiencies?.skills || [];
+    const cls = classes.find(c => c.name === baseClass);
+    const availableSkills = cls?.skillChoices?.skills || [];
 
     // Background Skills
     const baseBg = data.background.split(' (')[0];
     const bg = BACKGROUNDS.find(b => b.name === baseBg);
     const bgSkills = bg?.skillProficiencies || [];
 
-    // Determine # of picks (Simple heuristic)
-    const pickCount = baseClass === 'Ladro' ? 4 : (baseClass === 'Bardo' || baseClass === 'Ranger') ? 3 : 2;
+    // Determine # of picks from class data or fallback to heuristic
+    const pickCount = cls?.skillChoices?.count || cls?.numSkills || (baseClass === 'Ladro' ? 4 : (baseClass === 'Bardo' || baseClass === 'Ranger') ? 3 : 2);
 
     const toggleSkill = (skill: string) => {
         if (bgSkills.includes(skill)) return; // Cannot toggle background skills
@@ -434,7 +456,7 @@ export function SkillsStep({ data, updateData }: { data: CharacterData, updateDa
 }
 
 // --- FEATS & SPELLS STEP ---
-export function AdvancedOptionsStep({ data, updateData, activeSources = ['PHB', 'XGE', 'TCE'] }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void, activeSources?: string[] }) {
+export function AdvancedOptionsStep({ data, updateData, activeSources = ['PHB', 'XGE', 'TCE'], classes = [] }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void, activeSources?: string[], classes?: DynamicClass[] }) {
     // Check if Feats available
     const isVarHuman = data.race === 'Umano' && data.subclass === 'Variante';
     const hasFeat = isVarHuman || data.level >= 4;
@@ -759,7 +781,7 @@ export function AdvancedOptionsStep({ data, updateData, activeSources = ['PHB', 
     );
 }
 
-export function EquipmentStep({ data, updateData, activeSources = ['PHB', 'XGE', 'TCE'] }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void, activeSources?: string[] }) {
+export function EquipmentStep({ data, updateData, activeSources = ['PHB', 'XGE', 'TCE'], classes = [] }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void, activeSources?: string[], classes?: DynamicClass[] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [apiItems, setApiItems] = useState<any[]>([]);
     const [loadingItems, setLoadingItems] = useState(false);
@@ -785,14 +807,10 @@ export function EquipmentStep({ data, updateData, activeSources = ['PHB', 'XGE',
         load();
     }, [activeSources]);
 
-    // Default Equipment Loading (One-time)
+    // Default Equipment Loading (One-time) - note: DynamicClass doesn't have equipment field yet
     useEffect(() => {
-        if (data.equipment.length === 0) {
-            const cls = CLASSES.find(c => c.name === data.class.split(' (')[0]);
-            if (cls?.equipment) {
-                updateData('equipment', cls.equipment);
-            }
-        }
+        // Equipment is now handled by the parent or hydration process
+        // This step is primarily for manual adjustments
     }, []);
 
     const addItem = (itemName: string) => {

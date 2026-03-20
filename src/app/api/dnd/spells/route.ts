@@ -1,46 +1,33 @@
 import { NextResponse } from 'next/server';
-import { Plutonium } from '@/lib/plutonium';
+import { SpellService } from '@/lib/spell-service';
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
-    const sources = searchParams.get('sources')?.split(',') || ['PHB', 'XGE', 'TCE'];
     const className = searchParams.get('class');
     const levelStr = searchParams.get('level');
 
     try {
-        const allSpells = await Plutonium.getSpells(sources);
-
-        let filtered = allSpells;
-        // Note: Filtering by Class in 5etools data requires parsing the "fromClassList" or "classes" object which might be complex.
-        // For now, we return ALL spells and let Client filter if needed, OR we implement a basic class filter if possible.
-        // Checking schema: 5etools spells usually have `classes: { fromClassList: [...] }`.
+        let spells;
 
         if (className) {
-            filtered = filtered.filter(s => {
-                // Check if spell belongs to class. 
-                // Since we didn't fully implement class parsing in Plutonium.ts yet, we might return all. 
-                // But let's check if the 'classes' property exists on the entries we loaded.
-                // If the user wants "Wizard" spells, returning Cleric spells isn't ideal.
-                // However, without a dedicated Index, it's hard.
-                // For V1, let's return ALL and rely on client or name search.
-                return true;
-            });
+            const maxLevel = levelStr ? parseInt(levelStr) : 9;
+            spells = await SpellService.getSpellsForClass(className, maxLevel);
+        } else {
+            spells = await SpellService.getAllSpells();
+            if (levelStr) {
+                const maxLevel = parseInt(levelStr);
+                spells = spells.filter(s => s.level <= maxLevel);
+            }
         }
 
-        if (levelStr) {
-            const maxLevel = parseInt(levelStr);
-            filtered = filtered.filter(s => s.level <= maxLevel);
-        }
-
-        // Optimization: Map to simplified object to save bandwidth
-        const responseData = filtered.map(s => ({
-            name: Plutonium.translate(s.name, 'exact'),
-            originalName: s.name,
+        const responseData = spells.map(s => ({
+            name: s.name,
+            originalName: s.originalName,
             level: s.level,
-            school: Plutonium.translate(s.school || 'U', 'exact') || s.school,
+            school: s.school,
             source: s.source,
-            classes: s.classes?.fromClassList?.map((c: any) => c.name) || [],
-            description: Plutonium.cleanText((s.entries?.[0] as string) || ''),
+            classes: s.classes,
+            description: s.description,
         }));
 
         return NextResponse.json({ spells: responseData, count: responseData.length });
