@@ -81,54 +81,119 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
                 <div className="form-group">
                     <label>{type === 'GDR' ? 'Titolo Avventura' : 'Nome Gioco'}</label>
-                    <input name="title" required value={formData.title} onChange={handleChange} placeholder={type === 'GDR' ? "Es. La tomba degli orrori" : "Es. Catan, Ticket to Ride..."} />
+                    <input 
+                        name="title" 
+                        required 
+                        value={formData.title} 
+                        onChange={handleChange} 
+                        placeholder={type === 'GDR' ? "Es. La tomba degli orrori" : "Es. Catan, Ticket to Ride..."} 
+                    />
                 </div>
                 {type === 'GDR' && (
                     <div className="form-group">
                         <label>Sistema di Gioco</label>
-                        <input name="system" required value={formData.system} onChange={handleChange} placeholder="Es. D&D 5e" />
+                        <input 
+                            name="system" 
+                            required 
+                            value={formData.system} 
+                            onChange={handleChange} 
+                            placeholder="Es. D&D 5e" 
+                        />
                     </div>
                 )}
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
                 <div className="form-group">
-                    <label>{type === 'GDR' ? 'Master' : 'Organizzatore'}</label>
-                    <input name="masterName" required value={formData.masterName} onChange={handleChange} placeholder="Il tuo nome" />
+                    <label>{type === 'GDR' ? 'Il Tuo Nome (Master)' : 'Organizzatore'}</label>
+                    <input 
+                        name="masterName" 
+                        required 
+                        value={formData.masterName} 
+                        onChange={handleChange} 
+                        placeholder="Il tuo nome" 
+                    />
                 </div>
                 <div className="form-group">
-                    <label>Email {type === 'GDR' ? 'Master' : 'Organizzatore'} (per notifiche)</label>
-                    <input type="email" name="masterEmail" required value={formData.masterEmail || ''} onChange={handleChange} placeholder="tua@email.com" />
+                    <label>Email (per ricevere notifiche)</label>
+                    <input 
+                        type="email" 
+                        name="masterEmail" 
+                        required 
+                        value={formData.masterEmail || ''} 
+                        onChange={handleChange} 
+                        placeholder="tua@email.com" 
+                    />
                 </div>
                 <div className="form-group">
-                    <label>Luogo</label>
-                    <input name="location" required value={formData.location} onChange={handleChange} placeholder="Es. Tavolo 1" />
+                    <label>Luogo della Giocata</label>
+                    <input 
+                        name="location" 
+                        required 
+                        value={formData.location} 
+                        onChange={handleChange} 
+                        placeholder="Es. Tavolo 1, Soppalco..." 
+                    />
                 </div>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1.5rem' }}>
                 <div className="form-group">
                     <label>Data</label>
-                    <input type="date" name="date" required value={formData.date} onChange={handleChange} />
+                    <input 
+                        type="date" 
+                        name="date" 
+                        required 
+                        value={formData.date} 
+                        onChange={handleChange} 
+                    />
                 </div>
                 <div className="form-group">
-                    <label>Ora</label>
-                    <input type="time" name="time" required value={formData.time} onChange={handleChange} />
+                    <label>Ora di Inizio</label>
+                    <input 
+                        type="time" 
+                        name="time" 
+                        required 
+                        value={formData.time} 
+                        onChange={handleChange} 
+                    />
                 </div>
                 <div className="form-group">
                     <label>Max Giocatori</label>
-                    <input type="number" name="maxPlayers" min="1" max="10" required value={formData.maxPlayers} onChange={handleChange} />
+                    <input 
+                        type="number" 
+                        name="maxPlayers" 
+                        min="1" 
+                        max="10" 
+                        required 
+                        value={formData.maxPlayers} 
+                        onChange={handleChange} 
+                    />
                 </div>
             </div>
 
             <div className="form-group">
-                <label>Immagine</label>
+                <label>Immagine di Copertina</label>
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                    <input type="file" accept="image/*" onChange={handleFileChange} disabled={uploading} style={{ flex: 1 }} />
-                    {uploading && <span style={{ fontSize: '0.875rem', color: 'var(--accent)' }}>Caricamento...</span>}
+                    <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handleFileChange} 
+                        disabled={uploading} 
+                        style={{ flex: 1, padding: '0.5rem' }} 
+                    />
+                    {uploading && <span className="gold-text" style={{ fontSize: '0.875rem' }}>Caricamento...</span>}
                 </div>
                 {formData.imageUrl && (
-                    <div style={{ marginTop: '0.5rem', position: 'relative', width: '100%', height: '200px', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+                    <div style={{ 
+                        marginTop: '1rem', 
+                        position: 'relative', 
+                        width: '100%', 
+                        height: '240px', 
+                        borderRadius: 'var(--radius-md)', 
+                        overflow: 'hidden',
+                        border: '1px solid var(--border)'
+                    }}>
                         <Image src={formData.imageUrl} alt="Preview" fill style={{ objectFit: 'cover' }} unoptimized />
                     </div>
                 )}
@@ -136,37 +201,23 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
             </div>
 
             <div className="form-group">
-                <label>Descrizione</label>
-                <textarea name="description" required value={formData.description} onChange={handleChange} rows={5} placeholder={type === 'GDR' ? "Descrivi l'avventura..." : "Descrivi il gioco e il tipo di serata..."} />
+                <label>Breve Descrizione</label>
+                <textarea 
+                    name="description" 
+                    required 
+                    value={formData.description} 
+                    onChange={handleChange} 
+                    rows={5} 
+                    placeholder={type === 'GDR' ? "Di cosa parla l'avventura? Serve portare qualcosa?" : "Descrivi il gioco e il tipo di serata..."} 
+                />
             </div>
 
-            <button type="submit" className="btn btn-primary" disabled={loading || uploading}>
-                {loading ? 'Creazione...' : (type === 'GDR' ? 'Crea Sessione GDR' : 'Crea Tavolo Gioco')}
+            <button type="submit" className="btn btn-primary" disabled={loading || uploading} style={{ marginTop: '1rem' }}>
+                {loading ? 'Creazione in corso...' : (type === 'GDR' ? 'Crea Sessione GDR' : 'Crea Tavolo Gioco')}
             </button>
-
-            <style jsx>{`
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-        label {
-          font-size: 0.875rem;
-          color: var(--foreground-muted);
-        }
-        input, textarea, select {
-          padding: 0.75rem;
-          border-radius: var(--radius-md);
-          border: 1px solid var(--border);
-          background: rgba(0,0,0,0.2);
-          color: var(--foreground);
-          outline: none;
-          font-family: inherit;
-        }
-        input:focus, textarea:focus {
-          border-color: var(--primary);
-        }
-      `}</style>
+            <p style={{ fontSize: '0.75rem', color: 'var(--foreground-muted)', textAlign: 'center', opacity: 0.7 }}>
+                La sessione sarà pubblicata immediatamente e potrai condividere il link.
+            </p>
         </form>
     );
 }

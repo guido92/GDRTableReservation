@@ -15,111 +15,146 @@ export default async function SessionPage({ params }: { params: Promise<{ id: st
         notFound();
     }
 
+    // Determine fallback image to "sponsor the bar"
+    const fallbackImage = "/dama1.webp"; // Using one of the bar photos as default fallback
+    const displayImage = session.imageUrl || fallbackImage;
+
     return (
         <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Navbar />
-            <div className="container" style={{ padding: '3rem 1rem', flex: 1 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem', alignItems: 'start' }}>
+            
+            {/* Compact Hero Header */}
+            <div className="hero-compact">
+                <div className="hero-bg" style={{ 
+                    backgroundImage: `url('${displayImage}')`,
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover'
+                }} />
+                <div className="hero-overlay" />
+                <div className="hero-content">
+                    <span className="gold-text" style={{ 
+                        fontSize: '0.8rem', 
+                        fontWeight: 700, 
+                        textTransform: 'uppercase', 
+                        letterSpacing: '3px',
+                        display: 'block',
+                        marginBottom: '1rem'
+                    }}>
+                        {session.system}
+                    </span>
+                    <h1 className="text-gradient" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>
+                        {session.title}
+                    </h1>
+                    <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            📅 {formatDate(session.date)}
+                        </span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            ⏰ {session.time}
+                        </span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            📍 {session.location}
+                        </span>
+                    </div>
+                </div>
+            </div>
 
-                    {/* Left Column: Details */}
-                    <div style={{ gridColumn: 'span 2' }}>
-                        <div style={{ position: 'relative', height: '400px', borderRadius: 'var(--radius-lg)', overflow: 'hidden', marginBottom: '2rem' }}>
-                            {session.imageUrl ? (
-                                <Image src={session.imageUrl} alt={session.title} fill style={{ objectFit: 'cover' }} unoptimized />
-                            ) : (
-                                <div style={{ width: '100%', height: '100%', background: 'var(--surface)' }} />
-                            )}
-                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem', background: 'linear-gradient(to top, rgba(15,23,42,0.9), transparent)' }}>
-                                <span style={{ color: 'var(--primary)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{session.system}</span>
-                                <h1 style={{ fontSize: '3rem', fontWeight: 800, lineHeight: 1.1 }}>{session.title}</h1>
-                            </div>
-                        </div>
-
-                        <div className="glass-panel" style={{ padding: '2rem' }}>
-                            <h2 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>Dettagli Sessione</h2>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+            <div className="container" style={{ padding: '2rem 1rem 5rem', flex: 1 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', alignItems: 'start' }} className="responsive-grid">
+                    
+                    {/* Left Column: Information */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                        <div className="glass-panel" style={{ padding: '2.5rem' }}>
+                            <h2 className="gold-text" style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Informazioni</h2>
+                            
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', marginBottom: '2.5rem' }}>
                                 <div>
-                                    <div style={{ color: 'var(--foreground-muted)', fontSize: '0.875rem' }}>Master</div>
-                                    <div style={{ fontSize: '1.125rem', fontWeight: 600 }}>{session.masterName}</div>
+                                    <h4 style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>Master / Organizzatore</h4>
+                                    <div style={{ fontSize: '1.25rem', fontWeight: 600, color: 'white' }}>{session.masterName}</div>
                                 </div>
-                                <div>
-                                    <div style={{ color: 'var(--foreground-muted)', fontSize: '0.875rem' }}>Data & Ora</div>
-                                    <div style={{ fontSize: '1.125rem', fontWeight: 600 }}>
-                                        {formatDate(session.date)} alle {session.time}
-                                    </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                    <h4 style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Agenda</h4>
                                     <AddToCalendar session={session} />
                                 </div>
-                                <div>
-                                    <div style={{ color: 'var(--foreground-muted)', fontSize: '0.875rem' }}>Luogo</div>
-                                    <div style={{ fontSize: '1.125rem', fontWeight: 600 }}>{session.location}</div>
-                                </div>
                             </div>
 
-                            <h3 style={{ marginBottom: '0.5rem', fontSize: '1.25rem' }}>Descrizione</h3>
-                            <p style={{ lineHeight: 1.7, color: 'var(--foreground-muted)' }}>{session.description}</p>
-                        </div>
-                    </div>
-
-                    {/* Right Column: Sidebar */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', minWidth: '300px' }}>
-                        <div className="glass-panel" style={{ padding: '1.5rem', textAlign: 'center' }}>
-                            <h3 style={{ marginBottom: '0.5rem', fontSize: '1.25rem' }}>Organizzatore?</h3>
-                            <p style={{ fontSize: '0.875rem', color: 'var(--foreground-muted)', marginBottom: '1rem' }}>
-                                Condividi il link nel gruppo per raccogliere iscrizioni!
+                            <h4 style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem' }}>Descrizione dell&apos;evento</h4>
+                            <p style={{ lineHeight: 1.8, color: 'var(--foreground-muted)', fontWeight: 300, fontSize: '1.05rem', whiteSpace: 'pre-wrap' }}>
+                                {session.description}
                             </p>
-                            <ShareSession session={session} />
                         </div>
 
-                        <JoinSessionForm session={session} />
+                        {/* Players List */}
+                        <div className="glass-panel" style={{ padding: '2.5rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '2rem' }}>
+                                <h2 className="gold-text" style={{ fontSize: '1.5rem' }}>Partecipanti</h2>
+                                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem' }}>
+                                    {session.currentPlayers.length} / {session.maxPlayers} posti occupati
+                                </span>
+                            </div>
 
-                        <div className="glass-panel" style={{ padding: '1.5rem' }}>
-                            <h3 style={{ marginBottom: '1rem', fontSize: '1.25rem' }}>Partecipanti ({session.currentPlayers.length}/{session.maxPlayers})</h3>
                             {session.currentPlayers.length > 0 ? (
-                                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem' }}>
                                     {session.currentPlayers.map((player, idx) => (
-                                        <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '0.875rem' }}>
+                                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                            <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--brand-gold)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.8rem' }}>
                                                 {player.name.charAt(0).toUpperCase()}
                                             </div>
-                                            <span>{player.name}</span>
-                                        </li>
+                                            <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>{player.name}</span>
+                                        </div>
                                     ))}
-                                </ul>
+                                </div>
                             ) : (
-                                <p style={{ color: 'var(--foreground-muted)', fontStyle: 'italic' }}>Nessun partecipante ancora.</p>
+                                <div style={{ textAlign: 'center', padding: '2rem', border: '1px dashed rgba(207,170,67,0.2)', borderRadius: 'var(--radius-md)' }}>
+                                    <p style={{ color: 'var(--foreground-muted)', fontStyle: 'italic', fontSize: '0.9rem' }}>Ancora nessun avventuriero si è fatto avanti. Sii il primo!</p>
+                                </div>
                             )}
 
-                            {/* WhatsApp Master Helper for confirmed players */}
+                            {/* WhatsApp Helper for Master */}
                             {session.currentPlayers.length > 0 && (
-                                <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
+                                <div style={{ marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                                     <a
                                         href={`https://wa.me/?text=${encodeURIComponent(
-                                            `Ciao a tutti! Vi scrivo per la sessione "${session.title}" del ${formatDate(session.date)} alle ${session.time}. Ci siete tutti?`
+                                            `Ciao a tutti! Vi scrivo per la sessione "${session.title}" del ${formatDate(session.date)} alle ${session.time} al Dama Cafè. Ci siete tutti?`
                                         )}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="btn"
-                                        style={{
-                                            background: 'var(--surface)',
-                                            border: '1px solid #25D366',
-                                            color: '#25D366',
-                                            width: '100%',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: '0.5rem',
-                                            fontSize: '0.875rem'
-                                        }}
+                                        className="btn btn-secondary"
+                                        style={{ width: '100%', fontSize: '0.8rem', gap: '0.75rem' }}
                                     >
-                                        💬 Chat Gruppo
+                                        💬 Crea/Apri Chat di Coordinamento
                                     </a>
                                 </div>
                             )}
                         </div>
                     </div>
 
+                    {/* Right Column: Dynamic Form / Sidebar */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', position: 'sticky', top: '100px' }}>
+                        <JoinSessionForm session={session} />
+                        
+                        <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>
+                            <h4 style={{ fontSize: '0.8rem', color: 'var(--brand-gold)', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '1rem' }}>Condividi</h4>
+                            <p style={{ fontSize: '0.85rem', color: 'var(--foreground-muted)', marginBottom: '1.5rem', fontWeight: 300 }}>
+                                Invita altri giocatori a unirsi a questo tavolo!
+                            </p>
+                            <ShareSession session={session} />
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
+            <style jsx>{`
+                .responsive-grid {
+                    grid-template-columns: 1fr 380px;
+                }
+                @media (max-width: 1024px) {
+                    .responsive-grid {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            `}</style>
         </main>
     );
 }

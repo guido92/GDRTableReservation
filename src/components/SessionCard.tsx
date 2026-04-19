@@ -24,22 +24,25 @@ export default function SessionCard({ session }: SessionCardProps) {
                         unoptimized
                     />
                 ) : (
-                    <div style={{ width: '100%', height: '100%', background: 'var(--surface)' }} />
+                    <div style={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(135deg, #150a06, #1a0f0a)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(207,170,67,0.2)" strokeWidth="1">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
                 )}
             </div>
             <div className={styles.content}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
                     <div className={styles.system}>{session.system}</div>
-                    <span style={{
-                        fontSize: '0.75rem',
-                        fontWeight: 700,
-                        padding: '0.25rem 0.5rem',
-                        borderRadius: '999px',
-                        background: session.type === 'BOARDGAME' ? 'rgba(236, 72, 153, 0.2)' : 'rgba(59, 130, 246, 0.2)',
-                        color: session.type === 'BOARDGAME' ? '#f472b6' : '#60a5fa',
-                        border: `1px solid ${session.type === 'BOARDGAME' ? 'rgba(236, 72, 153, 0.3)' : 'rgba(59, 130, 246, 0.3)'}`
-                    }}>
-                        {session.type === 'BOARDGAME' ? '🎲 BOARD' : '🐉 GDR'}
+                    <span className={`${styles.typeBadge} ${session.type === 'BOARDGAME' ? styles.typeBadgeBoard : styles.typeBadgeGdr}`}>
+                        {session.type === 'BOARDGAME' ? '🎲 Board' : '🐉 GDR'}
                     </span>
                 </div>
                 <h3 className={styles.title}>{session.title}</h3>
@@ -56,7 +59,7 @@ export default function SessionCard({ session }: SessionCardProps) {
                     <div className={`${styles.players} ${isFull ? styles.playersFull : styles.playersOpen}`}>
                         {isFull ? 'Tavolo Completo' : `${spotsLeft} posti liberi`}
                     </div>
-                    <Link href={`/session/${session.id}`} className="btn btn-primary" style={{ fontSize: '0.875rem', padding: '0.5rem 1rem' }}>
+                    <Link href={`/session/${session.id}`} className="btn btn-primary" style={{ fontSize: '0.75rem', padding: '0.5rem 1.25rem', letterSpacing: '1px' }}>
                         {isFull ? 'Dettagli' : 'Partecipa'}
                     </Link>
                 </div>
