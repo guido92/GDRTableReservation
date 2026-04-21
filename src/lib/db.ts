@@ -74,6 +74,17 @@ export async function getSessionById(id: string): Promise<Session | undefined> {
 
 export async function saveSession(session: Session): Promise<void> {
     try {
+        console.log('[saveSession] Saving session:', session.id);
+        
+        const dataDir = path.join(process.cwd(), 'src', 'data');
+        console.log('[saveSession] Data dir:', dataDir);
+        await fs.ensureDir(dataDir);
+        
+        if (!await fs.pathExists(DB_PATH)) {
+            console.log('[saveSession] Creating new db at:', DB_PATH);
+            await fs.writeFile(DB_PATH, JSON.stringify({ sessions: [] }, null, 2));
+        }
+        
         let rawData = await fs.readFile(DB_PATH, 'utf-8');
         rawData = rawData.replace(/^\uFEFF/, '');
         
@@ -83,6 +94,7 @@ export async function saveSession(session: Session): Promise<void> {
         sessions = await cleanupExpiredSessions(sessions);
         
         await fs.writeFile(DB_PATH, JSON.stringify({ sessions }, null, 2));
+        console.log('[saveSession] Done');
     } catch (error) {
         console.error("[saveSession] Error:", error);
         throw error;
