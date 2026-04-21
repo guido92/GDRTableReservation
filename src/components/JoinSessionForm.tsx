@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Session } from '@/types';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function JoinSessionForm({ session }: { session: Session }) {
     const [name, setName] = useState('');
@@ -24,10 +25,21 @@ export default function JoinSessionForm({ session }: { session: Session }) {
         setError('');
 
         try {
+            const playerId = `p-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+            console.log('[JoinSessionForm] Attempting join for player:', { name, email, playerId });
+            
             const res = await fetch(`/api/sessions/${session.id}/join`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ player: { id: crypto.randomUUID(), name, email, contactInfo, notes } }),
+                body: JSON.stringify({ 
+                    player: { 
+                        id: playerId, 
+                        name, 
+                        email, 
+                        contactInfo, 
+                        notes 
+                    } 
+                }),
             });
 
             if (!res.ok) {

@@ -19,14 +19,18 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Dama Cafè × La Taverna di Guido | Serate GDR dal Vivo",
-  description: "Prenota il tuo posto al tavolo per le serate di giochi di ruolo dal vivo al Dama Cafè di Gambettola. Dadi reali, avventure epiche e birre artigianali.",
-  keywords: "giochi di ruolo, GDR, boardgame, Dama Cafè, Gambettola, La Taverna di Guido, D&D, serate gioco",
+  title: "Dama Cafè × La Taverna | Serate GdR & Giochi da Tavolo",
+  description: "Il punto di ritrovo a Gambettola per GdR e giochi da tavolo dal vivo. Prenota il tuo posto, organizza la tua serata e unisciti alla nostra community.",
+  keywords: "giochi di ruolo, GdR, boardgames, giochi da tavolo, Dama Cafè, Gambettola, La Taverna di Guido, D&D, serate gioco",
   openGraph: {
-    title: "Dama Cafè × La Taverna di Guido",
-    description: "Serate di giochi di ruolo dal vivo. Prenota il tuo posto!",
+    title: "Dama Cafè × La Taverna | GdR & Board Games",
+    description: "Serate di giochi di ruolo e board games dal vivo. Unisciti alla community!",
     type: "website",
     locale: "it_IT",
+  },
+  icons: {
+    icon: "/damalogo.webp",
+    apple: "/damalogo.webp",
   },
 };
 

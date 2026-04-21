@@ -315,6 +315,13 @@ textarea:disabled {
   object-fit: cover;
   border: 2px solid rgba(207, 170, 67, 0.4);
   box-shadow: 0 0 15px rgba(207, 170, 67, 0.3);
+  transition: all 0.3s ease;
+}
+
+.hero-logo-link:hover .hero-logo-img {
+  transform: scale(1.1);
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 30px var(--brand-gold-glow);
 }
 
 .hero-logo-separator {

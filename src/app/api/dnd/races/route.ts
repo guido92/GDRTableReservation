@@ -26,6 +26,7 @@ export async function GET(request: Request) {
         const racesList = allRaces.map(r => ({
             name: r.name,
             nameEn: r.nameEn,
+            source: r.source,
             speed: r.speed,
             abilityBonuses: r.abilityBonuses,
             darkvision: r.darkvision,
@@ -37,6 +38,7 @@ export async function GET(request: Request) {
             subraces: r.subraces?.map(s => ({
                 name: s.name,
                 nameEn: s.nameEn,
+                source: s.source,
                 abilityBonuses: s.abilityBonuses
             })) || []
         }));

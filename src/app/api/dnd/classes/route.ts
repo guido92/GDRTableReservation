@@ -26,6 +26,7 @@ export async function GET(request: Request) {
         const classesList = allClasses.map(c => ({
             name: c.name,
             nameEn: c.nameEn,
+            source: c.source,
             hitDie: c.hitDie,
             savingThrows: c.savingThrows,
             numSkills: c.skillChoices.count,
@@ -37,7 +38,8 @@ export async function GET(request: Request) {
             } : null,
             subclasses: c.subclasses.map(s => ({
                 name: s.name,
-                nameEn: s.nameEn
+                nameEn: s.nameEn,
+                source: s.source
             }))
         }));
 

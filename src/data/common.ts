@@ -18,8 +18,8 @@ export interface Option {
 }
 
 export const SOURCES_CONFIG: { id: Source; name: string }[] = [
-    { id: 'PHB', name: 'Manuale del Giocatore (2014)' },
-    { id: 'PHB24', name: 'Manuale del Giocatore (2024)' },
+    { id: 'PHB', name: 'Manuale del Giocatore 2014 (5.0)' },
+    { id: 'PHB24', name: 'Manuale del Giocatore 2024 (5.5)' },
     { id: 'XGE', name: 'Guida di Xanathar (XGE)' },
     { id: 'TCE', name: 'Calderone di Tasha (TCE)' },
     { id: 'SCAG', name: 'Guida degli Avventurieri alla Costa della Spada (SCAG)' },

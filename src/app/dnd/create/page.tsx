@@ -6,6 +6,7 @@ import { Sparkles, Scroll, User, Dices, ChevronRight, MessageSquare } from 'luci
 import { BACKGROUNDS, ALIGNMENTS, SOURCES_CONFIG, Source, Option } from '@/data/dnd-data';
 import { CharacterData } from '@/types/dnd';
 import AiChatBuilder from '@/components/AiChatBuilder';
+import Navbar from '@/components/Navbar';
 
 // Types for dynamic data
 interface DynamicClass {
@@ -53,7 +54,7 @@ export default function CharactermancerV2() {
     const [step, setStep] = useState(0); // 0 = Intro/QuickBuild choice
     const [data, setData] = useState<CharacterData>(INITIAL_DATA);
     const [loading, setLoading] = useState(false);
-    const [activeSources, setActiveSources] = useState<Source[]>(['PHB', 'PHB24', 'TCE', 'XGE']);
+    const [activeSources, setActiveSources] = useState<Source[]>(['PHB24', 'TCE', 'XGE']);
 
     // Dynamic data state
     const [classes, setClasses] = useState<DynamicClass[]>([]);
@@ -181,55 +182,66 @@ export default function CharactermancerV2() {
         }
     };
 
-    // Styles
-    const containerStyle: React.CSSProperties = {
-        maxWidth: '1200px', margin: '0 auto', padding: '2rem 1rem', minHeight: '100vh',
-        display: 'flex', flexDirection: 'column'
-    };
+    // Styles (Updated to Bar Dama Theme)
     const cardStyle: React.CSSProperties = {
-        background: 'rgba(30, 41, 59, 0.4)', backdropFilter: 'blur(10px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '1rem',
+        background: 'var(--glass-bg)', backdropFilter: 'blur(20px)',
+        border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-md)',
         padding: '2rem', cursor: 'pointer', transition: 'all 0.3s ease',
-        position: 'relative', overflow: 'hidden'
+        position: 'relative', overflow: 'hidden', boxShadow: 'var(--glass-shadow)'
     };
     const headerStyle: React.CSSProperties = {
-        marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '1rem',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem'
+        marginBottom: '2.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '1.5rem',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem'
     };
 
     return (
-        <div style={{ backgroundColor: '#0f172a', color: '#f8fafc', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
-
-            <div style={containerStyle}>
-
+        <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <Navbar />
+            
+            <div className="container" style={{ padding: '4rem 1rem', flex: 1 }}>
                 {/* Header */}
-                <header style={headerStyle}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <div style={{ padding: '0.75rem', background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', borderRadius: '0.75rem', display: 'flex' }}>
-                            <Sparkles size={24} color="white" />
+                <header style={{ 
+                    marginBottom: '3rem', 
+                    borderBottom: '1px solid var(--border)', 
+                    paddingBottom: '1.5rem',
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center', 
+                    flexWrap: 'wrap', 
+                    gap: '1.5rem' 
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+                        <div style={{ padding: '0.75rem', background: 'rgba(207, 170, 67, 0.1)', borderRadius: '0.75rem', border: '1px solid var(--brand-gold)', display: 'flex' }}>
+                            <Sparkles size={24} className="gold-text" />
                         </div>
                         <div>
-                            <h1 style={{ fontSize: '1.5rem', fontWeight: 700, background: 'linear-gradient(to right, #e9d5ff, #818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>
-                                Charactermancer
+                            <h1 className="text-gradient" style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0 }}>
+                                Crea la tua Scheda
                             </h1>
-                            <p style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0 }}>Forgia il tuo destino</p>
+                            <p style={{ fontSize: '0.75rem', color: 'var(--brand-gold)', textTransform: 'uppercase', letterSpacing: '0.2em', margin: '0.25rem 0 0', fontWeight: 700 }}>Forgia il tuo destino</p>
                         </div>
                     </div>
 
-                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
                         {SOURCES_CONFIG.map(src => (
                             <button
                                 key={src.id}
                                 onClick={() => toggleSource(src.id)}
                                 style={{
-                                    padding: '0.25rem 0.75rem', fontSize: '0.75rem', fontWeight: 600, borderRadius: '0.5rem',
-                                    border: '1px solid', transition: 'all 0.2s',
-                                    background: activeSources.includes(src.id) ? 'rgba(168, 85, 247, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                                    borderColor: activeSources.includes(src.id) ? '#a855f7' : 'rgba(255, 255, 255, 0.1)',
-                                    color: activeSources.includes(src.id) ? '#d8b4fe' : '#64748b'
+                                    padding: '0.4rem 1rem', 
+                                    fontSize: '0.7rem', 
+                                    fontWeight: 700, 
+                                    borderRadius: '4px',
+                                    border: '1px solid', 
+                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                    background: activeSources.includes(src.id) ? 'rgba(207, 170, 67, 0.15)' : 'rgba(255, 255, 255, 0.03)',
+                                    borderColor: activeSources.includes(src.id) ? 'var(--brand-gold)' : 'rgba(255, 255, 255, 0.1)',
+                                    color: activeSources.includes(src.id) ? 'white' : 'rgba(255, 255, 255, 0.4)',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '1px'
                                 }}
                             >
-                                {src.name.split(' (')[0]}
+                                {src.name}
                             </button>
                         ))}
                     </div>
@@ -239,76 +251,110 @@ export default function CharactermancerV2() {
 
                     {/* SELEZIONE INIZIALE (Home) */}
                     {step === 0 && (
-                        <motion.div
-                            key="intro"
-                            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
-                            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', maxWidth: '1100px', margin: '0 auto', width: '100%' }}
-                        >
-                            {/* Manual Mode */}
-                            <div
-                                onClick={() => setStep(1)}
-                                style={cardStyle}
-                                onMouseEnter={(e) => e.currentTarget.style.borderColor = '#8b5cf6'}
-                                onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
+                            <motion.div
+                                key="intro"
+                                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
+                                style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', maxWidth: '1100px', margin: '0 auto', width: '100%' }}
                             >
-                                <div style={{ marginBottom: '1.5rem', width: '64px', height: '64px', background: '#1e293b', borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <User size={32} color="#818cf8" />
-                                </div>
-                                <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>Creazione Guidata</h2>
-                                <p style={{ color: '#94a3b8', lineHeight: 1.5, marginBottom: '1rem' }}>Scegli Razza, Classe e Background. L'AI penserà ai dettagli.</p>
-                                <div style={{ display: 'flex', alignItems: 'center', color: '#a78bfa', fontWeight: 600, fontSize: '0.875rem' }}>
-                                    Inizia il Rituale <ChevronRight size={16} style={{ marginLeft: '0.25rem' }} />
-                                </div>
-                            </div>
-
-                            {/* Chat Mode */}
-                            <div
-                                onClick={() => setStep(2)}
-                                style={cardStyle}
-                                onMouseEnter={(e) => e.currentTarget.style.borderColor = '#ec4899'}
-                                onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
-                            >
-                                <div style={{ marginBottom: '1.5rem', width: '64px', height: '64px', background: '#1e293b', borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <MessageSquare size={32} color="#f472b6" />
-                                </div>
-                                <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>Creazione Narrativa</h2>
-                                <p style={{ color: '#94a3b8', lineHeight: 1.5, marginBottom: '1rem' }}>Parla con il Dungeon Master AI. Descrivi il tuo eroe e lascialo prendere vita.</p>
-                                <div style={{ display: 'flex', alignItems: 'center', color: '#f472b6', fontWeight: 600, fontSize: '0.875rem' }}>
-                                    Entra nella Tana <ChevronRight size={16} style={{ marginLeft: '0.25rem' }} />
-                                </div>
-                            </div>
-
-                            {/* Quick Build */}
-                            <div style={{ ...cardStyle, cursor: 'default' }}>
-                                <div style={{ marginBottom: '1.5rem', width: '64px', height: '64px', background: '#1e293b', borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Dices size={32} color="#10b981" />
-                                </div>
-                                <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>Quick Build</h2>
-                                <p style={{ color: '#94a3b8', lineHeight: 1.5, marginBottom: '1.5rem' }}>Generazione istantanea per NPC o personaggi veloci.</p>
-
-                                <div>
-                                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#64748b', marginBottom: '0.5rem' }}>Scegli il Livello</label>
-                                    <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                        {[1, 3, 5, 10].map(lvl => (
-                                            <button
-                                                key={lvl}
-                                                disabled={loading}
-                                                onClick={() => quickBuild(lvl)}
-                                                style={{
-                                                    flex: 1, padding: '0.5rem', background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)',
-                                                    borderRadius: '0.5rem', color: '#f8fafc', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s',
-                                                }}
-                                                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(16, 185, 129, 0.1)'; e.currentTarget.style.color = '#34d399'; }}
-                                                onMouseLeave={(e) => { e.currentTarget.style.background = '#1e293b'; e.currentTarget.style.color = '#f8fafc'; }}
-                                            >
-                                                Lv {lvl}
-                                            </button>
-                                        ))}
+                                {/* Manual Mode */}
+                                <div
+                                    onClick={() => setStep(1)}
+                                    className="glass-panel"
+                                    style={{ padding: '2.5rem', cursor: 'pointer' }}
+                                >
+                                    <div style={{ marginBottom: '1.5rem', width: '56px', height: '56px', background: 'rgba(207, 170, 67, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(207, 170, 67, 0.2)' }}>
+                                        <User size={28} className="gold-text" />
                                     </div>
-                                    {loading && <div style={{ textAlign: 'center', fontSize: '0.75rem', color: '#34d399', marginTop: '1rem', animation: 'pulse 2s infinite' }}>Evocazione dello spirito (AI) in corso...</div>}
+                                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.75rem', color: 'white' }}>Creazione Guidata</h2>
+                                    <p style={{ color: 'var(--foreground-muted)', lineHeight: 1.6, marginBottom: '1.5rem', fontSize: '0.95rem' }}>Scegli Razza, Classe e Background passo dopo passo. L&apos;AI penserà ai dettagli narrativi.</p>
+                                    <div className="gold-text" style={{ display: 'flex', alignItems: 'center', fontWeight: 700, fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '2px' }}>
+                                        Inizia il Rituale <ChevronRight size={16} style={{ marginLeft: '0.5rem' }} />
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
+
+                                {/* Chat Mode */}
+                                <div
+                                    onClick={() => setStep(2)}
+                                    className="glass-panel"
+                                    style={{ padding: '2.5rem', cursor: 'pointer' }}
+                                >
+                                    <div style={{ marginBottom: '1.5rem', width: '56px', height: '56px', background: 'rgba(207, 170, 67, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(207, 170, 67, 0.2)' }}>
+                                        <MessageSquare size={28} className="gold-text" />
+                                    </div>
+                                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.75rem', color: 'white' }}>Creazione Narrativa</h2>
+                                    <p style={{ color: 'var(--foreground-muted)', lineHeight: 1.6, marginBottom: '1.5rem', fontSize: '0.95rem' }}>Parla con il Dungeon Master AI. Descrivi il tuo eroe a parole tue e lascialo prendere vita.</p>
+                                    <div className="gold-text" style={{ display: 'flex', alignItems: 'center', fontWeight: 700, fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '2px' }}>
+                                        Entra nella Tana <ChevronRight size={16} style={{ marginLeft: '0.5rem' }} />
+                                    </div>
+                                </div>
+
+                                {/* Quick Build */}
+                                <div className="glass-panel" style={{ padding: '2.5rem' }}>
+                                    <div style={{ marginBottom: '1.5rem', width: '56px', height: '56px', background: 'rgba(207, 170, 67, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(207, 170, 67, 0.2)' }}>
+                                        <Dices size={28} className="gold-text" />
+                                    </div>
+                                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.75rem', color: 'white' }}>Evocazione Rapida</h2>
+                                    <p style={{ color: 'var(--foreground-muted)', lineHeight: 1.6, marginBottom: '1.5rem', fontSize: '0.95rem' }}>Generazione istantanea basata sul livello. Ideale per NPC o personaggi d&apos;emergenza.</p>
+
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--brand-gold)', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Scegli il Livello</label>
+                                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                            {[1, 3, 5, 10].map(lvl => (
+                                                <button
+                                                    key={lvl}
+                                                    disabled={loading}
+                                                    onClick={() => quickBuild(lvl)}
+                                                    className="btn-secondary"
+                                                    style={{
+                                                        flex: 1, padding: '0.6rem', fontSize: '0.8rem'
+                                                    }}
+                                                >
+                                                    Lv {lvl}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        {loading && <div className="gold-text" style={{ textAlign: 'center', fontSize: '0.75rem', marginTop: '1rem', animation: 'pulse 2s infinite', fontWeight: 600 }}>Evocazione dello spirito (AI) in corso...</div>}
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* TOOL EXPLANATION SECTION */}
+                            <motion.div 
+                                initial={{ opacity: 0 }} 
+                                animate={{ opacity: 1 }} 
+                                transition={{ delay: 0.5 }}
+                                className="glass-panel" 
+                                style={{ maxWidth: '1100px', margin: '0 auto', width: '100%', padding: '3rem' }}
+                            >
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem' }}>
+                                    <div>
+                                        <h3 className="gold-text" style={{ fontSize: '1.4rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                            <Sparkles size={20} /> Cervello Artificiale
+                                        </h3>
+                                        <p style={{ color: 'var(--foreground-muted)', fontSize: '0.9rem', lineHeight: 1.7, fontWeight: 300 }}>
+                                            Utilizziamo l&apos;intelligenza artificiale di <strong>Google Gemini</strong> per interpretare le tue idee. Non si limita a generare dati casuali: crea backstory profonde e personalità uniche che si integrano nel mondo di gioco.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h3 className="gold-text" style={{ fontSize: '1.4rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                            <Scroll size={20} /> Regole Ufficiali
+                                        </h3>
+                                        <p style={{ color: 'var(--foreground-muted)', fontSize: '0.9rem', lineHeight: 1.7, fontWeight: 300 }}>
+                                            Sotto il cofano, il motore carica database estesi (5etools) per garantire che ogni talento, incantesimo o privilegio sia fedele al manuale. Il sistema valida ogni statistica per assicurare un personaggio bilanciato.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h3 className="gold-text" style={{ fontSize: '1.4rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                            <Scroll size={20} /> Pipeline PDF
+                                        </h3>
+                                        <p style={{ color: 'var(--foreground-muted)', fontSize: '0.9rem', lineHeight: 1.7, fontWeight: 300 }}>
+                                            Una volta completato il "rituale", il sistema esegue una scansione finale dei dati, corregge automaticamente eventuali mancanze (DataFixer) e produce una scheda PDF pronta per la stampa o l&apos;uso digitale.
+                                        </p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
                     )}
 
                     {/* WIZARD FLOW */}
@@ -363,7 +409,7 @@ export default function CharactermancerV2() {
 
                 </AnimatePresence>
             </div>
-        </div>
+        </main>
     );
 }
 
@@ -402,29 +448,32 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
             style={{ width: '100%', maxWidth: '1000px', margin: '0 auto' }}
         >
             {/* Progress Bar */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem', position: 'relative' }}>
-                <div style={{ position: 'absolute', top: '20%', left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.1)', zIndex: 0 }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2.5rem', position: 'relative', padding: '0 1rem' }}>
+                <div style={{ position: 'absolute', top: '25%', left: '2rem', right: '2rem', height: '1px', background: 'var(--border)', zIndex: 0 }} />
                 {steps.map((s, i) => (
                     <div key={i} style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                         <div style={{
                             width: '32px', height: '32px', borderRadius: '50%',
-                            background: i <= wizardStep ? '#7c3aed' : '#1e293b',
-                            border: i === wizardStep ? '2px solid #a78bfa' : '2px solid rgba(255,255,255,0.1)',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.875rem'
+                            background: i <= wizardStep ? 'var(--brand-gold)' : 'var(--background)',
+                            border: '1px solid var(--brand-gold)',
+                            boxShadow: i === wizardStep ? '0 0 15px var(--brand-gold-glow)' : '',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                            fontWeight: 800, fontSize: '0.8rem', color: i <= wizardStep ? 'black' : 'var(--brand-gold)',
+                            transition: 'all 0.3s ease'
                         }}>
                             {i + 1}
                         </div>
-                        <div style={{ fontSize: '0.65rem', color: i <= wizardStep ? 'white' : '#64748b', fontWeight: 600, display: 'none' /* Hide text on mobile maybe, keep for now */ }}>{s.title}</div>
+                        <div style={{ fontSize: '0.6rem', color: i <= wizardStep ? 'white' : 'var(--foreground-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>{s.title}</div>
                     </div>
                 ))}
             </div>
 
-            <div style={{ background: '#13141a', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '1.5rem', padding: '2rem', minHeight: '500px', display: 'flex', flexDirection: 'column' }}>
+            <div className="glass-panel" style={{ padding: '2.5rem', minHeight: '550px', display: 'flex', flexDirection: 'column' }}>
 
-                <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem', background: 'linear-gradient(to right, white, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                <h2 className="text-gradient" style={{ fontSize: '2.25rem', fontWeight: 800, marginBottom: '0.5rem' }}>
                     {steps[wizardStep].title}
                 </h2>
-                <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>{steps[wizardStep].subtitle}</p>
+                <p style={{ color: 'var(--foreground-muted)', marginBottom: '2.5rem', fontWeight: 300 }}>{steps[wizardStep].subtitle}</p>
 
                 <div style={{ flex: 1 }}>
                     {/* STEP 0: CLASS & RACE */}
@@ -434,12 +483,12 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                             <div>
                                 <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <Sparkles size={18} color="#f87171" />
-                                    <h3 style={{ fontWeight: 600, color: 'white' }}>Classe ({dataLoading ? '...' : classes.length})</h3>
+                                    <h3 style={{ fontWeight: 700, color: 'white', textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '1px' }}>Classe ({dataLoading ? '...' : classes.length})</h3>
                                 </div>
                                 {dataLoading ? (
-                                    <div style={{ color: '#a78bfa', padding: '1rem', textAlign: 'center' }}>Caricamento classi...</div>
+                                    <div style={{ color: 'var(--brand-gold)', padding: '2rem', textAlign: 'center', animation: 'pulse 2s infinite' }}>Canalizzazione dei poteri (classi)...</div>
                                 ) : (
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.5rem', maxHeight: '300px', overflowY: 'auto' }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '0.6rem', maxHeight: '300px', overflowY: 'auto', paddingRight: '0.5rem' }}>
                                         {classes.map((c: DynamicClass) => (
                                             <div key={c.name} onClick={() => {
                                                 updateData('class', c.name);
@@ -447,15 +496,21 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                                                 const hd = c.hitDie ? `d${c.hitDie}` : 'd8';
                                                 updateData('hitDice', { total: data.level, die: hd });
                                             }}
+                                                className="glass-panel"
                                                 style={{
-                                                    padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s',
-                                                    background: data.class.includes(c.name) ? 'rgba(139, 92, 246, 0.2)' : 'rgba(255,255,255,0.05)',
-                                                    borderColor: data.class.includes(c.name) ? '#8b5cf6' : 'rgba(255,255,255,0.05)',
-                                                    color: data.class.includes(c.name) ? '#ddd6fe' : '#94a3b8'
+                                                    padding: '0.8rem', cursor: 'pointer', textAlign: 'center',
+                                                    background: data.class.includes(c.name) ? 'rgba(207, 170, 67, 0.15)' : '',
+                                                    borderColor: data.class.includes(c.name) ? 'var(--brand-gold)' : '',
+                                                    color: data.class.includes(c.name) ? 'white' : 'var(--foreground-muted)'
                                                 }}>
-                                                <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
+                                                <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>
                                                     {c.name}
                                                 </div>
+                                                {c.source && (
+                                                    <div style={{ fontSize: '0.65rem', color: 'var(--brand-gold)', opacity: 0.7, marginTop: '2px' }}>
+                                                        {c.source === 'PHB' ? 'Ed. 5.0 (2014)' : c.source === 'PHB24' || c.source === 'XPHB' ? 'Ed. 5.5 (2024)' : c.source}
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>
@@ -475,7 +530,9 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                                         >
                                             <option value="">Seleziona...</option>
                                             {classes.find((c: DynamicClass) => c.name === data.class.replace(/ *\(.*\)/, ''))?.subclasses?.map((s: { name: string; nameEn: string; source?: string }) => (
-                                                <option key={s.name} value={s.name}>{s.name}</option>
+                                                <option key={s.name} value={s.name}>
+                                                    {s.name} {s.source === 'PHB' ? '(5.0)' : s.source === 'PHB24' || s.source === 'XPHB' ? '(5.5)' : `(${s.source})`}
+                                                </option>
                                             ))}
                                         </select>
                                     </div>
@@ -486,23 +543,29 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                             <div>
                                 <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <User size={18} color="#60a5fa" />
-                                    <h3 style={{ fontWeight: 600, color: 'white' }}>Razza ({dataLoading ? '...' : races.length})</h3>
+                                    <h3 style={{ fontWeight: 700, color: 'white', textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '1px' }}>Razza ({dataLoading ? '...' : races.length})</h3>
                                 </div>
                                 {dataLoading ? (
-                                    <div style={{ color: '#60a5fa', padding: '1rem', textAlign: 'center' }}>Caricamento razze...</div>
+                                    <div style={{ color: 'var(--brand-gold)', padding: '2rem', textAlign: 'center', animation: 'pulse 2s infinite' }}>Evochiamo gli antenati (razze)...</div>
                                 ) : (
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '0.5rem', maxHeight: '300px', overflowY: 'auto' }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '0.6rem', maxHeight: '300px', overflowY: 'auto', paddingRight: '0.5rem' }}>
                                         {races.map((r: DynamicRace) => (
                                             <div key={r.name} onClick={() => updateData('race', r.name)}
+                                                className="glass-panel"
                                                 style={{
-                                                    padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s',
-                                                    background: data.race.includes(r.name) ? 'rgba(59, 130, 246, 0.2)' : 'rgba(255,255,255,0.05)',
-                                                    borderColor: data.race.includes(r.name) ? '#3b82f6' : 'rgba(255,255,255,0.05)',
-                                                    color: data.race.includes(r.name) ? '#bfdbfe' : '#94a3b8'
+                                                    padding: '0.8rem', cursor: 'pointer', textAlign: 'center',
+                                                    background: data.race.includes(r.name) ? 'rgba(207, 170, 67, 0.15)' : '',
+                                                    borderColor: data.race.includes(r.name) ? 'var(--brand-gold)' : '',
+                                                    color: data.race.includes(r.name) ? 'white' : 'var(--foreground-muted)'
                                                 }}>
-                                                <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>
+                                                <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>
                                                     {r.name}
                                                 </div>
+                                                {r.source && (
+                                                    <div style={{ fontSize: '0.65rem', color: 'var(--brand-gold)', opacity: 0.7, marginTop: '2px' }}>
+                                                        {r.source === 'PHB' ? 'Ed. 5.0 (2014)' : r.source === 'PHB24' || r.source === 'XPHB' ? 'Ed. 5.5 (2024)' : r.source}
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>
@@ -522,7 +585,9 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                                         >
                                             <option value="">Seleziona...</option>
                                             {races.find((r: DynamicRace) => r.name === data.race.split(' (')[0])?.subraces?.map((s: { name: string; nameEn: string; abilityBonuses: Record<string, number>; source?: string }) => (
-                                                <option key={s.name} value={s.name}>{s.name}</option>
+                                                <option key={s.name} value={s.name}>
+                                                    {s.name} {s.source === 'PHB' ? '(5.0)' : s.source === 'PHB24' || s.source === 'XPHB' ? '(5.5)' : `(${s.source})`}
+                                                </option>
                                             ))}
                                         </select>
                                     </div>
@@ -534,8 +599,11 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                                         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(lvl => (
                                             <div key={lvl} onClick={() => updateData('level', lvl)}
                                                 style={{
-                                                    width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0.25rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem',
-                                                    background: data.level === lvl ? '#f59e0b' : 'rgba(255,255,255,0.1)', color: data.level === lvl ? 'black' : '#94a3b8'
+                                                    width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px', cursor: 'pointer', fontWeight: 800, fontSize: '0.85rem',
+                                                    background: data.level === lvl ? 'var(--brand-gold)' : 'rgba(255,255,255,0.05)', 
+                                                    color: data.level === lvl ? 'black' : 'var(--foreground-muted)',
+                                                    border: '1px solid', borderColor: data.level === lvl ? 'var(--brand-gold)' : 'rgba(255,255,255,0.05)',
+                                                    transition: 'all 0.2s'
                                                 }}>
                                                 {lvl}
                                             </div>
@@ -557,19 +625,19 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                             <BioStep data={data} updateData={updateData} />
 
-                            <div style={{ marginTop: '3rem', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '2rem' }}>
-                                <div style={{ background: 'rgba(124, 58, 237, 0.1)', border: '1px solid #7c3aed', borderRadius: '1rem', padding: '1.5rem', marginBottom: '1.5rem', display: 'inline-block', minWidth: '300px' }}>
-                                    <User size={32} color="#a78bfa" style={{ marginBottom: '0.5rem' }} />
-                                    <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'white' }}>{data.characterName || 'Senza Nome'}</h3>
-                                    <div style={{ color: '#a78bfa', fontSize: '0.9rem' }}>{data.race} {data.class} (Lv {data.level})</div>
+                            <div style={{ marginTop: '3rem', textAlign: 'center', borderTop: '1px solid var(--border)', paddingTop: '2.5rem' }}>
+                                <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', minWidth: '320px', border: '1px solid var(--brand-gold)' }}>
+                                    <div style={{ width: '64px', height: '64px', background: 'rgba(207, 170, 67, 0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--brand-gold)' }}>
+                                        <User size={32} className="gold-text" />
+                                    </div>
+                                    <div>
+                                        <h3 className="gold-text" style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>{data.characterName || 'Senza Nome'}</h3>
+                                        <div style={{ color: 'var(--foreground-muted)', fontSize: '0.95rem', fontWeight: 600, marginTop: '0.25rem' }}>{data.race} {data.class} (Livello {data.level})</div>
+                                    </div>
                                 </div>
                                 <br />
-                                <button onClick={onFinish} disabled={loading}
-                                    style={{
-                                        padding: '1rem 3rem', background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', color: 'white', fontWeight: 700, borderRadius: '0.75rem',
-                                        border: 'none', cursor: 'pointer', boxShadow: '0 4px 20px 0 rgba(124, 58, 237, 0.5)', fontSize: '1.1rem', transition: 'all 0.2s'
-                                    }}>
-                                    {loading ? 'Evocazione in corso...' : 'Genera Scheda PDF'}
+                                <button onClick={onFinish} disabled={loading} className="btn-primary" style={{ padding: '1rem 4rem', fontSize: '1.1rem' }}>
+                                    {loading ? 'Invocazione Finali...' : 'Concludi il Rituale'}
                                 </button>
                             </div>
                         </div>
@@ -577,9 +645,9 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
                 </div>
 
                 {/* Footer Navigation */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '1.5rem', marginTop: '1rem' }}>
-                    {wizardStep === 0 ? <button onClick={onCancel} style={{ ...navBtnStyle, color: '#ef4444' }}>Annulla</button> : <button onClick={prev} style={navBtnStyle}>&larr; Indietro</button>}
-                    {wizardStep < 6 && <button onClick={next} style={{ ...navBtnStyle, background: 'white', color: 'black' }}>Avanti &rarr;</button>}
+                <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border)', paddingTop: '2rem', marginTop: 'auto' }}>
+                    {wizardStep === 0 ? <button onClick={onCancel} className="btn-secondary" style={{ color: '#ff6b6b' }}>Annulla</button> : <button onClick={prev} className="btn-secondary">&larr; Indietro</button>}
+                    {wizardStep < 6 && <button onClick={next} className="btn-primary">Avanti &rarr;</button>}
                 </div>
 
             </div>
@@ -587,8 +655,8 @@ function WizardFlow({ data, updateData, activeSources, filterOptions, onCancel, 
     );
 }
 
-const labelStyle: React.CSSProperties = { display: 'block', color: '#94a3b8', fontSize: '0.75rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase' };
-const inputStyle: React.CSSProperties = { width: '100%', background: '#0a0a0c', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.5rem', padding: '0.75rem', color: '#cbd5e1', outline: 'none' };
-const navBtnStyle: React.CSSProperties = { padding: '0.75rem 1.5rem', borderRadius: '0.5rem', fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer', border: 'none', background: 'rgba(255,255,255,0.1)', color: 'white' };
-const cardStyle = { background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '1rem', padding: '1.5rem', cursor: 'pointer', transition: 'all 0.2s', borderLeft: '4px solid transparent' };
+const labelStyle: React.CSSProperties = { display: 'block', color: 'var(--brand-gold)', fontSize: '0.75rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '1px' };
+const inputStyle: React.CSSProperties = { width: '100%', background: 'rgba(20, 15, 12, 0.5)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: '0.75rem', color: 'var(--foreground)', outline: 'none' };
+const navBtnStyle: React.CSSProperties = { padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-sm)', fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer' };
+const cardStyle = { background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-md)', padding: '1.5rem', cursor: 'pointer', transition: 'all 0.3s ease' };
 const iconBoxStyle = { width: '32px', height: '32px', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' };

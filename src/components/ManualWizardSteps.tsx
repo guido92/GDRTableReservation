@@ -1,4 +1,4 @@
-﻿
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BACKGROUNDS, PERSONALITY_TRAITS, IDEALS, BONDS, FLAWS } from '@/data/dnd-data';
@@ -127,10 +127,35 @@ const getSpellLimits = (cls: string, sub: string, lvl: number, abs: AbilityScore
     return limits;
 };
 
-// --- STYLES ---
-const cardStyle = { background: 'rgba(30, 41, 59, 0.4)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '1rem', padding: '1.5rem', marginBottom: '1rem' };
-const labelStyle: React.CSSProperties = { display: 'block', color: '#94a3b8', fontSize: '0.75rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase' };
-const inputStyle = { width: '100%', background: '#0a0a0c', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.5rem', padding: '0.5rem', color: '#cbd5e1', outline: 'none' };
+// --- STYLES (Aligned with Bar Dama) ---
+const cardStyle = { 
+    background: 'var(--glass-bg)', 
+    backdropFilter: 'blur(20px)',
+    border: '1px solid var(--glass-border)', 
+    borderRadius: 'var(--radius-md)', 
+    padding: '1.5rem', 
+    boxShadow: 'var(--glass-shadow)',
+    marginBottom: '1rem' 
+};
+const labelStyle: React.CSSProperties = { 
+    display: 'block', 
+    color: 'var(--brand-gold)', 
+    fontSize: '0.75rem', 
+    fontWeight: 700, 
+    marginBottom: '0.5rem', 
+    textTransform: 'uppercase',
+    letterSpacing: '1px'
+};
+const inputStyle = { 
+    width: '100%', 
+    background: 'rgba(20, 15, 12, 0.5)', 
+    border: '1px solid var(--border)', 
+    borderRadius: 'var(--radius-sm)', 
+    padding: '0.75rem', 
+    color: 'var(--foreground)', 
+    outline: 'none',
+    transition: 'all 0.3s ease'
+};
 
 // --- ABILITY SCORES STEP ---
 export function AbilityScoreStep({ data, updateData, races = [], classes = [] }: { data: CharacterData, updateData: (f: keyof CharacterData, v: any) => void, races?: DynamicRace[], classes?: DynamicClass[] }) {
@@ -204,9 +229,9 @@ export function AbilityScoreStep({ data, updateData, races = [], classes = [] }:
 
             {/* Mode Selector */}
             <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', justifyContent: 'center' }}>
-                <button onClick={() => setMode('pointBuy')} style={{ ...tabStyle, background: mode === 'pointBuy' ? '#7c3aed' : 'rgba(255,255,255,0.05)' }}>Point Buy</button>
-                <button onClick={() => setMode('standard')} style={{ ...tabStyle, background: mode === 'standard' ? '#7c3aed' : 'rgba(255,255,255,0.05)' }}>Standard Array</button>
-                <button onClick={() => setMode('roll')} style={{ ...tabStyle, background: mode === 'roll' ? '#7c3aed' : 'rgba(255,255,255,0.05)' }}>Tira i Dadi</button>
+                <button onClick={() => setMode('pointBuy')} className="btn-secondary" style={{ padding: '0.5rem 1.25rem', background: mode === 'pointBuy' ? 'var(--brand-gold)' : '', color: mode === 'pointBuy' ? 'black' : '' }}>Point Buy</button>
+                <button onClick={() => setMode('standard')} className="btn-secondary" style={{ padding: '0.5rem 1.25rem', background: mode === 'standard' ? 'var(--brand-gold)' : '', color: mode === 'standard' ? 'black' : '' }}>Standard Array</button>
+                <button onClick={() => setMode('roll')} className="btn-secondary" style={{ padding: '0.5rem 1.25rem', background: mode === 'roll' ? 'var(--brand-gold)' : '', color: mode === 'roll' ? 'black' : '' }}>Tira i Dadi</button>
             </div>
 
             {mode === 'pointBuy' && (
@@ -237,8 +262,8 @@ export function AbilityScoreStep({ data, updateData, races = [], classes = [] }:
                     const mod = Math.floor((total - 10) / 2);
 
                     return (
-                        <div key={stat} style={{ background: '#1e293b', padding: '1rem', borderRadius: '0.75rem', textAlign: 'center', border: '1px solid rgba(255,255,255,0.05)' }}>
-                            <div style={{ fontWeight: 700, color: '#a78bfa', marginBottom: '0.5rem' }}>{stat}</div>
+                        <div key={stat} className="glass-panel" style={{ padding: '1.25rem', textAlign: 'center' }}>
+                            <div className="gold-text" style={{ fontWeight: 800, marginBottom: '0.75rem', fontSize: '0.9rem' }}>{stat}</div>
                             {mode === 'pointBuy' ? (
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                                     <button onClick={() => handlePointBuy(stat, data.abilities[stat] - 1)} style={btnMiniStyle}>-</button>
@@ -267,9 +292,9 @@ export function AbilityScoreStep({ data, updateData, races = [], classes = [] }:
             </div>
 
             {/* HP & HIT DICE MANAGEMENT */}
-            <div style={{ marginTop: '2rem', padding: '1.5rem', background: 'rgba(239, 68, 68, 0.1)', borderRadius: '1rem', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
-                <h4 style={{ margin: '0 0 1rem 0', color: '#fca5a5', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <div style={{ padding: '0.25rem', background: '#ef4444', borderRadius: '0.25rem', color: 'black' }}>HP & Dadi Vita</div>
+            <div style={{ marginTop: '2.5rem', padding: '2rem', background: 'rgba(207, 170, 67, 0.03)', borderRadius: '1rem', border: '1px solid var(--border)' }}>
+                <h4 style={{ margin: '0 0 1.5rem 0', color: 'var(--brand-gold)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{ padding: '0.25rem 0.6rem', background: 'var(--brand-gold)', borderRadius: '4px', color: 'black', fontWeight: 800, fontSize: '0.7rem', textTransform: 'uppercase' }}>Vitalità</div>
                     Punti Ferita
                 </h4>
 
@@ -425,20 +450,21 @@ export function SkillsStep({ data, updateData, classes = [] }: { data: Character
                         <div
                             key={skill}
                             onClick={() => toggleSkill(skill)}
+                            className="glass-panel"
                             style={{
-                                padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid', cursor: isBgSkill ? 'default' : 'pointer',
-                                background: (isSelected || isBgSkill) ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255,255,255,0.05)',
-                                borderColor: (isSelected || isBgSkill) ? '#10b981' : 'rgba(255,255,255,0.05)',
-                                color: (isSelected || isBgSkill) ? '#d1fae5' : '#94a3b8',
+                                padding: '1rem', cursor: isBgSkill ? 'default' : 'pointer',
+                                background: (isSelected || isBgSkill) ? 'rgba(207, 170, 67, 0.1)' : '',
+                                borderColor: (isSelected || isBgSkill) ? 'var(--brand-gold)' : '',
+                                color: (isSelected || isBgSkill) ? 'white' : 'var(--foreground-muted)',
                                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                                opacity: isBgSkill ? 0.7 : 1
+                                opacity: isBgSkill ? 0.6 : 1
                             }}
                         >
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <span>{skill}</span>
-                                {isBgSkill && <span style={{ fontSize: '0.65rem', color: '#6ee7b7' }}>(Background)</span>}
+                                <span style={{ fontWeight: 600 }}>{skill}</span>
+                                {isBgSkill && <span className="gold-text" style={{ fontSize: '0.65rem' }}>(Background)</span>}
                             </div>
-                            {(isSelected || isBgSkill) && <Sparkles size={14} />}
+                            {(isSelected || isBgSkill) && <Sparkles size={14} className="gold-text" />}
                         </div>
                     );
                 })}
@@ -657,12 +683,11 @@ export function AdvancedOptionsStep({ data, updateData, activeSources = ['PHB', 
                         </select>
                     )}
 
-                    {/* Show selected feats that are NOT class features (heuristic: source is strict) */}
                     <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                         {data.features.filter(f => !['Class', 'Race'].includes(f.source || '') && filteredFeats.some(api => api.name === f.name)).map(f => (
-                            <div key={f.name} style={{ background: '#4c1d95', padding: '0.5rem 1rem', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '0.5rem', border: '1px solid #8b5cf6' }}>
-                                <span>{f.name}</span>
-                                <button onClick={() => removeFeat(f.name)} style={{ background: 'none', border: 'none', color: '#fca5a5', cursor: 'pointer', fontWeight: 'bold' }}>Ã—</button>
+                            <div key={f.name} className="glass-panel" style={{ padding: '0.4rem 1rem', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '0.5rem', border: '1px solid var(--brand-gold)', background: 'rgba(207, 170, 67, 0.1)' }}>
+                                <span style={{ fontSize: '0.85rem' }}>{f.name}</span>
+                                <button onClick={() => removeFeat(f.name)} style={{ background: 'none', border: 'none', color: '#ff6b6b', cursor: 'pointer', fontWeight: 'bold' }}>×</button>
                             </div>
                         ))}
                     </div>
@@ -676,23 +701,23 @@ export function AdvancedOptionsStep({ data, updateData, activeSources = ['PHB', 
                     </h3>
 
                     {/* LIMITS DISPLAY */}
-                    <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', background: 'rgba(0,0,0,0.3)', padding: '0.75rem', borderRadius: '0.5rem' }}>
-                        <div style={{ color: currentCantrips.length > limits.cantrips ? '#ef4444' : '#94a3b8' }}>
-                            <span style={{ fontWeight: 700, color: 'white' }}>Trucchetti:</span> {currentCantrips.length} / {limits.cantrips}
+                    <div className="glass-panel" style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem', padding: '1rem', flexWrap: 'wrap' }}>
+                        <div style={{ color: currentCantrips.length > limits.cantrips ? '#ff6b6b' : 'var(--foreground-muted)', fontSize: '0.9rem' }}>
+                            <span style={{ fontWeight: 700, color: 'var(--brand-gold)' }}>Trucchetti:</span> {currentCantrips.length} / {limits.cantrips}
                         </div>
                         {limits.type === 'known' && (
-                            <div style={{ color: currentLeveled.length > limits.known ? '#ef4444' : '#94a3b8' }}>
-                                <span style={{ fontWeight: 700, color: 'white' }}>Conosciuti:</span> {currentLeveled.length} / {limits.known}
+                            <div style={{ color: currentLeveled.length > limits.known ? '#ff6b6b' : 'var(--foreground-muted)', fontSize: '0.9rem' }}>
+                                <span style={{ fontWeight: 700, color: 'var(--brand-gold)' }}>Conosciuti:</span> {currentLeveled.length} / {limits.known}
                             </div>
                         )}
                         {limits.type === 'prepared' && (
-                            <div style={{ color: currentLeveled.length > limits.prepared ? '#ef4444' : '#94a3b8' }}>
-                                <span style={{ fontWeight: 700, color: 'white' }}>Preparati:</span> {currentLeveled.length} / {limits.prepared}
+                            <div style={{ color: currentLeveled.length > limits.prepared ? '#ff6b6b' : 'var(--foreground-muted)', fontSize: '0.9rem' }}>
+                                <span style={{ fontWeight: 700, color: 'var(--brand-gold)' }}>Preparati:</span> {currentLeveled.length} / {limits.prepared}
                             </div>
                         )}
                         {baseClass === 'Mago' && (
-                            <div style={{ marginLeft: 'auto', fontSize: '0.8rem', color: '#64748b' }}>
-                                *Per il Mago, seleziona i Preparati. Il Libro ne contiene di piÃ¹ (6 + 2/liv).
+                            <div style={{ marginLeft: 'auto', fontSize: '0.75rem', color: 'rgba(207, 170, 67, 0.5)', fontStyle: 'italic' }}>
+                                *Per il Mago, seleziona i Preparati. Il Libro ne contiene di più (6 + 2/liv).
                             </div>
                         )}
                     </div>
@@ -721,13 +746,12 @@ export function AdvancedOptionsStep({ data, updateData, activeSources = ['PHB', 
 
                                 return (
                                     <div key={level} style={{ marginBottom: '2rem' }}>
-                                        <h4 style={{ color: '#a78bfa', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem', marginBottom: '1rem' }}>
-                                            {level === 0 ? 'Trucchetti (Livello 0)' : `Livello ${level}`}
+                                        <h4 className="gold-text" style={{ borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem', marginBottom: '1.25rem', fontSize: '1.1rem', letterSpacing: '1px' }}>
+                                            {level === 0 ? 'Trucchetti' : `Livello ${level}`}
                                         </h4>
-                                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.5rem' }}>
+                                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.6rem' }}>
                                             {list.length > 0 ? list.map((spell: any) => {
                                                 const isSelected = data.spells.some(s => s.name === spell.name);
-                                                // Enable selection logic (Optional: Disable if full)
                                                 const isCantrip = spell.level === 0;
                                                 const cantripFull = currentCantrips.length >= limits.cantrips;
                                                 const leveledFull = limits.type === 'known'
@@ -739,28 +763,28 @@ export function AdvancedOptionsStep({ data, updateData, activeSources = ['PHB', 
                                                     <button
                                                         key={spell.name}
                                                         onClick={() => !disabled && toggleSpell(spell.name, level)}
+                                                        className="glass-panel"
                                                         style={{
-                                                            padding: '0.5rem',
-                                                            borderRadius: '0.25rem',
-                                                            border: '1px solid',
-                                                            borderColor: isSelected ? '#a78bfa' : 'rgba(255,255,255,0.1)',
-                                                            background: isSelected ? 'rgba(167, 139, 250, 0.2)' : 'transparent',
-                                                            color: isSelected ? 'white' : disabled ? '#475569' : '#cbd5e1',
+                                                            padding: '0.6rem 0.75rem',
+                                                            background: isSelected ? 'rgba(207, 170, 67, 0.15)' : 'rgba(255,255,255,0.02)',
+                                                            borderColor: isSelected ? 'var(--brand-gold)' : 'var(--glass-border)',
+                                                            color: isSelected ? 'white' : disabled ? 'rgba(255,255,255,0.1)' : 'var(--foreground-muted)',
                                                             cursor: disabled ? 'not-allowed' : 'pointer',
                                                             textAlign: 'left',
-                                                            fontSize: '0.9rem',
-                                                            whiteSpace: 'nowrap',
-                                                            overflow: 'hidden',
-                                                            textOverflow: 'ellipsis'
+                                                            fontSize: '0.85rem',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'space-between',
+                                                            gap: '0.5rem',
                                                         }}
                                                         title={spell.description || spell.name}
                                                     >
-                                                        {spell.name}
-                                                        {spell.source !== 'PHB' && <span style={{ marginLeft: '0.5rem', fontSize: '0.7em', color: '#64748b' }}>[{spell.source}]</span>}
+                                                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{spell.name}</span>
+                                                        {isSelected && <Sparkles size={12} className="gold-text" />}
                                                     </button>
                                                 );
                                             }) : (
-                                                <div style={{ color: '#64748b', fontSize: '0.8rem', fontStyle: 'italic' }}>Nessun incantesimo trovato.</div>
+                                                <div style={{ color: 'var(--foreground-muted)', fontSize: '0.8rem', fontStyle: 'italic' }}>Nessun incantesimo trovato.</div>
                                             )}
                                         </div>
                                     </div>
@@ -853,7 +877,8 @@ export function EquipmentStep({ data, updateData, activeSources = ['PHB', 'XGE',
                             />
                             <button
                                 onClick={() => addItem(searchTerm)} // Fallback for custom items
-                                style={{ padding: '0.5rem 1rem', background: '#7c3aed', color: 'white', border: 'none', borderRadius: '0.5rem', cursor: 'pointer' }}
+                                className="btn-primary"
+                                style={{ padding: '0.5rem 1.25rem', minWidth: '44px' }}
                             >
                                 +
                             </button>
@@ -904,9 +929,9 @@ export function EquipmentStep({ data, updateData, activeSources = ['PHB', 'XGE',
                     <h4 style={{ color: '#a78bfa', marginBottom: '1rem' }}>Zaino</h4>
                     <div style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '0.5rem', padding: '0.5rem', minHeight: '300px', maxHeight: '400px', overflowY: 'auto' }}>
                         {data.equipment.map((item, idx) => (
-                            <div key={idx} style={{ padding: '0.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'white' }}>
-                                <span>{item}</span>
-                                <button onClick={() => removeItem(idx)} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }}>Ã—</button>
+                            <div key={idx} style={{ padding: '0.75rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'white' }}>
+                                <span style={{ fontSize: '0.9rem' }}>{item}</span>
+                                <button onClick={() => removeItem(idx)} style={{ color: '#ff6b6b', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 800 }}>×</button>
                             </div>
                         ))}
                         {data.equipment.length === 0 && (
@@ -1004,13 +1029,13 @@ export function BioStep({ data, updateData }: { data: CharacterData, updateData:
                     </div>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div>
                         <label style={labelStyle}>Storia del Personaggio (Backstory)</label>
                         <textarea
                             value={data.personality.backstory}
                             onChange={(e) => updateData('personality', { ...data.personality, backstory: e.target.value })}
-                            style={{ ...inputStyle, height: '300px' }}
+                            style={{ ...inputStyle, height: '360px', lineHeight: '1.6' }}
                             placeholder="Scrivi qui la storia del tuo eroe..."
                         />
                     </div>
@@ -1107,17 +1132,17 @@ export function BackgroundStep({ data, updateData, activeSources = ['PHB', 'XGE'
                         <div
                             key={bg.name}
                             onClick={() => selectBackground(bg)}
+                            className="glass-panel"
                             style={{
-                                padding: '1rem',
-                                border: '1px solid',
-                                borderColor: data.background === bg.name ? '#10b981' : 'rgba(255,255,255,0.1)',
-                                background: data.background === bg.name ? 'rgba(16, 185, 129, 0.1)' : 'rgba(255,255,255,0.05)',
-                                borderRadius: '0.5rem',
-                                cursor: 'pointer'
+                                padding: '1.25rem',
+                                background: data.background === bg.name ? 'rgba(207, 170, 67, 0.15)' : '',
+                                borderColor: data.background === bg.name ? 'var(--brand-gold)' : '',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                             }}
                         >
-                            <div style={{ fontWeight: 'bold', color: 'white' }}>{bg.name}</div>
-                            <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>{bg.source}</div>
+                            <div style={{ fontWeight: 700, color: 'white', marginBottom: '0.25rem' }}>{bg.name}</div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--brand-gold)', opacity: 0.8, letterSpacing: '1px', fontWeight: 600 }}>{bg.source}</div>
                         </div>
                     ))}
                 </div>

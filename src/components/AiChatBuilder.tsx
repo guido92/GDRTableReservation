@@ -71,14 +71,14 @@ export default function AiChatBuilder({ onFinish, onCancel }: AiChatBuilderProps
     };
 
     return (
-        <div style={{ height: '600px', display: 'flex', flexDirection: 'column', background: '#0f172a', borderRadius: '1rem', border: '1px solid rgba(255,255,255,0.1)', overflow: 'hidden' }}>
+        <div className="glass-panel" style={{ height: '600px', display: 'flex', flexDirection: 'column', overflow: 'hidden', border: '1px solid var(--brand-gold)' }}>
             {/* Header */}
-            <div style={{ padding: '1rem', background: '#1e293b', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+            <div style={{ padding: '1.25rem', background: 'rgba(207, 170, 67, 0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <Sparkles size={20} color="#a78bfa" />
-                    <h3 style={{ fontWeight: 700, color: 'white' }}>Creazione Narrativa (Beta)</h3>
+                    <Sparkles size={20} className="gold-text" />
+                    <h3 className="gold-text" style={{ fontWeight: 800, fontSize: '1.1rem', margin: 0 }}>Creazione Narrativa</h3>
                 </div>
-                <button onClick={onCancel} style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer' }}>Chiudi</button>
+                <button onClick={onCancel} className="btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.7rem' }}>Chiudi</button>
             </div>
 
             {/* Chat Area */}
@@ -90,16 +90,19 @@ export default function AiChatBuilder({ onFinish, onCancel }: AiChatBuilderProps
                             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                             style={{
                                 alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
-                                maxWidth: '80%',
-                                background: m.role === 'user' ? '#4f46e5' : '#1e293b',
-                                color: m.role === 'user' ? 'white' : '#cbd5e1',
-                                padding: '0.75rem 1rem',
-                                borderRadius: m.role === 'user' ? '1rem 1rem 0 1rem' : '1rem 1rem 1rem 0',
-                                lineHeight: 1.5,
-                                fontSize: '0.95rem'
+                                maxWidth: '85%',
+                                background: m.role === 'user' ? 'rgba(207, 170, 67, 0.2)' : 'rgba(255, 255, 255, 0.03)',
+                                border: '1px solid',
+                                borderColor: m.role === 'user' ? 'var(--brand-gold)' : 'var(--glass-border)',
+                                color: 'white',
+                                padding: '1rem',
+                                borderRadius: m.role === 'user' ? '1.25rem 1.25rem 0 1.25rem' : '1.25rem 1.25rem 1.25rem 0',
+                                lineHeight: 1.6,
+                                fontSize: '0.95rem',
+                                boxShadow: 'var(--glass-shadow)'
                             }}
                         >
-                            {m.role === 'model' && <span style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, marginBottom: '0.25rem', color: '#a78bfa' }}>Dungeon Master</span>}
+                            {m.role === 'model' && <span className="gold-text" style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Dungeon Master</span>}
                             <ReactMarkdown
                                 components={{
                                     p: ({ node, ...props }) => <p style={{ margin: 0, marginBottom: '0.5rem' }} {...props} />,
@@ -120,19 +123,36 @@ export default function AiChatBuilder({ onFinish, onCancel }: AiChatBuilderProps
                 </AnimatePresence>
             </div>
 
-            {/* Input Area */}
-            <div style={{ padding: '1rem', background: '#13141a', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: '0.5rem' }}>
+            <div style={{ padding: '1.25rem', background: 'rgba(20, 15, 12, 0.8)', borderTop: '1px solid var(--border)', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                 <input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                    placeholder="Descrivi il tuo eroe..."
-                    style={{ flex: 1, background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', padding: '0.75rem', borderRadius: '0.5rem', color: 'white', outline: 'none' }}
+                    placeholder="Descrivi il tuo eroe al DM..."
+                    style={{ 
+                        flex: 1, 
+                        background: 'rgba(0, 0, 0, 0.3)', 
+                        border: '1px solid var(--border)', 
+                        padding: '0.875rem 1rem', 
+                        borderRadius: 'var(--radius-md)', 
+                        color: 'white', 
+                        outline: 'none',
+                        transition: 'all 0.3s ease'
+                    }}
                 />
                 <button
                     onClick={sendMessage}
                     disabled={loading || !input.trim()}
-                    style={{ background: '#7c3aed', color: 'white', border: 'none', borderRadius: '0.5rem', width: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', opacity: loading ? 0.5 : 1 }}
+                    className="btn-primary"
+                    style={{ 
+                        width: '56px', 
+                        height: '48px', 
+                        padding: 0, 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        opacity: (loading || !input.trim()) ? 0.5 : 1 
+                    }}
                 >
                     <Send size={20} />
                 </button>

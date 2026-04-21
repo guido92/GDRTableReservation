@@ -12,12 +12,12 @@
  * - Support for both English and Italian names
  */
 
-import { FiveToolsService, RawClass, RawRace, RawBackground, RawSpell, RawItem, SOURCES_2014 } from './five-tools-service';
+import { FiveToolsService, RawClass, RawSubclass, RawRace, RawBackground, RawSpell, RawItem, SOURCES_2014 } from './five-tools-service';
 import { CLASSES, ClassOption } from '../data/classes';
 import { RACES, RaceOption } from '../data/races';
-import { BACKGROUNDS } from '../data/backgrounds';
+import { BACKGROUNDS, Background as StaticBackground } from '../data/backgrounds';
 import { CLASS_TRANSLATIONS, RACE_TRANSLATIONS, BACKGROUND_TRANSLATIONS, translateClass, translateRace, translateBackground, translateSkill, getReverseTranslation } from '../data/translations';
-import { AbilityScores, Feature } from '../types/dnd';
+import { Feature } from '../types/dnd';
 
 // Unified interfaces that combine 5etools and static data
 export interface UnifiedClass {
@@ -152,7 +152,17 @@ export class UnifiedDataService {
 
         const rawClasses = this.fiveTools.getClasses(sources);
         if (rawClasses.length > 0) {
-            return rawClasses.map(rc => this.convertRawClass(rc, sources));
+            const mapped = rawClasses.map(rc => this.convertRawClass(rc, sources));
+            
+            // Deduplicate by name, preferring 2024/XPHB versions
+            const deduped = new Map<string, UnifiedClass>();
+            for (const cls of mapped) {
+                const existing = deduped.get(cls.name);
+                if (!existing || cls.source === 'PHB24' || cls.source === 'XPHB') {
+                    deduped.set(cls.name, cls);
+                }
+            }
+            return Array.from(deduped.values()).sort((a, b) => a.name.localeCompare(b.name));
         }
 
         // Fallback to static data
@@ -161,7 +171,17 @@ export class UnifiedDataService {
 
     private convertRawClass(raw: RawClass, sources: string[]): UnifiedClass {
         const nameIt = translateClass(raw.name);
-        const subclasses = this.fiveTools.getSubclasses(raw.name, sources);
+        const rawSubclasses = this.fiveTools.getSubclasses(raw.name, sources);
+
+        // Deduplicate subclasses by name, preferring 2024/XPHB versions
+        const dedupedSubs = new Map<string, RawSubclass>();
+        for (const sc of rawSubclasses) {
+            const existing = dedupedSubs.get(sc.name);
+            if (!existing || sc.source === 'PHB24' || sc.source === 'XPHB') {
+                dedupedSubs.set(sc.name, sc);
+            }
+        }
+        const subclasses = Array.from(dedupedSubs.values());
 
         return {
             name: nameIt,
@@ -176,10 +196,10 @@ export class UnifiedDataService {
             equipment: this.extractEquipment(raw.startingEquipment?.default),
             features: this.extractClassFeatures(raw),
             subclasses: subclasses.map(sc => ({
-                name: sc.shortName,
+                name: sc.shortName || sc.name,
                 nameEn: sc.name,
                 source: sc.source,
-                features: []  // Would need classFeature data to populate
+                features: []  // Sarebbero necessari i dati di classFeature per popolare
             })),
             casterProgression: raw.casterProgression || null,
             spellcastingAbility: raw.spellcastingAbility || null,
@@ -265,7 +285,21 @@ export class UnifiedDataService {
 
         const rawRaces = this.fiveTools.getRaces(sources, false);
         if (rawRaces.length > 0) {
-            return rawRaces.map(rr => this.convertRawRace(rr, sources));
+            const mapped = rawRaces.map(rr => this.convertRawRace(rr, sources));
+
+            // Deduplicate by name, preferring 2024/XPHB versions
+            const deduped = new Map<string, UnifiedRace>();
+            for (const race of mapped) {
+                const existing = deduped.get(race.name);
+                // Priority: PHB24/XPHB > generic PHB > others
+                const isNewHighPriority = race.source === 'PHB24' || race.source === 'XPHB';
+                const isOldHighPriority = existing?.source === 'PHB24' || existing?.source === 'XPHB';
+
+                if (!existing || (isNewHighPriority && !isOldHighPriority)) {
+                    deduped.set(race.name, race);
+                }
+            }
+            return Array.from(deduped.values()).sort((a, b) => a.name.localeCompare(b.name));
         }
 
         // Fallback to static data
@@ -279,7 +313,7 @@ export class UnifiedDataService {
         const race = await this.getRace(raceName);
         if (!race) return {};
 
-        let bonuses = { ...race.abilityBonuses };
+        const bonuses = { ...race.abilityBonuses };
 
         if (subraceName) {
             const subrace = race.subraces.find(sr =>
@@ -409,7 +443,7 @@ export class UnifiedDataService {
         };
     }
 
-    private convertStaticBackground(staticBg: any): UnifiedBackground {
+    private convertStaticBackground(staticBg: StaticBackground): UnifiedBackground {
         const engName = getReverseTranslation(staticBg.name, BACKGROUND_TRANSLATIONS) || staticBg.name;
 
         return {
@@ -424,7 +458,7 @@ export class UnifiedDataService {
         };
     }
 
-    private findStaticBackground(name: string): any {
+    private findStaticBackground(name: string): StaticBackground | undefined {
         const cleanName = name.toLowerCase().trim();
         return BACKGROUNDS.find(b =>
             b.name.toLowerCase() === cleanName ||
@@ -476,7 +510,7 @@ export class UnifiedDataService {
 
     // ========== HELPER METHODS ==========
 
-    private extractToolProficiencies(tools: any[] | undefined): string[] {
+    private extractToolProficiencies(tools: (string | Record<string, boolean | number>)[] | undefined): string[] {
         if (!tools) return [];
 
         const result: string[] = [];
@@ -504,7 +538,7 @@ export class UnifiedDataService {
         });
     }
 
-    private extractBackgroundEquipment(startingEquipment: any[] | undefined): string[] {
+    private extractBackgroundEquipment(startingEquipment: { _?: (string | { item?: string; special?: string })[] }[] | undefined): string[] {
         if (!startingEquipment) return [];
 
         const result: string[] = [];
@@ -540,7 +574,7 @@ export class UnifiedDataService {
         return langs.length > 0 ? langs : ['Comune'];
     }
 
-    private extractClassFeatures(raw: RawClass): Feature[] {
+    private extractClassFeatures(_raw: RawClass): Feature[] {
         // This would require loading classFeature data from 5etools
         // For now, return empty and rely on static data fallback
         return [];
