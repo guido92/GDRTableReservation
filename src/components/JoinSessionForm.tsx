@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Session } from '@/types';
 import { useRouter } from 'next/navigation';
+import NextLink from 'next/link';
 import Link from 'next/link';
 
 export default function JoinSessionForm({ session }: { session: Session }) {
