@@ -4,9 +4,6 @@ import { Session } from '@/types';
 
 const DB_PATH = path.join(process.cwd(), 'src/data/db.json');
 
-console.log('[db] DB_PATH:', DB_PATH);
-console.log('[db] CWD:', process.cwd());
-
 export async function getSessions(): Promise<Session[]> {
     try {
         let data = await fs.readFile(DB_PATH, 'utf-8');
