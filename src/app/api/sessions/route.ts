@@ -9,14 +9,22 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    const body = await request.json();
+    try {
+        const body = await request.json();
 
-    const newSession: Session = {
-        id: uuidv4(),
-        ...body,
-        currentPlayers: []
-    };
+        const newSession: Session = {
+            id: uuidv4(),
+            title: body.title || 'Nuova Sessione',
+            date: body.date || new Date().toISOString().split('T')[0],
+            ...body,
+            currentPlayers: []
+        };
 
-    await saveSession(newSession);
-    return NextResponse.json(newSession);
+        await saveSession(newSession);
+        return NextResponse.json(newSession);
+    } catch (error) {
+        console.error('[API Sessions] Error creating session:', error);
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ error: 'Failed to create session', details: message }, { status: 500 });
+    }
 }

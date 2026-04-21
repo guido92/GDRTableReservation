@@ -24,6 +24,7 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
+        console.log(`[Form Change] ${name} = ${value}`);
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
@@ -57,6 +58,12 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
         e.preventDefault();
         setLoading(true);
 
+        if (!formData.date || !formData.time) {
+            alert('Per favore, seleziona una data e un orario validi.');
+            setLoading(false);
+            return;
+        }
+
         try {
             const res = await fetch('/api/sessions', {
                 method: 'POST',
@@ -68,156 +75,242 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
                 const data = await res.json();
                 router.push(`/session/${data.id}`);
                 router.refresh();
+            } else {
+                const errorData = await res.json().catch(() => ({ error: 'Errore sconosciuto' }));
+                console.error('[CreateSessionForm] Errore creazione sessione:', errorData);
+                alert(`Errore nella creazione della sessione: ${errorData.error || 'Errore sconosciuto'}`);
             }
         } catch (error) {
             console.error(error);
+            alert('Errore di connessione. Riprova.');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
-                <div className="form-group">
-                    <label>{type === 'GDR' ? 'Titolo Avventura' : 'Nome Gioco'}</label>
-                    <input 
-                        name="title" 
-                        required 
-                        value={formData.title} 
-                        onChange={handleChange} 
-                        placeholder={type === 'GDR' ? "Es. La tomba degli orrori" : "Es. Catan, Ticket to Ride..."} 
-                    />
+        <div style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}>
+            <form onSubmit={handleSubmit} className="glass-panel" style={{ 
+                padding: '3rem', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: '2rem',
+                background: 'rgba(10, 5, 3, 0.96)',
+                border: '1px solid rgba(207, 170, 67, 0.3)',
+                boxShadow: '0 20px 50px rgba(0,0,0,0.8)',
+                borderRadius: '16px'
+            }}>
+                {/* Header Form */}
+                <div style={{ marginBottom: '1rem', textAlign: 'center' }}>
+                    <h2 className="gold-text" style={{ fontSize: '2.2rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+                        {type === 'GDR' ? 'Nuova Sessione GDR' : 'Nuovo Tavolo Boardgame'}
+                    </h2>
+                    <p style={{ color: 'white', fontSize: '1.1rem', fontWeight: '400', opacity: 0.9 }}>
+                        Compila i dettagli per pubblicare la tua partita al Bar Dama
+                    </p>
                 </div>
-                {type === 'GDR' && (
+
+                {/* Grid Dati Principali */}
+                <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+                    gap: '2rem' 
+                }}>
                     <div className="form-group">
-                        <label>Sistema di Gioco</label>
+                        <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                            {type === 'GDR' ? 'Titolo Avventura' : 'Nome Gioco'}
+                        </label>
                         <input 
-                            name="system" 
+                            name="title" 
                             required 
-                            value={formData.system} 
+                            value={formData.title} 
                             onChange={handleChange} 
-                            placeholder="Es. D&D 5e" 
+                            className="form-input"
+                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(207, 170, 67, 0.2)', padding: '1rem', borderRadius: '4px' }}
+                            placeholder={type === 'GDR' ? "Es. La tomba degli orrori" : "Es. Catan, Ticket to Ride..."} 
                         />
                     </div>
-                )}
-            </div>
+                    {type === 'GDR' && (
+                        <div className="form-group">
+                            <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Sistema di Gioco</label>
+                            <input 
+                                name="system" 
+                                required 
+                                value={formData.system} 
+                                onChange={handleChange} 
+                                className="form-input"
+                                style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(207, 170, 67, 0.2)', padding: '1rem', borderRadius: '4px' }}
+                                placeholder="Es. D&D 5e, Pathfinder" 
+                            />
+                        </div>
+                    )}
+                </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
-                <div className="form-group">
-                    <label>{type === 'GDR' ? 'Il Tuo Nome (Master)' : 'Organizzatore'}</label>
-                    <input 
-                        name="masterName" 
-                        required 
-                        value={formData.masterName} 
-                        onChange={handleChange} 
-                        placeholder="Il tuo nome" 
-                    />
+                {/* Grid Organizzazione */}
+                <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+                    gap: '2rem' 
+                }}>
+                    <div className="form-group">
+                        <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                            {type === 'GDR' ? 'Il Tuo Nome (Master)' : 'Organizzatore'}
+                        </label>
+                        <input 
+                            name="masterName" 
+                            required 
+                            value={formData.masterName} 
+                            onChange={handleChange} 
+                            className="form-input"
+                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(207, 170, 67, 0.2)', padding: '1rem', borderRadius: '4px' }}
+                            placeholder="Il tuo nome" 
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Email di Contatto</label>
+                        <input 
+                            type="email" 
+                            name="masterEmail" 
+                            required 
+                            value={formData.masterEmail || ''} 
+                            onChange={handleChange} 
+                            className="form-input"
+                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(207, 170, 67, 0.2)', padding: '1rem', borderRadius: '4px' }}
+                            placeholder="tua@email.com" 
+                        />
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label>Email (per ricevere notifiche)</label>
-                    <input 
-                        type="email" 
-                        name="masterEmail" 
-                        required 
-                        value={formData.masterEmail || ''} 
-                        onChange={handleChange} 
-                        placeholder="tua@email.com" 
-                    />
+
+                {/* Grid Logistica */}
+                <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+                    gap: '2rem' 
+                }}>
+                    <div className="form-group">
+                        <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Data</label>
+                        <input 
+                            type="date" 
+                            name="date" 
+                            required 
+                            value={formData.date} 
+                            onChange={handleChange} 
+                            className="form-input"
+                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(207, 170, 67, 0.2)', padding: '1rem', borderRadius: '4px' }}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Ora di Inizio</label>
+                        <input 
+                            type="time" 
+                            name="time" 
+                            required 
+                            value={formData.time} 
+                            onChange={handleChange} 
+                            className="form-input"
+                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(207, 170, 67, 0.2)', padding: '1rem', borderRadius: '4px' }}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Max Giocatori</label>
+                        <input 
+                            type="number" 
+                            name="maxPlayers" 
+                            min="1" 
+                            max="10" 
+                            required 
+                            value={formData.maxPlayers} 
+                            onChange={handleChange} 
+                            className="form-input"
+                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(207, 170, 67, 0.2)', padding: '1rem', borderRadius: '4px' }}
+                        />
+                    </div>
                 </div>
+
                 <div className="form-group">
-                    <label>Luogo della Giocata</label>
+                    <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Luogo (Tavolo / Area)</label>
                     <input 
                         name="location" 
                         required 
                         value={formData.location} 
                         onChange={handleChange} 
-                        placeholder="Es. Tavolo 1, Soppalco..." 
+                        className="form-input"
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(207, 170, 67, 0.2)', padding: '1rem', borderRadius: '4px' }}
+                        placeholder="Es. Tavolo 1, Area Divanetti..." 
                     />
                 </div>
-            </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1.5rem' }}>
                 <div className="form-group">
-                    <label>Data</label>
-                    <input 
-                        type="date" 
-                        name="date" 
-                        required 
-                        value={formData.date} 
-                        onChange={handleChange} 
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Ora di Inizio</label>
-                    <input 
-                        type="time" 
-                        name="time" 
-                        required 
-                        value={formData.time} 
-                        onChange={handleChange} 
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Max Giocatori</label>
-                    <input 
-                        type="number" 
-                        name="maxPlayers" 
-                        min="1" 
-                        max="10" 
-                        required 
-                        value={formData.maxPlayers} 
-                        onChange={handleChange} 
-                    />
-                </div>
-            </div>
-
-            <div className="form-group">
-                <label>Immagine di Copertina</label>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                    <input 
-                        type="file" 
-                        accept="image/*" 
-                        onChange={handleFileChange} 
-                        disabled={uploading} 
-                        style={{ flex: 1, padding: '0.5rem' }} 
-                    />
-                    {uploading && <span className="gold-text" style={{ fontSize: '0.875rem' }}>Caricamento...</span>}
-                </div>
-                {formData.imageUrl && (
+                    <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Immagine di Copertina</label>
                     <div style={{ 
-                        marginTop: '1rem', 
-                        position: 'relative', 
-                        width: '100%', 
-                        height: '240px', 
-                        borderRadius: 'var(--radius-md)', 
-                        overflow: 'hidden',
-                        border: '1px solid var(--border)'
-                    }}>
-                        <Image src={formData.imageUrl} alt="Preview" fill style={{ objectFit: 'cover' }} unoptimized />
+                        border: '2px dashed rgba(207, 170, 67, 0.3)', 
+                        borderRadius: '8px',
+                        padding: '2.5rem',
+                        textAlign: 'center',
+                        background: 'rgba(255, 255, 255, 0.02)',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                    }}
+                    onMouseOver={e => e.currentTarget.style.borderColor = 'var(--brand-gold)'}
+                    onMouseOut={e => e.currentTarget.style.borderColor = 'rgba(207, 170, 67, 0.3)'}
+                    onClick={() => document.getElementById('file-upload')?.click()}
+                    >
+                        <input 
+                            id="file-upload"
+                            type="file" 
+                            accept="image/*" 
+                            onChange={handleFileChange} 
+                            disabled={uploading} 
+                            style={{ display: 'none' }} 
+                        />
+                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🖼️</div>
+                        <p style={{ color: uploading ? 'var(--brand-gold)' : 'white', margin: 0, fontWeight: 500 }}>
+                            {uploading ? 'Caricamento in corso...' : 'Trascina o clicca per caricare un\'immagine'}
+                        </p>
                     </div>
-                )}
-                <input type="hidden" name="imageUrl" value={formData.imageUrl} />
-            </div>
+                    {formData.imageUrl && (
+                        <div style={{ 
+                            marginTop: '1.5rem', 
+                            position: 'relative', 
+                            width: '100%', 
+                            height: '300px', 
+                            borderRadius: '12px', 
+                            overflow: 'hidden',
+                            border: '2px solid rgba(207, 170, 67, 0.5)'
+                        }}>
+                            <Image src={formData.imageUrl} alt="Preview" fill style={{ objectFit: 'cover' }} unoptimized />
+                        </div>
+                    )}
+                </div>
 
-            <div className="form-group">
-                <label>Breve Descrizione</label>
-                <textarea 
-                    name="description" 
-                    required 
-                    value={formData.description} 
-                    onChange={handleChange} 
-                    rows={5} 
-                    placeholder={type === 'GDR' ? "Di cosa parla l'avventura? Serve portare qualcosa?" : "Descrivi il gioco e il tipo di serata..."} 
-                />
-            </div>
+                <div className="form-group">
+                    <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Breve Descrizione</label>
+                    <textarea 
+                        name="description" 
+                        required 
+                        value={formData.description} 
+                        onChange={handleChange} 
+                        rows={6} 
+                        className="form-input"
+                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(207, 170, 67, 0.2)', padding: '1rem', borderRadius: '4px', fontSize: '1rem' }}
+                        placeholder={type === 'GDR' ? "Di cosa parla l'avventura? Serve portare qualcosa?" : "Descrivi il gioco e il tipo di serata..."} 
+                    />
+                </div>
 
-            <button type="submit" className="btn btn-primary" disabled={loading || uploading} style={{ marginTop: '1rem' }}>
-                {loading ? 'Creazione in corso...' : (type === 'GDR' ? 'Crea Sessione GDR' : 'Crea Tavolo Gioco')}
-            </button>
-            <p style={{ fontSize: '0.75rem', color: 'var(--foreground-muted)', textAlign: 'center', opacity: 0.7 }}>
-                La sessione sarà pubblicata immediatamente e potrai condividere il link.
-            </p>
-        </form>
+                <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                    <button 
+                        type="submit" 
+                        className="btn btn-primary" 
+                        disabled={loading || uploading} 
+                        style={{ width: '100%', padding: '1.4rem', fontSize: '1.2rem', fontWeight: 700, letterSpacing: '2px', cursor: 'pointer' }}
+                    >
+                        {loading ? 'CREAZIONE IN CORSO...' : (type === 'GDR' ? 'PUBBLICA SESSIONE GDR' : 'PUBBLICA TAVOLO GIOCO')}
+                    </button>
+                    <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', marginTop: '1.2rem' }}>
+                        La partita sarà pubblicata immediatamente e apparirà nella homepage del Bar Dama.
+                    </p>
+                </div>
+            </form>
+        </div>
     );
 }

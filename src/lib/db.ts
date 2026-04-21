@@ -1,4 +1,4 @@
-import fs from 'fs/promises';
+import fs from 'fs-extra';
 import path from 'path';
 import { Session } from '@/types';
 
@@ -6,77 +6,98 @@ const DB_PATH = path.join(process.cwd(), 'src/data/db.json');
 
 export async function getSessions(): Promise<Session[]> {
     try {
-        // Ensure directory exists
-        await fs.mkdir(path.dirname(DB_PATH), { recursive: true });
-
-        try {
-            await fs.access(DB_PATH);
-        } catch (error: any) {
-            // Only create if file doesn't exist. If permission error, FAIL instead of overwriting!
-            if (error.code === 'ENOENT') {
-                await fs.writeFile(DB_PATH, JSON.stringify({ sessions: [] }, null, 2));
-                return [];
-            }
-            console.error('Database access error:', error);
-            throw error;
-        }
-
-        const data = await fs.readFile(DB_PATH, 'utf-8');
-        let sessions: Session[] = JSON.parse(data).sessions;
-
-        // Auto-cleanup: Remove sessions older than 7 days
+        let data = await fs.readFile(DB_PATH, 'utf-8');
+        data = data.replace(/^\uFEFF/, '');
+        const sessions: Session[] = JSON.parse(data).sessions;
+        
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        const limitDateStr = sevenDaysAgo.toISOString().split('T')[0];
 
+        // Ensure we only return sessions that are either upcoming OR recently expired (within 7 days)
+        // Sessions with missing dates are PRESERVED to avoid 404 errors during data entry glitches.
         const validSessions = sessions.filter(s => {
-            const sessionDate = new Date(s.date);
-            return sessionDate >= sevenDaysAgo;
+            if (!s.date) return true; // Keep it if date is missing
+            return s.date >= limitDateStr;
         });
 
-        if (validSessions.length !== sessions.length) {
-            // Find expired sessions to delete their images
-            const expiredSessions = sessions.filter(s => !validSessions.includes(s));
-            for (const session of expiredSessions) {
-                if (session.imageUrl) {
-                    try {
-                        const filename = session.imageUrl.split('/').pop();
-                        if (filename) {
-                            const imagePath = path.join(process.cwd(), 'public/uploads', filename);
-                            await fs.unlink(imagePath).catch(() => console.log(`Failed to delete expired image: ${imagePath}`));
-                        }
-                    } catch (e) {
-                        console.error("Error deleting expired image:", e);
-                    }
-                }
-            }
-
-            await fs.writeFile(DB_PATH, JSON.stringify({ sessions: validSessions }, null, 2));
-            sessions = validSessions;
-        }
-
-        return sessions;
+        return validSessions;
     } catch (error) {
-        console.error("Error reading DB:", error);
+        console.error("Error reading sessions:", error);
         return [];
     }
 }
 
-export async function saveSession(session: Session): Promise<void> {
-    const sessions = await getSessions();
-    sessions.push(session);
-    await fs.writeFile(DB_PATH, JSON.stringify({ sessions }, null, 2));
-}
+async function cleanupExpiredSessions(sessions: Session[]): Promise<Session[]> {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const limitDateStr = sevenDaysAgo.toISOString().split('T')[0];
 
-export async function updateSession(updatedSession: Session): Promise<void> {
-    const sessions = await getSessions();
-    const index = sessions.findIndex(s => s.id === updatedSession.id);
-    if (index !== -1) {
-        sessions[index] = updatedSession;
-        await fs.writeFile(DB_PATH, JSON.stringify({ sessions }, null, 2));
+    const validSessions = sessions.filter(s => {
+        // Only remove if it HAS a date and it's truly OLDER than 7 days
+        if (!s.date) return true;
+        return s.date >= limitDateStr;
+    });
+
+    const expiredSessions = sessions.filter(s => !validSessions.includes(s));
+    for (const session of expiredSessions) {
+        if (session.imageUrl) {
+            try {
+                const filename = session.imageUrl.split('/').pop();
+                if (filename) {
+                    const imagePath = path.join(process.cwd(), 'public/uploads', filename);
+                    await fs.unlink(imagePath).catch(() => {});
+                }
+            } catch (e) {
+                console.error("Error deleting expired image:", e);
+            }
+        }
     }
+
+    return validSessions;
 }
 
 export async function getSessionById(id: string): Promise<Session | undefined> {
-    const sessions = await getSessions();
-    return sessions.find(s => s.id === id);
+    try {
+        let data = await fs.readFile(DB_PATH, 'utf-8');
+        data = data.replace(/^\uFEFF/, '');
+        const sessions: Session[] = JSON.parse(data).sessions;
+        return sessions.find(s => s.id === id);
+    } catch (error) {
+        console.error("Error reading session by ID:", error);
+        return undefined;
+    }
+}
+
+export async function saveSession(session: Session): Promise<void> {
+    try {
+        let rawData = await fs.readFile(DB_PATH, 'utf-8');
+        rawData = rawData.replace(/^\uFEFF/, '');
+        
+        let sessions: Session[] = JSON.parse(rawData).sessions;
+        
+        sessions.push(session);
+        sessions = await cleanupExpiredSessions(sessions);
+        
+        await fs.writeFile(DB_PATH, JSON.stringify({ sessions }, null, 2));
+    } catch (error) {
+        console.error("[saveSession] Error:", error);
+        throw error;
+    }
+}
+
+export async function updateSession(updatedSession: Session): Promise<void> {
+    try {
+        const data = await fs.readFile(DB_PATH, 'utf-8');
+        let sessions: Session[] = JSON.parse(data).sessions;
+        
+        const index = sessions.findIndex(s => s.id === updatedSession.id);
+        if (index !== -1) {
+            sessions[index] = updatedSession;
+            await fs.writeFile(DB_PATH, JSON.stringify({ sessions }, null, 2));
+        }
+    } catch (error) {
+        console.error("Error updating session:", error);
+        throw error;
+    }
 }
