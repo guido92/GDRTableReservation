@@ -751,7 +751,7 @@ export class CharacterLogic {
         }
 
         // 7. Armor Class
-        const { ac } = this.calculateArmorClass(newData.equipment, newData.abilities, className);
+        const { ac } = this.calculateArmorClass(newData.equipment, newData.abilities, primaryClassStr);
         newData.armorClass = ac;
 
         // 8. Attacks (if empty)
@@ -792,14 +792,14 @@ export class CharacterLogic {
         }
 
         // 9. Spells (if caster and empty)
-        const isCaster = ['Bardo', 'Chierico', 'Druido', 'Mago', 'Stregone', 'Warlock', 'Artefice', 'Paladino', 'Ranger'].includes(className);
+        const isCaster = ['Bardo', 'Chierico', 'Druido', 'Mago', 'Stregone', 'Warlock', 'Artefice', 'Paladino', 'Ranger'].includes(primaryClassStr);
         if (isCaster && (!newData.spells || newData.spells.length === 0)) {
             let castStatMod = this.getModifier(newData.abilities.INT);
-            if (["Chierico", "Druido", "Ranger", "Monaco"].includes(className)) castStatMod = this.getModifier(newData.abilities.WIS);
-            if (["Bardo", "Paladino", "Stregone", "Warlock"].includes(className)) castStatMod = this.getModifier(newData.abilities.CHA);
+            if (["Chierico", "Druido", "Ranger", "Monaco"].includes(primaryClassStr)) castStatMod = this.getModifier(newData.abilities.WIS);
+            if (["Bardo", "Paladino", "Stregone", "Warlock"].includes(primaryClassStr)) castStatMod = this.getModifier(newData.abilities.CHA);
             
             // Note: getSpells internally uses FiveToolsService
-            newData.spells = await this.getSpells(className, level, castStatMod);
+            newData.spells = await this.getSpells(primaryClassStr, level, castStatMod);
         }
 
         return newData;

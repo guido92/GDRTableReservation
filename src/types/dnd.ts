@@ -86,5 +86,5 @@ export type CharacterData = {
         ability: keyof AbilityScores;
         bonus: number;
     }[];
-    backgroundFeat?: Feature;
+    backgroundFeat?: string;
 };
