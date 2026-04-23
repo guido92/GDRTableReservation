@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   web-app:
@@ -10,9 +10,16 @@ services:
     ports:
       - "3010:3000"
     volumes:
-      - ./src/data:/app/src/data
-      - ./public/uploads:/app/public/uploads
+      - tavoli-data:/app/src/data
+      - tavoli-uploads:/app/public/uploads
     environment:
       - NODE_ENV=production
+      - DATABASE_PATH=/app/src/data/db.json
       - RESEND_API_KEY=${RESEND_API_KEY}
       - ADMIN_EMAIL=${ADMIN_EMAIL}
+
+volumes:
+  tavoli-data:
+    name: tavoli-data
+  tavoli-uploads:
+    name: tavoli-uploads

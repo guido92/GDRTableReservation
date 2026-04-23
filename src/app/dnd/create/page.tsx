@@ -33,8 +33,10 @@ const INITIAL_DATA: CharacterData = {
     class: 'Guerriero',
     level: 1,
     background: 'Soldato',
+    backgroundSkills: ['Atletica', 'Intimidire'],
+    backgroundTools: ['Veicoli (Terrestri)', 'Un set da gioco'],
     alignment: 'Neutrale',
-    abilities: { STR: 10, DEX: 10, CON: 10, INT: 10, WIS: 10, CHA: 10 },
+    abilities: { STR: 8, DEX: 8, CON: 8, INT: 8, WIS: 8, CHA: 8 },
     skills: [],
     languages: [],
     equipment: [],
@@ -48,6 +50,7 @@ const INITIAL_DATA: CharacterData = {
     personality: { traits: '', ideals: '', bonds: '', flaws: '', backstory: '' },
     spells: [],
     is2024: true,
+    sources: ['PHB24', 'TCE', 'XGE'],
 };
 
 export default function CharactermancerV2() {

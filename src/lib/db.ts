@@ -2,7 +2,8 @@ import fs from 'fs-extra';
 import path from 'path';
 import { Session } from '@/types';
 
-const DB_PATH = path.join(process.cwd(), 'src/data/db.json');
+const DEFAULT_DB_PATH = path.join(process.cwd(), 'src/data/db.json');
+const DB_PATH = process.env.DATABASE_PATH || DEFAULT_DB_PATH;
 
 export async function getSessions(): Promise<Session[]> {
     try {

@@ -50,11 +50,13 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy data directory for persistence (includes db.json)
 COPY --from=builder --chown=nextjs:nodejs /app/src/data ./src/data
 
-# Ensure db.json exists
-RUN if [ ! -f ./src/data/db.json ]; then echo '{"sessions":[]}' > ./src/data/db.json; fi
+# Ensure db.json exists and has correct permissions
+RUN mkdir -p src/data && \
+    if [ ! -f ./src/data/db.json ]; then echo '{"sessions":[]}' > ./src/data/db.json; fi && \
+    chown -R nextjs:nodejs src/data
 
-# Create uploads directory
-RUN mkdir -p public/uploads && chown nextjs:nodejs public/uploads
+# Create uploads directory with correct permissions
+RUN mkdir -p public/uploads && chown -R nextjs:nodejs public/uploads
 
 # USER nextjs
 

@@ -1,22 +1,24 @@
 import { NextResponse } from 'next/server';
-import { Plutonium } from '@/lib/plutonium';
+import { UnifiedDataService } from '@/services/unified-data-service';
 
 export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
-    const sources = searchParams.get('sources')?.split(',') || ['PHB', 'XGE', 'TCE'];
+    try {
+        const { searchParams } = new URL(request.url);
+        const sourcesParam = searchParams.get('sources');
+        const sources = sourcesParam ? sourcesParam.split(',') : ['PHB', 'XGE', 'TCE'];
 
-    const backgrounds = await Plutonium.getBackgrounds(sources);
+        const unifiedService = UnifiedDataService.getInstance();
+        const backgrounds = await unifiedService.getBackgrounds(sources);
 
-    const mapped = backgrounds.map(b => ({
-        name: Plutonium.translate(b.name, 'exact'),
-        originalName: b.name,
-        source: b.source,
-        skillProficiencies: b.skillProficiencies,
-        toolProficiencies: b.toolProficiencies,
-        languageProficiencies: b.languageProficiencies,
-        startingEquipment: b.startingEquipment,
-        feature: (b.entries as any[])?.find(e => e.name?.includes('Feature')) // heuristic to find feature
-    }));
-
-    return NextResponse.json({ backgrounds: mapped });
+        return NextResponse.json({
+            backgrounds: backgrounds,
+            count: backgrounds.length
+        });
+    } catch (error) {
+        console.error('Error in /api/dnd/backgrounds:', error);
+        return NextResponse.json(
+            { error: 'Errore nel caricamento dei background' },
+            { status: 500 }
+        );
+    }
 }

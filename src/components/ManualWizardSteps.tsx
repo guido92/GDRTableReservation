@@ -202,12 +202,23 @@ export function AbilityScoreStep({ data, updateData, races = [], classes = [] }:
         return 99;
     };
 
+    // Recalculate remaining points based on current abilities
+    useEffect(() => {
+        if (mode === 'pointBuy') {
+            const used = Object.values(data.abilities).reduce((acc, val) => acc + cost(val), 0);
+            setPoints(27 - used);
+        }
+    }, [data.abilities, mode]);
+
     const handlePointBuy = (stat: keyof AbilityScores, val: number) => {
-        const currentVal = data.abilities[stat];
-        const newCost = points + cost(currentVal) - cost(val);
-        if (newCost >= 0 && val >= 8 && val <= 15) {
-            updateData('abilities', { ...data.abilities, [stat]: val });
-            setPoints(newCost);
+        if (val >= 8 && val <= 15) {
+            const currentVal = data.abilities[stat];
+            const currentUsed = Object.values(data.abilities).reduce((acc, v) => acc + cost(v), 0);
+            const nextUsed = currentUsed - cost(currentVal) + cost(val);
+            
+            if (nextUsed <= 27) {
+                updateData('abilities', { ...data.abilities, [stat]: val });
+            }
         }
     };
 
@@ -258,7 +269,10 @@ export function AbilityScoreStep({ data, updateData, races = [], classes = [] }:
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '1rem' }}>
                 {scores.map(stat => {
                     const bonus = racialBonuses[stat] || 0;
-                    const total = data.abilities[stat] + bonus;
+                    const backgroundBonus = (data.backgroundAbilityChoices || [])
+                        .filter(c => c.ability === stat)
+                        .reduce((acc, c) => acc + c.bonus, 0);
+                    const total = data.abilities[stat] + bonus + backgroundBonus;
                     const mod = Math.floor((total - 10) / 2);
 
                     return (
@@ -275,11 +289,12 @@ export function AbilityScoreStep({ data, updateData, races = [], classes = [] }:
                                     type="number"
                                     value={data.abilities[stat]}
                                     readOnly={mode === 'roll'}
-                                    onChange={(e) => updateData('abilities', { ...data.abilities, [stat]: parseInt(e.target.value) || 10 })}
+                                    onChange={(e) => updateData('abilities', { ...data.abilities, [stat]: parseInt(e.target.value) || 8 })}
                                     style={{ ...inputStyle, textAlign: 'center', fontSize: '1.5rem', fontWeight: 700, width: '60px' }}
                                 />
                             )}
                             {bonus > 0 && <div style={{ fontSize: '0.75rem', color: '#4ade80', marginTop: '0.25rem' }}>+{bonus} Razza</div>}
+                            {backgroundBonus > 0 && <div style={{ fontSize: '0.75rem', color: '#60a5fa', marginTop: '0.1rem' }}>+{backgroundBonus} Background</div>}
                             <div style={{ fontSize: '0.9rem', color: 'white', marginTop: '0.5rem', fontWeight: 600 }}>
                                 Totale: {total}
                             </div>
@@ -414,9 +429,7 @@ export function SkillsStep({ data, updateData, classes = [] }: { data: Character
     const availableSkills = cls?.skillChoices?.skills || [];
 
     // Background Skills
-    const baseBg = data.background.split(' (')[0];
-    const bg = BACKGROUNDS.find(b => b.name === baseBg);
-    const bgSkills = bg?.skillProficiencies || [];
+    const bgSkills = data.backgroundSkills || [];
 
     // Determine # of picks from class data or fallback to heuristic
     const pickCount = cls?.skillChoices?.count || cls?.numSkills || (baseClass === 'Ladro' ? 4 : (baseClass === 'Bardo' || baseClass === 'Ranger') ? 3 : 2);
@@ -1090,29 +1103,51 @@ export function BackgroundStep({ data, updateData, activeSources = ['PHB', 'XGE'
     const filtered = backgrounds.filter(b => b.name.toLowerCase().includes(search.toLowerCase()));
 
     const selectBackground = (bg: any) => {
-        // Update background name
-        // Note: generic proficiencies in json are tricky (e.g. "choose two from...").
-        // For now, let's just save the background name and name-based skills if distinct.
-        // Actually, Plutonium data often has concrete skills or "choose 2".
-
         updateData('background', bg.name);
-        // updateData('skills', newSkills); // Optional: Auto-add skills? Might conflict with manual picks logic. 
-        // Better to just set background and let user pick skills manually in next step if they want, 
-        // OR separate background skills.
+        updateData('backgroundSkills', bg.skillProficiencies || []);
+        updateData('backgroundTools', bg.toolProficiencies || []);
+        
+        const is2024 = bg.source === 'XPHB' || bg.source === 'PHB24';
+        updateData('is2024', is2024);
 
-        // For now, simpliest: Set Name.
-        // Feature?
+        if (is2024) {
+            // Reset 2024 specific choices when changing background
+            updateData('backgroundAbilityChoices', []);
+            // Background feats will be handled below or in a separate choice if needed
+        } else if (bg.abilityBonuses && Object.keys(bg.abilityBonuses).length > 0) {
+            const choices = Object.entries(bg.abilityBonuses).map(([ability, bonus]) => ({
+                ability: ability as any,
+                bonus: bonus as number
+            }));
+            updateData('backgroundAbilityChoices', choices);
+        }
+
         if (bg.feature) {
             const feat = {
                 name: bg.feature.name,
                 source: bg.source,
                 level: 1,
-                description: bg.feature.entries ? JSON.stringify(bg.feature.entries) : ''
+                description: bg.feature.description || (bg.feature.entries ? JSON.stringify(bg.feature.entries) : '')
             };
-            // Remove old background feature?
             const cleanFeatures = data.features.filter(f => f.source !== 'Background');
             updateData('features', [...cleanFeatures, { ...feat, source: 'Background' }]);
         }
+
+        if (is2024 && bg.feats && bg.feats.length > 0) {
+            // Support multiple feats or a single one
+            const featRef = bg.feats[0];
+            const featName = typeof featRef === 'string' ? featRef : featRef.name;
+            updateData('backgroundFeat', featName);
+        }
+    };
+
+    const selectedBg = backgrounds.find(b => b.name === data.background);
+    const scores = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'] as const;
+
+    const handle2024AbilityChoice = (index: number, ability: string, bonus: number) => {
+        const current = [...(data.backgroundAbilityChoices || [])];
+        current[index] = { ability: ability as any, bonus };
+        updateData('backgroundAbilityChoices', current);
     };
 
     return (
@@ -1145,6 +1180,58 @@ export function BackgroundStep({ data, updateData, activeSources = ['PHB', 'XGE'
                             <div style={{ fontSize: '0.75rem', color: 'var(--brand-gold)', opacity: 0.8, letterSpacing: '1px', fontWeight: 600 }}>{bg.source}</div>
                         </div>
                     ))}
+                </div>
+            )}
+
+            {selectedBg && data.is2024 && (
+                <div style={{ marginTop: '2rem' }}>
+                    {selectedBg.abilityChoices && selectedBg.abilityChoices.length > 0 && (
+                        <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '1.5rem' }}>
+                            <h4 style={{ color: 'var(--brand-gold)', marginBottom: '1rem' }}>Scelte Caratteristiche (2024)</h4>
+                            <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '1.5rem' }}>
+                                I Background del 2024 ti permettono di scegliere quali caratteristiche potenziare.
+                            </p>
+                            
+                            {selectedBg.abilityChoices.map((choice: any, idx: number) => (
+                                <div key={idx} style={{ marginBottom: '1.5rem' }}>
+                                    <label style={labelStyle}>Scegli Bonus {idx + 1}</label>
+                                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                        {(choice.from || choice.weighted?.from || scores).map((stat: string) => {
+                                            const upperStat = stat.toUpperCase();
+                                            const isSelected = data.backgroundAbilityChoices?.[idx]?.ability === upperStat;
+                                            const bonusValue = choice.weighted?.weights?.[idx] || choice.bonus || 1;
+
+                                            return (
+                                                <button
+                                                    key={stat}
+                                                    onClick={() => handle2024AbilityChoice(idx, upperStat, bonusValue)}
+                                                    className="btn-secondary"
+                                                    style={{
+                                                        padding: '0.5rem 1rem',
+                                                        background: isSelected ? 'var(--brand-gold)' : '',
+                                                        color: isSelected ? 'black' : '',
+                                                        fontSize: '0.85rem'
+                                                    }}
+                                                >
+                                                    {upperStat} (+{bonusValue})
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {data.backgroundFeat && (
+                        <div className="glass-panel" style={{ padding: '1.5rem', borderLeft: '4px solid var(--brand-gold)' }}>
+                            <h4 style={{ color: 'var(--brand-gold)', marginBottom: '0.5rem', fontSize: '1rem' }}>Talento di Origine</h4>
+                            <div style={{ color: 'white', fontWeight: 600 }}>{data.backgroundFeat}</div>
+                            <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.5rem' }}>
+                                Questo talento viene fornito automaticamente dal tuo background.
+                            </p>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

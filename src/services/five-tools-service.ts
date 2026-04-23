@@ -62,6 +62,17 @@ export interface RawClass {
     multiclassing?: any;
 }
 
+export interface RawFeature {
+    name: string;
+    source: string;
+    className: string;
+    classSource: string;
+    level: number;
+    entries: any[];
+    subclassShortName?: string;
+    subclassSource?: string;
+}
+
 export interface RawSubclass {
     name: string;
     shortName: string;
@@ -105,13 +116,41 @@ export interface RawBackground {
     startingEquipment?: any[];
     entries?: any[];
     feats?: any[];
+    ability?: any[];
 }
 
-const DATA_DIR = path.join(process.cwd(), 'src', 'data', 'external', '5etools', 'data');
+const DATA_DIR = path.join(process.cwd(), 'plutonium', 'data');
 
 // Source lists for 2014 vs 2024 rules
 export const SOURCES_2014 = ['PHB', 'XGE', 'TCE', 'SCAG', 'VGTM', 'MTOF', 'EGW', 'FTD', 'VRGR'];
-export const SOURCES_2024 = ['XPHB', 'PHB24']; // Future support
+export const SOURCES_2024 = ['XPHB', 'PHB24']; // PHB24 is our UI id, XPHB is 5etools id
+
+/**
+ * Maps UI source IDs to 5etools source IDs
+ */
+export const SOURCE_MAPPING: Record<string, string[]> = {
+    'PHB24': ['XPHB', 'PHB24'],
+    'PHB': ['PHB'],
+    'XGE': ['XGE'],
+    'TCE': ['TCE'],
+    'DMG': ['DMG', 'XDMG'],
+    'MM': ['MM', 'XMM']
+};
+
+/**
+ * Expands a list of sources to include their 5etools equivalents
+ */
+export function expandSources(sources: string[]): string[] {
+    const expanded = new Set<string>();
+    for (const s of sources) {
+        if (SOURCE_MAPPING[s]) {
+            SOURCE_MAPPING[s].forEach(id => expanded.add(id));
+        } else {
+            expanded.add(s);
+        }
+    }
+    return Array.from(expanded);
+}
 
 export class FiveToolsService {
     private static instance: FiveToolsService;
@@ -119,6 +158,8 @@ export class FiveToolsService {
     private items: RawItem[] = [];
     private classes: RawClass[] = [];
     private subclasses: RawSubclass[] = [];
+    private classFeatures: RawFeature[] = [];
+    private subclassFeatures: RawFeature[] = [];
     private races: RawRace[] = [];
     private backgrounds: RawBackground[] = [];
     private spellClassMapping: Record<string, Record<string, { class: { name: string; source: string }[] }>> = {};
@@ -224,9 +265,15 @@ export class FiveToolsService {
                 if (content.subclass) {
                     this.subclasses.push(...content.subclass);
                 }
+                if (content.classFeature) {
+                    this.classFeatures.push(...content.classFeature);
+                }
+                if (content.subclassFeature) {
+                    this.subclassFeatures.push(...content.subclassFeature);
+                }
             }
         }
-        console.log(`Loaded ${this.classes.length} classes and ${this.subclasses.length} subclasses from 5etools.`);
+        console.log(`Loaded ${this.classes.length} classes, ${this.subclasses.length} subclasses and ${this.classFeatures.length + this.subclassFeatures.length} features from 5etools.`);
     }
 
     // ========== RACES ==========
@@ -263,13 +310,14 @@ export class FiveToolsService {
      */
     public getSpells(className: string, level: number, sources: string[] = SOURCES_2014): RawSpell[] {
         const engClass = getReverseTranslation(className, CLASS_TRANSLATIONS) || className;
+        const expandedSources = expandSources(sources);
 
         return this.spells.filter(s => {
             if (s.level !== level) return false;
-            if (sources.length > 0 && !sources.includes(s.source)) return false;
+            if (expandedSources.length > 0 && !expandedSources.includes(s.source)) return false;
             if (!s.classes?.fromClassList) return false;
             return s.classes.fromClassList.some(c =>
-                c.name === engClass && (!c.source || sources.includes(c.source))
+                c.name === engClass && (!c.source || expandedSources.includes(c.source))
             );
         });
     }
@@ -315,9 +363,10 @@ export class FiveToolsService {
      * @param armorType 'LA' (light), 'MA' (medium), 'HA' (heavy), 'S' (shield)
      */
     public getArmorByType(armorType: string, sources: string[] = SOURCES_2014): RawItem[] {
+        const expandedSources = expandSources(sources);
         return this.items.filter(i =>
             i.type === armorType &&
-            (sources.length === 0 || sources.includes(i.source))
+            (expandedSources.length === 0 || expandedSources.includes(i.source))
         );
     }
 
@@ -333,10 +382,11 @@ export class FiveToolsService {
     public getClassByName(name: string, sources: string[] = SOURCES_2014): RawClass | undefined {
         const clean = name.toLowerCase().trim();
         const engName = getReverseTranslation(name, CLASS_TRANSLATIONS) || name;
+        const expandedSources = expandSources(sources);
 
         return this.classes.find(c =>
             (c.name.toLowerCase() === clean || c.name.toLowerCase() === engName.toLowerCase()) &&
-            (sources.length === 0 || sources.includes(c.source))
+            (expandedSources.length === 0 || expandedSources.includes(c.source))
         );
     }
 
@@ -344,8 +394,9 @@ export class FiveToolsService {
      * Get all classes filtered by sources
      */
     public getClasses(sources: string[] = SOURCES_2014): RawClass[] {
+        const expandedSources = expandSources(sources);
         return this.classes.filter(c =>
-            sources.length === 0 || sources.includes(c.source)
+            expandedSources.length === 0 || expandedSources.includes(c.source)
         );
     }
 
@@ -354,10 +405,11 @@ export class FiveToolsService {
      */
     public getSubclasses(className: string, sources: string[] = SOURCES_2014): RawSubclass[] {
         const engName = getReverseTranslation(className, CLASS_TRANSLATIONS) || className;
+        const expandedSources = expandSources(sources);
 
         return this.subclasses.filter(sc =>
             sc.className.toLowerCase() === engName.toLowerCase() &&
-            (sources.length === 0 || sources.includes(sc.source))
+            (expandedSources.length === 0 || expandedSources.includes(sc.source))
         );
     }
 
@@ -367,11 +419,12 @@ export class FiveToolsService {
     public getSubclassByName(className: string, subclassName: string, sources: string[] = SOURCES_2014): RawSubclass | undefined {
         const engClassName = getReverseTranslation(className, CLASS_TRANSLATIONS) || className;
         const cleanSubName = subclassName.toLowerCase().trim();
+        const expandedSources = expandSources(sources);
 
         return this.subclasses.find(sc =>
             sc.className.toLowerCase() === engClassName.toLowerCase() &&
             (sc.name.toLowerCase() === cleanSubName || sc.shortName.toLowerCase() === cleanSubName) &&
-            (sources.length === 0 || sources.includes(sc.source))
+            (expandedSources.length === 0 || expandedSources.includes(sc.source))
         );
     }
 
@@ -425,6 +478,20 @@ export class FiveToolsService {
         return { skills: [], count: 2 };
     }
 
+    /**
+     * Get features for a class up to a certain level
+     */
+    public getClassFeatures(className: string, level: number, sources: string[] = SOURCES_2014): RawFeature[] {
+        const engName = getReverseTranslation(className, CLASS_TRANSLATIONS) || className;
+        const expandedSources = expandSources(sources);
+
+        return this.classFeatures.filter(f =>
+            f.className.toLowerCase() === engName.toLowerCase() &&
+            f.level <= level &&
+            (expandedSources.length === 0 || expandedSources.includes(f.source))
+        );
+    }
+
     // ========== RACE METHODS ==========
 
     /**
@@ -433,10 +500,11 @@ export class FiveToolsService {
     public getRaceByName(name: string, sources: string[] = SOURCES_2014): RawRace | undefined {
         const clean = name.toLowerCase().trim();
         const engName = getReverseTranslation(name, RACE_TRANSLATIONS) || name;
+        const expandedSources = expandSources(sources);
 
         return this.races.find(r =>
             (r.name.toLowerCase() === clean || r.name.toLowerCase() === engName.toLowerCase()) &&
-            (sources.length === 0 || sources.includes(r.source))
+            (expandedSources.length === 0 || expandedSources.includes(r.source))
         );
     }
 
@@ -445,8 +513,9 @@ export class FiveToolsService {
      * @param includeVariants Include reprinted/variant races
      */
     public getRaces(sources: string[] = SOURCES_2014, includeVariants: boolean = false): RawRace[] {
+        const expandedSources = expandSources(sources);
         return this.races.filter(r => {
-            if (sources.length > 0 && !sources.includes(r.source)) return false;
+            if (expandedSources.length > 0 && !expandedSources.includes(r.source)) return false;
             // Optionally exclude lineage/variant races
             if (!includeVariants && r.lineage) return false;
             return true;
@@ -510,10 +579,11 @@ export class FiveToolsService {
     public getBackgroundByName(name: string, sources: string[] = SOURCES_2014): RawBackground | undefined {
         const clean = name.toLowerCase().trim();
         const engName = getReverseTranslation(name, BACKGROUND_TRANSLATIONS) || name;
+        const expandedSources = expandSources(sources);
 
         return this.backgrounds.find(b =>
             (b.name.toLowerCase() === clean || b.name.toLowerCase() === engName.toLowerCase()) &&
-            (sources.length === 0 || sources.includes(b.source))
+            (expandedSources.length === 0 || expandedSources.includes(b.source))
         );
     }
 
@@ -521,16 +591,17 @@ export class FiveToolsService {
      * Get all backgrounds filtered by sources
      */
     public getBackgrounds(sources: string[] = SOURCES_2014): RawBackground[] {
+        const expandedSources = expandSources(sources);
         return this.backgrounds.filter(b =>
-            sources.length === 0 || sources.includes(b.source)
+            expandedSources.length === 0 || expandedSources.includes(b.source)
         );
     }
 
     /**
      * Get skill proficiencies for a background
      */
-    public getBackgroundSkills(backgroundName: string): string[] {
-        const bg = this.getBackgroundByName(backgroundName);
+    public getBackgroundSkills(backgroundName: string, sources: string[] = SOURCES_2014): string[] {
+        const bg = this.getBackgroundByName(backgroundName, sources);
         if (!bg?.skillProficiencies) return [];
 
         const skills: string[] = [];
@@ -547,18 +618,46 @@ export class FiveToolsService {
     /**
      * Get background feature
      */
-    public getBackgroundFeature(backgroundName: string): { name: string; description: string } | undefined {
-        const bg = this.getBackgroundByName(backgroundName);
-        if (!bg?.entries) return undefined;
-
-        for (const entry of bg.entries) {
-            if (typeof entry === 'object' && entry.type === 'entries' && entry.data?.isFeature) {
+    public getBackgroundFeature(backgroundName: string, sources: string[] = SOURCES_2014): { name: string; description: string } | undefined {
+        const bg = this.getBackgroundByName(backgroundName, sources);
+        if (!bg?.entries) {
+            // Check for 2024 style feats
+            if (bg?.feats && Array.isArray(bg.feats) && bg.feats.length > 0) {
+                const featRef = bg.feats[0];
+                const featName = typeof featRef === 'string' ? featRef.split('|')[0] : Object.keys(featRef)[0].split('|')[0];
                 return {
-                    name: entry.name.replace('Feature: ', ''),
-                    description: this.entriesToString(entry.entries)
+                    name: `Talento: ${featName.charAt(0).toUpperCase() + featName.slice(1)}`,
+                    description: "Questo background fornisce un talento (Feat) come da regole 2024."
                 };
             }
+            return undefined;
         }
+
+        // 1. Look for explicit feature entry
+        for (const entry of bg.entries) {
+            if (typeof entry === 'object' && entry.type === 'entries') {
+                if (entry.data?.isFeature || (entry.name && (entry.name.includes('Feature') || entry.name.includes('Caratteristica')))) {
+                    return {
+                        name: entry.name.replace('Feature: ', '').replace('Caratteristica: ', ''),
+                        description: this.entriesToString(entry.entries)
+                    };
+                }
+            }
+        }
+
+        // 2. Look for "Feat:" in lists (2024 style)
+        for (const entry of bg.entries) {
+            if (typeof entry === 'object' && entry.type === 'list') {
+                const featItem = (entry.items as any[])?.find(it => it.name === 'Feat:');
+                if (featItem) {
+                    return {
+                        name: "Talento (Feat)",
+                        description: this.entriesToString([featItem.entry])
+                    };
+                }
+            }
+        }
+
         return undefined;
     }
 

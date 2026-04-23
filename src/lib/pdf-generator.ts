@@ -430,50 +430,44 @@ export async function generateCharacterPDF(data: CharacterData): Promise<Uint8Ar
         }
     }
 
-    // --- SAVING THROWS (Inferred) ---
-    // Extract base class from "Paladin 13 / Warlock 2" -> "Paladin"
-    // Handle Italian "Paladino" or English "Paladin"
+    // --- SAVING THROWS (Inferred or Dynamic) ---
     const baseClass = data.class.split(/[\s/0-9]/)[0].trim();
-
-    // We will Map Class -> Saves.
     const classSaves: { [key: string]: string[] } = {
         'Barbaro': ['STR', 'CON'], 'Bardo': ['DEX', 'CHA'], 'Chierico': ['WIS', 'CHA'],
         'Druido': ['INT', 'WIS'], 'Guerriero': ['STR', 'CON'], 'Monaco': ['STR', 'DEX'],
         'Paladino': ['WIS', 'CHA'], 'Ranger': ['STR', 'DEX'], 'Ladro': ['DEX', 'INT'],
         'Stregone': ['CON', 'CHA'], 'Mago': ['INT', 'WIS'], 'Warlock': ['WIS', 'CHA'],
         'Artefice': ['CON', 'INT'],
-        // English fallbacks
-        'Barbarian': ['STR', 'CON'], 'Bard': ['DEX', 'CHA'], 'Cleric': ['WIS', 'CHA'],
-        'Druid': ['INT', 'WIS'], 'Fighter': ['STR', 'CON'], 'Monk': ['STR', 'DEX'],
-        'Paladin': ['WIS', 'CHA'], 'Rogue': ['DEX', 'INT'], 'Sorcerer': ['CON', 'CHA'],
-        'Wizard': ['INT', 'WIS']
     };
 
-    const mySaves = classSaves[baseClass] || classSaves[Object.keys(classSaves).find(k => baseClass.includes(k)) || ''] || [];
+    // Use data.proficiencies.savingThrows if available, otherwise fallback to static map
+    let mySaves = data.proficiencies?.savingThrows || [];
+    if (mySaves.length === 0) {
+        mySaves = classSaves[baseClass] || classSaves[Object.keys(classSaves).find(k => baseClass.includes(k)) || ''] || [];
+    }
 
-    // Attempt standard checkboxes 11, 18, 19, 20, 21, 22 (WotC standard)
-    const saveBoxMap: { [key: string]: string } = {
-        'STR': 'Check Box 11', 'DEX': 'Check Box 18', 'CON': 'Check Box 19',
-        'INT': 'Check Box 20', 'WIS': 'Check Box 21', 'CHA': 'Check Box 22'
+    // Map of Checkbox names (Standard and Sequential fallbacks)
+    const saveBoxMap: { [key: string]: string[] } = {
+        'STR': ['Check Box 11'], 
+        'DEX': ['Check Box 18', 'Check Box 12'], 
+        'CON': ['Check Box 19', 'Check Box 13'],
+        'INT': ['Check Box 20', 'Check Box 14'], 
+        'WIS': ['Check Box 21', 'Check Box 15'], 
+        'CHA': ['Check Box 22', 'Check Box 16']
     };
 
     mySaves.forEach(stat => {
-        setChecked(saveBoxMap[stat], true);
-        // Also try sequential logic if standard fails (double tap for variants)
-        const seqMap: { [key: string]: string } = {
-            'STR': 'Check Box 11', 'DEX': 'Check Box 12', 'CON': 'Check Box 13',
-            'INT': 'Check Box 14', 'WIS': 'Check Box 15', 'CHA': 'Check Box 16'
-        };
-        setChecked(seqMap[stat], true);
+        const boxes = saveBoxMap[stat.toUpperCase()] || [];
+        boxes.forEach(box => setChecked(box, true));
     });
 
-    // Write Saving Throw VALUES (with proficiency bonus for proficient saves)
+    // Write Saving Throw VALUES
     const stFieldMap: { [key: string]: string } = {
         'STR': 'ST Strength', 'DEX': 'ST Dexterity', 'CON': 'ST Constitution',
         'INT': 'ST Intelligence', 'WIS': 'ST Wisdom', 'CHA': 'ST Charisma'
     };
     Object.keys(stFieldMap).forEach(stat => {
-        const isProficient = mySaves.includes(stat);
+        const isProficient = mySaves.some(s => s.toUpperCase().includes(stat));
         const val = mods[stat] + (isProficient ? profBonus : 0);
         setField(stFieldMap[stat], fmtMod(val));
     });

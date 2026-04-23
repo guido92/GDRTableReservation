@@ -28,6 +28,8 @@ export type CharacterData = {
     level: number;
     subclass?: string;
     background: string;
+    backgroundSkills?: string[];
+    backgroundTools?: string[];
     alignment: string;
     abilities: AbilityScores;
     skills: string[]; // List of proficient skills
@@ -79,4 +81,10 @@ export type CharacterData = {
         hair?: string;
     };
     is2024: boolean;
+    sources?: string[];
+    backgroundAbilityChoices?: {
+        ability: keyof AbilityScores;
+        bonus: number;
+    }[];
+    backgroundFeat?: Feature;
 };

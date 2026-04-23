@@ -8,6 +8,7 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
         system: type === 'BOARDGAME' ? 'Board Game' : '',
@@ -28,10 +29,9 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
+    const uploadFile = async (file: File) => {
         if (!file) return;
-
+        
         setUploading(true);
         const data = new FormData();
         data.append('file', file);
@@ -51,6 +51,31 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
             alert('Errore durante il caricamento dell\'immagine');
         } finally {
             setUploading(false);
+        }
+    };
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) await uploadFile(file);
+    };
+
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+        setIsDragging(true);
+    };
+
+    const handleDragLeave = (e: React.DragEvent) => {
+        e.preventDefault();
+        setIsDragging(false);
+    };
+
+    const handleDrop = async (e: React.DragEvent) => {
+        e.preventDefault();
+        setIsDragging(false);
+        
+        const file = e.dataTransfer.files?.[0];
+        if (file && file.type.startsWith('image/')) {
+            await uploadFile(file);
         }
     };
 
@@ -243,16 +268,22 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
                 <div className="form-group">
                     <label style={{ color: 'var(--brand-gold)', fontWeight: 600, marginBottom: '0.6rem', display: 'block', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Immagine di Copertina</label>
                     <div style={{ 
-                        border: '2px dashed rgba(207, 170, 67, 0.3)', 
+                        border: `2px dashed ${isDragging ? 'var(--brand-gold)' : 'rgba(207, 170, 67, 0.3)'}`, 
                         borderRadius: '8px',
                         padding: '2.5rem',
                         textAlign: 'center',
-                        background: 'rgba(255, 255, 255, 0.02)',
+                        background: isDragging ? 'rgba(207, 170, 67, 0.05)' : 'rgba(255, 255, 255, 0.02)',
                         cursor: 'pointer',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s ease',
+                        transform: isDragging ? 'scale(1.01)' : 'scale(1)'
                     }}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
                     onMouseOver={e => e.currentTarget.style.borderColor = 'var(--brand-gold)'}
-                    onMouseOut={e => e.currentTarget.style.borderColor = 'rgba(207, 170, 67, 0.3)'}
+                    onMouseOut={e => {
+                        if (!isDragging) e.currentTarget.style.borderColor = 'rgba(207, 170, 67, 0.3)';
+                    }}
                     onClick={() => document.getElementById('file-upload')?.click()}
                     >
                         <input 
@@ -263,9 +294,9 @@ export default function CreateSessionForm({ type }: { type: 'GDR' | 'BOARDGAME' 
                             disabled={uploading} 
                             style={{ display: 'none' }} 
                         />
-                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🖼️</div>
-                        <p style={{ color: uploading ? 'var(--brand-gold)' : 'white', margin: 0, fontWeight: 500 }}>
-                            {uploading ? 'Caricamento in corso...' : 'Trascina o clicca per caricare un\'immagine'}
+                        <div style={{ fontSize: '3rem', marginBottom: '0.5rem', transform: isDragging ? 'translateY(-5px)' : 'none', transition: 'transform 0.3s ease' }}>🖼️</div>
+                        <p style={{ color: uploading || isDragging ? 'var(--brand-gold)' : 'white', margin: 0, fontWeight: 500 }}>
+                            {uploading ? 'Caricamento in corso...' : isDragging ? 'Rilascia qui l\'immagine' : 'Trascina o clicca per caricare un\'immagine'}
                         </p>
                     </div>
                     {formData.imageUrl && (

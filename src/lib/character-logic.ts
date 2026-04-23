@@ -631,134 +631,139 @@ export class CharacterLogic {
      * Hydrates a partially filled character with full features and stats
      */
     static async hydrateCharacter(data: CharacterData): Promise<CharacterData> {
+        const uds = UnifiedDataService.getInstance();
+        await uds.initialize();
+
         const newData = { ...data };
         const level = newData.level || 1;
+        const sources = newData.sources || (newData.is2024 ? ['PHB24', 'XPHB'] : SOURCES_2014);
 
-        const rClass = CLASSES.find(c => c.name === data.class.replace(/ *\(.*\)/, '')) || CLASSES[0];
-        const rRace = RACES.find(r => r.name === data.race.replace(/ *\(.*\)/, '')) || RACES[0];
-        const rBg = BACKGROUNDS.find(b => b.name === data.background.replace(/ *\(.*\)/, '')) || BACKGROUNDS[0];
+        // 1. Get Core Data from Unified Service
+        // 1. Parse Classes (Support for Multiclass "Class 1 / Class 2")
+        const classParts = data.class.split('/').map(p => p.trim());
+        const primaryClassStr = classParts[0].replace(/ *\(.*\)/, '').replace(/[0-9]/g, '').trim();
+        
+        // Load all classes for multiclassing
+        const uClasses = await Promise.all(classParts.map(async p => {
+            const name = p.replace(/ *\(.*\)/, '').replace(/[0-9]/g, '').trim();
+            return uds.getClass(name, sources);
+        }));
+        const uClass = uClasses[0]; // Primary class
 
+        const raceName = data.race.replace(/ *\(.*\)/, '').trim();
+        const bgName = data.background.replace(/ *\(.*\)/, '').trim();
+
+        const uRace = await uds.getRace(raceName, sources);
+        const uBackground = await uds.getBackground(bgName, sources);
+
+        // Fallbacks to static data if unified fails
+        const sClass = CLASSES.find(c => c.name === primaryClassStr) || CLASSES[0];
+        const sRace = RACES.find(r => r.name === raceName) || RACES[0];
+        const sBg = BACKGROUNDS.find(b => b.name === bgName) || BACKGROUNDS[0];
+
+        // 2. Identify Subclass and Subrace
         const subclassName = data.class.match(/\((.*?)\)/)?.[1];
-        const subclass = subclassName ? rClass.suboptions?.find(s => s.name === subclassName) : undefined;
-
         const subraceName = data.race.match(/\((.*?)\)/)?.[1];
-        const subrace = subraceName ? rRace.suboptions?.find(s => s.name === subraceName) : undefined;
 
-        // Features
+        // 3. Aggregate Features
         const features: Feature[] = [...(newData.features || [])];
+        const addUniqueFeature = (f: { name: string; description: string; level?: number }, prefix: string) => {
+            const fullName = `(${prefix}) ${f.name}`;
+            if (!features.find(ef => ef.name === fullName || ef.name === f.name)) {
+                features.push({
+                    name: fullName,
+                    description: f.description,
+                    level: f.level || 1,
+                    source: prefix
+                });
+            }
+        };
 
-        if (rRace.features) {
-            rRace.features.filter(f => !f.level || f.level <= level).forEach(f => {
-                if (!features.find(ef => ef.name === f.name)) features.push({ ...f, name: `(Razza) ${f.name}` });
-            });
-        }
-        if (subrace && subrace.features) {
-            subrace.features.filter(f => !f.level || f.level <= level).forEach(f => {
-                if (!features.find(ef => ef.name === f.name)) features.push({ ...f, name: `(Razza) ${f.name}` });
-            });
-        }
-
-        if (rClass.features) {
-            rClass.features.filter(f => f.level <= level).forEach(f => {
-                if (!features.find(ef => ef.name === f.name || ef.name === `(Classe) ${f.name}`)) {
-                    features.push({ ...f, name: `(Classe) ${f.name}` });
-                }
-            });
-        }
-        if (subclass && subclass.features) {
-            subclass.features.filter(f => f.level <= level).forEach(f => {
-                if (!features.find(ef => ef.name === f.name || ef.name === `(Archetipo) ${f.name}`)) {
-                    features.push({ ...f, name: `(Archetipo) ${f.name}` });
-                }
-            });
+        // Class Features (All classes if multiclass)
+        uClasses.forEach((cls, idx) => {
+            if (!cls) return;
+            const clsLevel = classParts.length > 1 ? (parseInt(classParts[idx].match(/\d+/)?.[0] || "1")) : level;
+            cls.features.filter(f => f.level <= clsLevel).forEach(f => addUniqueFeature(f, classParts.length > 1 ? classParts[idx] : 'Classe'));
+        });
+        
+        // Subclass Features (Current logic only for primary class)
+        if (subclassName && uClass) {
+            const fts = FiveToolsService.getInstance();
+            const rawSub = fts.getSubclassByName(primaryClassStr, subclassName, sources);
+            // ... logic could be expanded
+        } else if (subclassName && sClass.suboptions) {
+            const sSub = sClass.suboptions.find(s => s.name === subclassName);
+            if (sSub?.features) {
+                sSub.features.filter(f => f.level <= level).forEach(f => addUniqueFeature(f, 'Archetipo'));
+            }
         }
 
-        if (rBg.features) {
-            rBg.features.filter(f => !f.level || f.level <= level).forEach(f => {
-                if (!features.find(ef => ef.name === f.name)) features.push({ ...f, name: `(Background) ${f.name}` });
-            });
+        // Race Features
+        if (uRace) {
+            uRace.features.forEach(f => addUniqueFeature(f, 'Razza'));
+            if (subraceName) {
+                const sub = uRace.subraces?.find(s => s.name === subraceName);
+                if (sub?.features) sub.features.forEach(f => addUniqueFeature(f, 'Razza'));
+            }
+        } else {
+            if (sRace.features) sRace.features.forEach(f => addUniqueFeature(f, 'Razza'));
+            if (subraceName && sRace.suboptions) {
+                const sub = sRace.suboptions.find(s => s.name === subraceName);
+                if (sub?.features) sub.features.forEach(f => addUniqueFeature(f, 'Razza'));
+            }
+        }
+
+        // Background Feature
+        if (uBackground && uBackground.feature) {
+            addUniqueFeature({ ...uBackground.feature, level: 1 }, 'Background');
+        } else if (sBg.features) {
+            sBg.features.forEach(f => addUniqueFeature(f, 'Background'));
         }
 
         newData.features = features;
 
-        // HP Calculation
-        if (newData.hp.max === 10 && rClass.hitDie && rClass.hitDie !== 10) {
-            const conMod = this.getModifier(newData.abilities.CON);
-            const hpCalc = this.calculateHP(level, conMod, `d${rClass.hitDie}`);
-            newData.hp = hpCalc;
-            newData.hitDice = { total: level, die: `d${rClass.hitDie}` };
-        }
+        // 4. Hit Points & Hit Dice
+        const hitDie = uClass?.hitDie || sClass.hitDie || 8;
+        const conMod = this.getModifier(newData.abilities.CON);
+        newData.hp = this.calculateHP(level, conMod, `d${hitDie}`);
+        newData.hitDice = { total: level, die: `d${hitDie}` };
 
-        // Equipment Aggregation
-        if (newData.equipment.length === 0) {
-            if (rClass.equipment) newData.equipment.push(...rClass.equipment);
-            if (rBg.equipment) newData.equipment.push(...rBg.equipment);
-            if (newData.equipment.length === 0) newData.equipment.push("Zaino da Esploratore");
-        }
-
-        // Proficiencies
+        // 5. Proficiencies
         const mergeUnique = (arr1: string[] = [], arr2: string[] = []) => Array.from(new Set([...arr1, ...arr2]));
 
         newData.proficiencies = {
-            armor: mergeUnique(newData.proficiencies?.armor, rClass.proficiencies?.armor),
-            weapons: mergeUnique(newData.proficiencies?.weapons, rClass.proficiencies?.weapons),
-            tools: mergeUnique(newData.proficiencies?.tools, rClass.proficiencies?.tools),
-            savingThrows: mergeUnique(newData.proficiencies?.savingThrows, rClass.proficiencies?.savingThrows)
+            armor: mergeUnique(newData.proficiencies?.armor, uClass?.armorProficiencies || sClass.proficiencies?.armor),
+            weapons: mergeUnique(newData.proficiencies?.weapons, uClass?.weaponProficiencies || sClass.proficiencies?.weapons),
+            tools: mergeUnique(newData.proficiencies?.tools, uClass?.toolProficiencies || sClass.proficiencies?.tools),
+            savingThrows: mergeUnique(newData.proficiencies?.savingThrows, uClass?.savingThrows || sClass.proficiencies?.savingThrows)
         };
 
-        newData.skills = mergeUnique(newData.skills, rBg.skillProficiencies || []);
+        // Skills from Background (if not already picked)
+        const bgSkills = uBackground?.skillProficiencies || sBg.skillProficiencies || [];
+        newData.skills = mergeUnique(newData.skills, bgSkills);
 
-        // Languages
-        if (!newData.languages || newData.languages.length === 0) {
-            const raceLanguages: Record<string, string[]> = {
-                'Umano': ['Comune'], 'Elfo': ['Comune', 'Elfico'], 'Nano': ['Comune', 'Nanico'],
-                'Halfling': ['Comune', 'Halfling'], 'Dragonide': ['Comune', 'Draconico'],
-                'Gnomo': ['Comune', 'Gnomesco'], 'Mezzelfo': ['Comune', 'Elfico'],
-                'Mezzorco': ['Comune', 'Orchesco'], 'Tiefling': ['Comune', 'Infernale'],
-                'Aasimar': ['Comune', 'Celestiale'], 'Goliath': ['Comune', 'Gigante'],
-                'Tabaxi': ['Comune'], 'Tritone': ['Comune', 'Primordiale'],
-                'Kenku': ['Comune', 'Auran'], 'Tortle': ['Comune', 'Aquan'],
-                'Warforged': ['Comune'], 'Genasi': ['Comune', 'Primordiale'],
-            };
-            const baseRaceName = data.race.replace(/\s*\(.*\)/, '');
-            newData.languages = raceLanguages[baseRaceName] || ['Comune'];
-            if (rBg.languages) {
-                rBg.languages.forEach(l => {
-                    if (!l.includes('scelta') && !newData.languages.includes(l)) {
-                        newData.languages.push(l);
-                    }
-                });
-            }
+        // 6. Equipment
+        if (!newData.equipment || newData.equipment.length === 0) {
+            const classEquip = uClass ? getDefaultEquipment(uClass.name) : (sClass.equipment || []);
+            const bgEquip = uBackground?.equipment || sBg.equipment || [];
+            newData.equipment = mergeUnique(classEquip, bgEquip);
+            if (newData.equipment.length === 0) newData.equipment.push("Zaino da Esploratore", "Viveri (5 giorni)");
         }
 
-        // HP Calculation Fallback
-        if ((!newData.hp.max || newData.hp.max === 0) && rClass.hitDie) {
-            const conMod = this.getModifier(newData.abilities.CON);
-            const hpCalc = this.calculateHP(level, conMod, `d${rClass.hitDie}`);
-            newData.hp = hpCalc;
-            newData.hitDice = { total: level, die: `d${rClass.hitDie}` };
-        }
+        // 7. Armor Class
+        const { ac } = this.calculateArmorClass(newData.equipment, newData.abilities, className);
+        newData.armorClass = ac;
 
-        if (!newData.hitDice?.die) {
-            newData.hitDice = { total: level, die: rClass.hitDie ? `d${rClass.hitDie}` : 'd8' };
-        }
-
-        // AC Calculation
-        if (!newData.armorClass || newData.armorClass === 10) {
-            const { ac } = this.calculateArmorClass(newData.equipment, newData.abilities, rClass.name);
-            newData.armorClass = ac;
-        }
-
-        // Attacks
+        // 8. Attacks (if empty)
         if (!newData.attacks || newData.attacks.length === 0) {
             newData.attacks = [];
             const strMod = this.getModifier(newData.abilities.STR);
             const dexMod = this.getModifier(newData.abilities.DEX);
-            const profBonus = Math.ceil((level) / 4) + 1;
+            const profBonus = Math.ceil(level / 4) + 1;
 
             newData.equipment.forEach(itemStr => {
-                const itemName = itemStr.replace(/x[0-9]+/, '').trim();
-                const item = ITEMS.find(i => itemName.toLowerCase().includes(i.name.toLowerCase()));
+                const itemName = itemStr.replace(/x[0-9]+/, '').trim().toLowerCase();
+                const item = ITEMS.find(i => itemName.includes(i.name.toLowerCase()));
 
                 if (item && item.type === 'Weapon' && item.damage) {
                     const props = (item.properties || []).join(' ').toLowerCase();
@@ -786,47 +791,15 @@ export class CharacterLogic {
             }
         }
 
-        // Appearance
-        if (!newData.appearance || (!newData.appearance.age && !newData.appearance.height)) {
-            const raceAppearance: Record<string, { age: string; height: string; weight: string }> = {
-                'Elfo': { age: '120', height: '1.70m', weight: '60kg' },
-                'Nano': { age: '150', height: '1.30m', weight: '70kg' },
-                'Halfling': { age: '40', height: '0.90m', weight: '35kg' },
-                'Gnomo': { age: '100', height: '1.00m', weight: '35kg' },
-                'Dragonide': { age: '30', height: '1.90m', weight: '110kg' },
-                'Mezzorco': { age: '25', height: '1.85m', weight: '100kg' },
-                'Tiefling': { age: '30', height: '1.75m', weight: '75kg' },
-                'Mezzelfo': { age: '50', height: '1.70m', weight: '68kg' },
-                'Aasimar': { age: '30', height: '1.80m', weight: '75kg' },
-                'Goliath': { age: '30', height: '2.20m', weight: '140kg' },
-                'Tabaxi': { age: '25', height: '1.75m', weight: '65kg' },
-                'Warforged': { age: '10', height: '1.85m', weight: '130kg' },
-                'Kenku': { age: '20', height: '1.50m', weight: '50kg' },
-                'Tortle': { age: '40', height: '1.70m', weight: '200kg' },
-                'Tritone': { age: '60', height: '1.60m', weight: '65kg' },
-                'Genasi': { age: '30', height: '1.75m', weight: '75kg' },
-            };
-            const baseRaceName = data.race.replace(/\s*\(.*\)/, '');
-            const raceDefaults = raceAppearance[baseRaceName] || { age: '25', height: '1.75m', weight: '75kg' };
-            const eyes = ['Marroni', 'Azzurri', 'Verdi', 'Grigi', 'Ambra', 'Nocciola'];
-            const skins = ['Chiara', 'Olivastra', 'Scura', 'Bronzea', 'Pallida'];
-            const hairs = ['Neri', 'Castani', 'Biondi', 'Rossi', 'Grigi', 'Bianchi'];
-            newData.appearance = {
-                age: newData.appearance?.age || raceDefaults.age,
-                height: newData.appearance?.height || raceDefaults.height,
-                weight: newData.appearance?.weight || raceDefaults.weight,
-                eyes: newData.appearance?.eyes || eyes[Math.floor(Math.random() * eyes.length)],
-                skin: newData.appearance?.skin || skins[Math.floor(Math.random() * skins.length)],
-                hair: newData.appearance?.hair || hairs[Math.floor(Math.random() * hairs.length)],
-            };
-        }
-
-        // Spells
-        if (newData.spells.length === 0) {
+        // 9. Spells (if caster and empty)
+        const isCaster = ['Bardo', 'Chierico', 'Druido', 'Mago', 'Stregone', 'Warlock', 'Artefice', 'Paladino', 'Ranger'].includes(className);
+        if (isCaster && (!newData.spells || newData.spells.length === 0)) {
             let castStatMod = this.getModifier(newData.abilities.INT);
-            if (["Chierico", "Druido", "Ranger", "Monaco"].includes(rClass.name)) castStatMod = this.getModifier(newData.abilities.WIS);
-            if (["Bardo", "Paladino", "Stregone", "Warlock"].includes(rClass.name)) castStatMod = this.getModifier(newData.abilities.CHA);
-            newData.spells = await this.getSpells(rClass.name, level, castStatMod);
+            if (["Chierico", "Druido", "Ranger", "Monaco"].includes(className)) castStatMod = this.getModifier(newData.abilities.WIS);
+            if (["Bardo", "Paladino", "Stregone", "Warlock"].includes(className)) castStatMod = this.getModifier(newData.abilities.CHA);
+            
+            // Note: getSpells internally uses FiveToolsService
+            newData.spells = await this.getSpells(className, level, castStatMod);
         }
 
         return newData;

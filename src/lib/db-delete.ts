@@ -3,7 +3,8 @@ import path from 'path';
 import { Session } from '@/types';
 import { getSessions } from './db';
 
-const DB_PATH = path.join(process.cwd(), 'src/data/db.json');
+const DEFAULT_DB_PATH = path.join(process.cwd(), 'src/data/db.json');
+const DB_PATH = process.env.DATABASE_PATH || DEFAULT_DB_PATH;
 
 export async function deleteSession(id: string): Promise<void> {
     const sessions = await getSessions();

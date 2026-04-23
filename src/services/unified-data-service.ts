@@ -76,6 +76,9 @@ export interface UnifiedBackground {
     languages: string[];
     equipment: string[];
     feature: { name: string; description: string } | null;
+    abilityBonuses?: Record<string, number>;
+    abilityChoices?: any[]; // To handle 2024 choices
+    feats?: string[];
 }
 
 export class UnifiedDataService {
@@ -419,7 +422,21 @@ export class UnifiedDataService {
 
         const rawBgs = this.fiveTools.getBackgrounds(sources);
         if (rawBgs.length > 0) {
-            return rawBgs.map(rb => this.convertRawBackground(rb));
+            const mapped = rawBgs.map(rb => this.convertRawBackground(rb));
+
+            // Deduplicate by name, preferring 2024/XPHB versions
+            const deduped = new Map<string, UnifiedBackground>();
+            for (const bg of mapped) {
+                const existing = deduped.get(bg.name);
+                // Priority: PHB24/XPHB > others
+                const isNewHighPriority = bg.source === 'PHB24' || bg.source === 'XPHB';
+                const isOldHighPriority = existing?.source === 'PHB24' || existing?.source === 'XPHB';
+
+                if (!existing || (isNewHighPriority && !isOldHighPriority)) {
+                    deduped.set(bg.name, bg);
+                }
+            }
+            return Array.from(deduped.values()).sort((a, b) => a.name.localeCompare(b.name));
         }
 
         // Fallback to static data
@@ -428,8 +445,8 @@ export class UnifiedDataService {
 
     private convertRawBackground(raw: RawBackground): UnifiedBackground {
         const nameIt = translateBackground(raw.name);
-        const skills = this.fiveTools.getBackgroundSkills(raw.name);
-        const feature = this.fiveTools.getBackgroundFeature(raw.name);
+        const skills = this.fiveTools.getBackgroundSkills(raw.name, [raw.source]);
+        const feature = this.fiveTools.getBackgroundFeature(raw.name, [raw.source]);
 
         return {
             name: nameIt,
@@ -439,8 +456,44 @@ export class UnifiedDataService {
             toolProficiencies: this.extractToolProficiencies(raw.toolProficiencies),
             languages: this.extractLanguages(raw.languageProficiencies),
             equipment: this.extractBackgroundEquipment(raw.startingEquipment),
-            feature: feature ? { name: feature.name, description: feature.description } : null
+            feature: feature ? { name: feature.name, description: feature.description } : null,
+            abilityBonuses: this.extractBackgroundAbilityBonuses(raw),
+            abilityChoices: this.extractBackgroundAbilityChoices(raw),
+            feats: this.extractBackgroundFeats(raw)
         };
+    }
+
+    private extractBackgroundAbilityBonuses(raw: RawBackground): Record<string, number> {
+        if (!raw.ability || !Array.isArray(raw.ability)) return {};
+
+        const bonuses: Record<string, number> = {};
+        
+        for (const entry of raw.ability) {
+            if (entry.choose && entry.choose.weighted) {
+                // Choice logic is handled by abilityChoices field in UnifiedBackground
+            } else {
+                for (const [stat, value] of Object.entries(entry)) {
+                    if (typeof value === 'number') {
+                        bonuses[stat.toUpperCase()] = value;
+                    }
+                }
+            }
+        }
+        return bonuses;
+    }
+
+    private extractBackgroundAbilityChoices(raw: RawBackground): any[] {
+        if (!raw.ability || !Array.isArray(raw.ability)) return [];
+        return raw.ability.filter(a => a.choose).map(a => a.choose);
+    }
+
+    private extractBackgroundFeats(raw: RawBackground): string[] {
+        if (!raw.feats || !Array.isArray(raw.feats)) return [];
+
+        return raw.feats.map(f => {
+            if (typeof f === 'string') return f.split('|')[0];
+            return Object.keys(f)[0].split('|')[0];
+        });
     }
 
     private convertStaticBackground(staticBg: StaticBackground): UnifiedBackground {
@@ -574,10 +627,29 @@ export class UnifiedDataService {
         return langs.length > 0 ? langs : ['Comune'];
     }
 
-    private extractClassFeatures(_raw: RawClass): Feature[] {
-        // This would require loading classFeature data from 5etools
-        // For now, return empty and rely on static data fallback
-        return [];
+    private extractClassFeatures(raw: RawClass): Feature[] {
+        // Ottieni tutti i feature per questa classe fino al livello 20
+        const rawFeatures = this.fiveTools.getClassFeatures(raw.name, 20, [raw.source]);
+        
+        return rawFeatures.map(rf => ({
+            name: rf.name,
+            source: rf.source,
+            level: rf.level,
+            description: this.entriesToMarkdown(rf.entries)
+        }));
+    }
+
+    private entriesToMarkdown(entries: any[]): string {
+        if (!entries) return '';
+        return entries.map(e => {
+            if (typeof e === 'string') return e;
+            if (e.type === 'entries') return `**${e.name}**: ${this.entriesToMarkdown(e.entries)}`;
+            if (e.type === 'list') return e.items.map((it: any) => `- ${typeof it === 'string' ? it : this.entriesToMarkdown([it])}`).join('\n');
+            // Basic replacement for tags
+            let text = JSON.stringify(e);
+            if (typeof e === 'object' && e.entries) text = this.entriesToMarkdown(e.entries);
+            return text.replace(/\{@\w+\s+([^}|]+)(?:\|[^}]*)?\}/g, '$1');
+        }).join('\n\n');
     }
 
     private getDefaultSkillCount(className: string): number {
