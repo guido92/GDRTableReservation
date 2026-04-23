@@ -119,7 +119,30 @@ export interface RawBackground {
     ability?: any[];
 }
 
-const DATA_DIR = path.join(process.cwd(), 'plutonium', 'data');
+let DATA_DIR = path.join(process.cwd(), 'plutonium', 'data');
+
+/**
+ * Robustly find the plutonium data directory
+ */
+async function resolveDataDir(): Promise<string> {
+    const possiblePaths = [
+        path.join(process.cwd(), 'plutonium', 'data'),
+        path.join(__dirname, 'plutonium', 'data'),
+        path.join(__dirname, '..', 'plutonium', 'data'),
+        path.join(__dirname, '..', '..', 'plutonium', 'data'),
+        '/app/plutonium/data'
+    ];
+
+    for (const p of possiblePaths) {
+        if (await fs.pathExists(p)) {
+            console.log(`Found data directory at: ${p}`);
+            return p;
+        }
+    }
+
+    console.warn('Could not find plutonium data directory in any standard location. Falling back to default.');
+    return possiblePaths[0];
+}
 
 // Source lists for 2014 vs 2024 rules
 export const SOURCES_2014 = ['PHB', 'XGE', 'TCE', 'SCAG', 'VGTM', 'MTOF', 'EGW', 'FTD', 'VRGR'];
@@ -184,16 +207,10 @@ export class FiveToolsService {
         try {
             console.log('Initializing FiveToolsService...');
             console.log('Current working directory:', process.cwd());
-            try {
-                const rootFiles = await fs.readdir(process.cwd());
-                console.log('Root files in container:', rootFiles);
-                if (rootFiles.includes('plutonium')) {
-                    const plutContent = await fs.readdir(path.join(process.cwd(), 'plutonium'));
-                    console.log('Plutonium directory content:', plutContent);
-                }
-            } catch (e) {
-                console.error('Debug readdir failed:', e);
-            }
+            
+            // Resolve the data directory dynamically
+            DATA_DIR = await resolveDataDir();
+            console.log('Using DATA_DIR:', DATA_DIR);
 
             // Load all data types in parallel for better performance
             await Promise.all([
