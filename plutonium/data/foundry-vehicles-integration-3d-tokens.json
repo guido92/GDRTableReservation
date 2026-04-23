@@ -1,0 +1,24 @@
+{
+	"apparatus%20of%20kwalish_mm": {
+		"primary": "modules/canvas3dtokencompendium/miniatures/_Colorized/Monster%20Manual/A/MZ4250%20-%20Apparatus%20of%20Kwalish.glb"
+	},
+	"demon%20grinder_bgdia": {
+		"primary": "modules/canvas3dtokencompendium/miniatures/_Colorized/Baldur%27s%20Gate_%20Descent%20into%20Avernus/Infernal%20War%20Machines/MZ4250%20-%20Demon%20Grinder.glb"
+	},
+	"devil's%20ride_bgdia": {
+		"primary": "modules/canvas3dtokencompendium/miniatures/_Colorized/Baldur%27s%20Gate_%20Descent%20into%20Avernus/Infernal%20War%20Machines/MZ4250%20-%20Devils%20Ride.glb",
+		"secondary": [
+			"modules/canvas3dtokencompendium/miniatures/_Colorized/Baldur%27s%20Gate_%20Descent%20into%20Avernus/Infernal%20War%20Machines/MZ4250%20-%20Devils%20Ride%20Black.glb",
+			"modules/canvas3dtokencompendium/miniatures/_Colorized/Baldur%27s%20Gate_%20Descent%20into%20Avernus/Infernal%20War%20Machines/MZ4250%20-%20Devils%20Ride%20Red.glb"
+		]
+	},
+	"scavenger_bgdia": {
+		"primary": "modules/canvas3dtokencompendium/miniatures/_Colorized/Baldur%27s%20Gate_%20Descent%20into%20Avernus/Infernal%20War%20Machines/MZ4250%20-%20Scavenger.glb"
+	},
+	"tormentor_bgdia": {
+		"primary": "modules/canvas3dtokencompendium/miniatures/_Colorized/Baldur%27s%20Gate_%20Descent%20into%20Avernus/Infernal%20War%20Machines/MZ4250%20-%20Tormentor.glb"
+	},
+	"nautiloid_aag": {
+		"primary": "modules/canvas3dtokencompendium/miniatures/_Colorized/Monstrous%20Compendium%20Volume%2001_%20Spelljammer%20Creatures/MZ4250_-_Nautiloid_Kitbashed_1K.glb"
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"TCE": {
+		"Eldritch Cannon, Flamethrower": [
+			{
+				"path": "img/objects/token-subjects/TCE/Eldritch Cannon, Flamethrower.webp"
+			}
+		],
+		"Eldritch Cannon, Force Ballista": [
+			{
+				"path": "img/objects/token-subjects/TCE/Eldritch Cannon, Force Ballista.webp"
+			}
+		],
+		"Eldritch Cannon, Protector": [
+			{
+				"path": "img/objects/token-subjects/TCE/Eldritch Cannon, Protector.webp"
+			}
+		]
+	}
+}

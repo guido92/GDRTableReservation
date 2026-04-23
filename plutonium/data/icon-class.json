@@ -1,0 +1,30 @@
+{
+	"PHB": {
+		"Barbarian": "media/icon/class/phb-barbarian.webp",
+		"Bard": "media/icon/class/phb-bard.webp",
+		"Cleric": "media/icon/class/phb-cleric.webp",
+		"Druid": "media/icon/class/phb-druid.webp",
+		"Fighter": "media/icon/class/phb-fighter.webp",
+		"Monk": "media/icon/class/phb-monk.webp",
+		"Paladin": "media/icon/class/phb-paladin.webp",
+		"Ranger": "media/icon/class/phb-ranger.webp",
+		"Rogue": "media/icon/class/phb-rogue.webp",
+		"Sorcerer": "media/icon/class/phb-sorcerer.webp",
+		"Warlock": "media/icon/class/phb-warlock.webp",
+		"Wizard": "media/icon/class/phb-wizard.webp"
+	},
+	"XPHB": {
+		"Barbarian": "media/icon/class/phb-barbarian.webp",
+		"Bard": "media/icon/class/phb-bard.webp",
+		"Cleric": "media/icon/class/phb-cleric.webp",
+		"Druid": "media/icon/class/phb-druid.webp",
+		"Fighter": "media/icon/class/phb-fighter.webp",
+		"Monk": "media/icon/class/phb-monk.webp",
+		"Paladin": "media/icon/class/phb-paladin.webp",
+		"Ranger": "media/icon/class/phb-ranger.webp",
+		"Rogue": "media/icon/class/phb-rogue.webp",
+		"Sorcerer": "media/icon/class/phb-sorcerer.webp",
+		"Warlock": "media/icon/class/phb-warlock.webp",
+		"Wizard": "media/icon/class/phb-wizard.webp"
+	}
+}

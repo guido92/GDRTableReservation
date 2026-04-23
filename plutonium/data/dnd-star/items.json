@@ -1,0 +1,39 @@
+{
+	"TCE": {
+		"Absorbing Tattoo": "icons/magic/defensive/shield-barrier-flaming-diamond-teal.webp",
+		"Alchemical Compendium": "icons/sundries/books/book-tooled-blue-yellow.webp",
+		"Astral Shard": "icons/commodities/gems/gem-rough-cushion-white.webp",
+		"Astromancy Archive": "icons/tools/scribal/lens-grey-brown.webp",
+		"Bell Branch": "icons/weapons/staves/staff-crescent-green.webp",
+		"Blood Fury Tattoo": "icons/magic/symbols/rune-sigil-red-orange.webp",
+		"Coiling Grasp Tattoo": "icons/magic/symbols/runes-carved-stone-yellow.webp",
+		"Duplicitous Manuscript": "icons/sundries/books/book-rounded-red.webp",
+		"Eldritch Claw Tattoo": "icons/creatures/claws/claw-talons-yellow-red.webp",
+		"Elemental Essence Shard": "icons/commodities/gems/gem-rough-navette-green.webp",
+		"Ghost Step Tattoo": "icons/magic/symbols/rune-sigil-rough-white-teal.webp",
+		"Guardian Emblem": "icons/equipment/neck/necklace-simple-carved-spiral-blue.webp",
+		"Heart Weaver's Primer": "icons/sundries/books/book-embossed-jewel-gold-green.webp",
+		"Libram of Souls and Flesh": "icons/sundries/books/book-mimic.webp",
+		"Lifewell Tattoo": "icons/magic/life/heart-cross-strong-green.webp",
+		"Lyre of Building": "icons/tools/instruments/harp-gold-glowing.webp",
+		"Masquerade Tattoo": "icons/magic/symbols/mask-metal-silver-white.webp",
+		"Outer Essence Shard": "icons/commodities/gems/gem-faceted-rough-blue.webp",
+		"Baba Yaga's Pestle": "icons/weapons/staves/staff-simple-carved.webp",
+		"Planecaller's Codex": "icons/sundries/books/book-worn-blue.webp",
+		"Prosthetic Limb": "icons/commodities/tech/claw-mechanical.webp",
+		"Protective Verses": "icons/sundries/books/book-embossed-clasp-gold-brown.webp",
+		"Shadowfell Brand Tattoo": "icons/magic/symbols/circled-gem-pink.webp",
+		"Spellwrought Tattoo": "icons/commodities/metal/barstock-heated-steel.webp",
+		"Teeth of Dahlver-Nar": "icons/containers/bags/pouch-leather-spiral-red-brown.webp"
+	},
+	"DMG": {
+		"Antimatter Rifle": "icons/weapons/guns/gun-green.webp",
+		"Energy Cell": "icons/weapons/ammunition/bullet-ice-blue.webp",
+		"Laser Pistol": "icons/weapons/guns/gun-blunderbuss-gold.webp",
+		"Laser Rifle": "icons/weapons/guns/gun-blunderbuss-steel.webp",
+		"Musket": "icons/weapons/guns/rifle-brown.webp",
+		"Pistol": "icons/weapons/guns/gun-pistol-flintlock.webp",
+		"Revolver": "icons/weapons/guns/gun-wood.webp",
+		"Shotgun": "icons/weapons/guns/gun-blunderbuss-steel.webp"
+	}
+}

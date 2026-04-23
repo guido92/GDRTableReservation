@@ -1,0 +1,5056 @@
+{
+	"MM": {
+		"Drow": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Drow.webp"
+			}
+		],
+		"Xorn": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Xorn.webp"
+			}
+		],
+		"Hobgoblin": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Hobgoblin.webp"
+			}
+		],
+		"Violet Fungus": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Violet Fungus.webp"
+			}
+		],
+		"Young Green Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Young Green Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Gibbering Mouther": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Gibbering Mouther.webp"
+			}
+		],
+		"Spirit Naga": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Spirit Naga.webp"
+			}
+		],
+		"Dust Mephit": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Dust Mephit.webp"
+			}
+		],
+		"Draft Horse": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Draft Horse.webp"
+			}
+		],
+		"Wraith": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Wraith.webp"
+			}
+		],
+		"Dire Wolf": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Dire Wolf.webp"
+			}
+		],
+		"Grimlock": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Grimlock.webp"
+			}
+		],
+		"Druid": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Druid.webp"
+			}
+		],
+		"Hydra": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Hydra.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Chain Devil": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Chain Devil.webp"
+			}
+		],
+		"Zombie": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Zombie.webp"
+			}
+		],
+		"Giant Constrictor Snake": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Giant Constrictor Snake.webp"
+			}
+		],
+		"Ghoul": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Ghoul.webp"
+			}
+		],
+		"Chuul": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Chuul.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Purple Worm": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Purple Worm.webp"
+			}
+		],
+		"Specter": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Specter.webp"
+			}
+		],
+		"Bugbear": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Bugbear.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/MM/Bugbear (Variant 1).webp"
+			}
+		],
+		"Ogre Zombie": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Ogre Zombie.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Commoner": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Commoner.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/MM/Commoner (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/MM/Commoner (Variant 2).webp"
+			}
+		],
+		"Shrieker": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Shrieker.webp",
+				"scale": 0.8
+			}
+		],
+		"Goblin": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Goblin.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/MM/Goblin (Variant 1).webp"
+			}
+		],
+		"Clay Golem": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Clay Golem.webp"
+			}
+		],
+		"Homunculus": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Homunculus.webp",
+				"scale": 0.8
+			}
+		],
+		"Giant Poisonous Snake": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Giant Poisonous Snake.webp"
+			}
+		],
+		"Quasit": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Quasit.webp"
+			}
+		],
+		"Giant Badger": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Giant Badger.webp",
+				"scale": 1.1
+			}
+		],
+		"Ogre": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Ogre.webp"
+			}
+		],
+		"Animated Armor": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Animated Armor.webp"
+			}
+		],
+		"Shambling Mound": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Shambling Mound.webp"
+			}
+		],
+		"Stirge": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Stirge.webp",
+				"scale": 0.9
+			}
+		],
+		"Basilisk": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Basilisk.webp"
+			}
+		],
+		"Otyugh": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Otyugh.webp"
+			}
+		],
+		"Phase Spider": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Phase Spider.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Mage": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Mage.webp"
+			}
+		],
+		"Doppelganger": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Doppelganger.webp"
+			}
+		],
+		"Bandit": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Bandit.webp"
+			}
+		],
+		"Skeleton": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Skeleton.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/MM/Skeleton (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/MM/Skeleton (Variant 2).webp"
+			}
+		],
+		"Water Elemental": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Water Elemental.webp"
+			}
+		],
+		"Invisible Stalker": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Invisible Stalker.webp"
+			}
+		],
+		"Giant Octopus": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Giant Octopus.webp"
+			}
+		],
+		"Arcanaloth": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Arcanaloth.webp"
+			}
+		],
+		"Banshee": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Banshee.webp"
+			}
+		],
+		"Barlgura": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Barlgura.webp"
+			}
+		],
+		"Beholder": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Beholder.webp"
+			}
+		],
+		"Blue Slaad": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Blue Slaad.webp"
+			}
+		],
+		"Orc": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Orc.webp"
+			}
+		],
+		"Drow Elite Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Drow Elite Warrior.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/MM/Drow Elite Warrior (Variant 1).webp"
+			}
+		],
+		"Flameskull": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Flameskull.webp"
+			}
+		],
+		"Flumph": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Flumph.webp"
+			}
+		],
+		"Fomorian": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Fomorian.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Galeb Duhr": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Galeb Duhr.webp"
+			}
+		],
+		"Githyanki Knight": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Githyanki Knight.webp"
+			}
+		],
+		"Githyanki Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Githyanki Warrior.webp"
+			}
+		],
+		"Goblin Boss": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Goblin Boss.webp"
+			}
+		],
+		"Gray Slaad": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Gray Slaad.webp"
+			}
+		],
+		"Green Slaad": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Green Slaad.webp"
+			}
+		],
+		"Grell": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Grell.webp"
+			}
+		],
+		"Grick Alpha": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Grick Alpha.webp"
+			}
+		],
+		"Archmage": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Archmage.webp"
+			}
+		],
+		"Helmed Horror": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Helmed Horror.webp"
+			}
+		],
+		"Hook Horror": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Hook Horror.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Intellect Devourer": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Intellect Devourer.webp"
+			}
+		],
+		"Kraken": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Kraken.webp"
+			}
+		],
+		"Mezzoloth": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Mezzoloth.webp"
+			}
+		],
+		"Mind Flayer": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Mind Flayer.webp"
+			}
+		],
+		"Needle Blight": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Needle Blight.webp"
+			}
+		],
+		"Nothic": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Nothic.webp"
+			}
+		],
+		"Nycaloth": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Nycaloth.webp"
+			}
+		],
+		"Quaggoth": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Quaggoth.webp"
+			}
+		],
+		"Quaggoth Thonot": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Quaggoth Thonot.webp"
+			}
+		],
+		"Red Slaad": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Red Slaad.webp"
+			}
+		],
+		"Remorhaz": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Remorhaz.webp"
+			}
+		],
+		"Duergar": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Duergar.webp"
+			}
+		],
+		"Slaad Tadpole": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Slaad Tadpole.webp"
+			}
+		],
+		"Spectator": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Spectator.webp"
+			}
+		],
+		"Troglodyte": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Troglodyte.webp"
+			}
+		],
+		"Twig Blight": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Twig Blight.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/MM/Twig Blight (Variant 1).webp"
+			}
+		],
+		"Umber Hulk": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Umber Hulk.webp"
+			}
+		],
+		"Water Weird": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Water Weird.webp"
+			}
+		],
+		"Yochlol": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Yochlol.webp"
+			}
+		],
+		"Roper": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Roper.webp"
+			}
+		],
+		"Cultist": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Cultist.webp"
+			}
+		],
+		"Ghost": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Ghost.webp"
+			}
+		],
+		"Wight": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Wight.webp"
+			}
+		],
+		"Earth Elemental": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Earth Elemental.webp"
+			}
+		],
+		"Aboleth": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Aboleth.webp"
+			}
+		],
+		"Mummy": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Mummy.webp"
+			}
+		],
+		"Grick": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Grick.webp"
+			}
+		],
+		"Cult Fanatic": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Cult Fanatic.webp"
+			}
+		],
+		"Giant Spider": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Giant Spider.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Behir": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Behir.webp"
+			}
+		],
+		"Ochre Jelly": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Ochre Jelly.webp"
+			}
+		],
+		"Goat": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Goat.webp"
+			}
+		],
+		"Wolf": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Wolf.webp"
+			}
+		],
+		"Shield Guardian": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Shield Guardian.webp"
+			}
+		],
+		"Owlbear": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Owlbear.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/MM/Owlbear (Variant 1).webp"
+			}
+		],
+		"Ice Devil": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Ice Devil.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Lizardfolk": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Lizardfolk.webp"
+			}
+		],
+		"Vrock": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Vrock.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Fire Elemental": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Fire Elemental.webp"
+			}
+		],
+		"Swarm of Rats": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Swarm of Rats.webp"
+			}
+		],
+		"Vampire": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Vampire.webp"
+			}
+		],
+		"Flying Sword": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Flying Sword.webp"
+			}
+		],
+		"Unicorn": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Unicorn.webp"
+			}
+		],
+		"Tarrasque": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Tarrasque.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Oni": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Oni.webp"
+			}
+		],
+		"Treant": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Treant.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Priest": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Priest.webp"
+			}
+		],
+		"Pit Fiend": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Pit Fiend.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ancient Blue Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Ancient Blue Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Bat": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Giant Bat.webp"
+			}
+		],
+		"Mummy Lord": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Mummy Lord.webp"
+			}
+		],
+		"Succubus": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Succubus.webp"
+			}
+		],
+		"Air Elemental": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Air Elemental.webp"
+			}
+		],
+		"Imp": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Imp.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Marilith": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Marilith.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Swarm of Ravens": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Swarm of Ravens.webp"
+			}
+		],
+		"Cat": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Cat.webp",
+				"scaleCorrection": 1,
+				"scale": 0.7
+			}
+		],
+		"Blink Dog": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Blink Dog.webp"
+			}
+		],
+		"Giant Frog": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Giant Frog.webp"
+			}
+		],
+		"Rakshasa": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Rakshasa.webp"
+			}
+		],
+		"Barbed Devil": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Barbed Devil.webp"
+			}
+		],
+		"Green Hag": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Green Hag.webp"
+			}
+		],
+		"Death Slaad": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Death Slaad.webp"
+			}
+		],
+		"Planetar": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Planetar.webp"
+			}
+		],
+		"Dao": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Dao.webp"
+			}
+		],
+		"Death Knight": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Death Knight.webp"
+			}
+		],
+		"Deva": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Deva.webp"
+			}
+		],
+		"Incubus": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Incubus.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Marid": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Marid.webp"
+			}
+		],
+		"Iron Golem": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Iron Golem.webp"
+			}
+		],
+		"Satyr": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Satyr.webp"
+			}
+		],
+		"Stone Golem": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Stone Golem.webp"
+			}
+		],
+		"Swarm of Quippers": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Swarm of Quippers.png"
+			}
+		],
+		"Balor": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Balor.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ancient Red Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Ancient Red Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Night Hag": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Night Hag.webp"
+			}
+		],
+		"Vampire Spawn": [
+			{
+				"path": "img/bestiary/token-subjects/MM/Vampire Spawn.webp"
+			}
+		]
+	},
+	"PaBTSO": {
+		"Gwyn Oresong": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Gwyn Oresong.webp"
+			}
+		],
+		"Infected Townsperson": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Infected Townsperson.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Infected Townsperson (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Infected Townsperson (Variant 2).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Infected Townsperson (Variant 3).webp"
+			}
+		],
+		"Aberrant Zealot": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Aberrant Zealot.webp"
+			}
+		],
+		"Ash Zombie": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Ash Zombie.webp"
+			}
+		],
+		"Brain Breaker": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Brain Breaker.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Chishinix": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Chishinix.webp"
+			}
+		],
+		"Mind Flayer Clairvoyant": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Mind Flayer Clairvoyant.webp"
+			}
+		],
+		"Cloaker Mutate": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Cloaker Mutate.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Dwarf Skeleton": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Dwarf Skeleton.webp"
+			}
+		],
+		"Infected Elder Brain": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Infected Elder Brain.webp"
+			}
+		],
+		"Encephalon Cluster": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Encephalon Cluster.webp"
+			}
+		],
+		"Feral Ashenwight": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Feral Ashenwight.webp"
+			}
+		],
+		"Fiendish Auger": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Fiendish Auger.webp"
+			}
+		],
+		"Flesh Meld": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Flesh Meld.webp"
+			}
+		],
+		"Encephalon Gemmule": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Encephalon Gemmule.webp"
+			}
+		],
+		"Goblin Psi Brawler": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Goblin Psi Brawler.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Goblin Psi Brawler (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Goblin Psi Brawler (Variant 2).webp"
+			}
+		],
+		"Goblin Psi Commander": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Goblin Psi Commander.webp"
+			}
+		],
+		"Grell Psychic": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Grell Psychic.webp"
+			}
+		],
+		"Gundren Rockseeker": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Gundren Rockseeker.webp"
+			}
+		],
+		"Hashutu": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Hashutu.webp"
+			}
+		],
+		"Hjoldak Hollowhelm": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Hjoldak Hollowhelm.webp"
+			}
+		],
+		"Honna": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Honna.webp"
+			}
+		],
+		"Humanoid Mutate": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Humanoid Mutate.webp"
+			}
+		],
+		"Iarno \"Glasstaff\" Albrek": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Iarno Glasstaff Albrek.webp"
+			}
+		],
+		"Refraction of Ilvaash": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Refraction of Ilvaash.webp"
+			}
+		],
+		"Intellect Snare": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Intellect Snare.webp"
+			}
+		],
+		"Mind Flayer Prophet": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Mind Flayer Prophet.webp"
+			}
+		],
+		"Mormesk the Wraith": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Mormesk the Wraith.webp"
+			}
+		],
+		"Nezznar the Spider": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Nezznar the Spider.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Mind Flayer Nothic": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Mind Flayer Nothic.webp"
+			}
+		],
+		"Oculorb": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Oculorb.webp"
+			}
+		],
+		"Ontharyx": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Ontharyx.webp"
+			}
+		],
+		"Oshundo the Alhoon": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Oshundo the Alhoon.webp"
+			}
+		],
+		"Otyugh Mutate": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Otyugh Mutate.webp"
+			}
+		],
+		"Psionic Ashenwight": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Psionic Ashenwight.webp"
+			}
+		],
+		"Qunbraxel": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Qunbraxel.webp"
+			}
+		],
+		"Redbrand Ruffian": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Redbrand Ruffian.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Redbrand Ruffian (Variant 1).webp"
+			}
+		],
+		"Rivibiddel": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Rivibiddel.webp"
+			}
+		],
+		"Ruxithid the Chosen": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Ruxithid the Chosen.webp"
+			}
+		],
+		"Chishinix' Head": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Chishinix' Head.webp"
+			}
+		],
+		"Shalfi Lewin": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Shalfi Lewin.webp"
+			}
+		],
+		"Voalsh": [
+			{
+				"path": "img/bestiary/token-subjects/PaBTSO/Voalsh.webp"
+			}
+		]
+	},
+	"FTD": {
+		"Young Amethyst Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/FTD/Young Amethyst Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		]
+	},
+	"TCE": {
+		"Homunculus Servant": [
+			{
+				"path": "img/bestiary/token-subjects/TCE/Homunculus Servant.webp",
+				"scaleCorrection": 1,
+				"scale": 0.8
+			}
+		],
+		"Adult Red Dracolich": [
+			{
+				"path": "img/bestiary/token-subjects/TCE/Adult Red Dracolich.webp"
+			}
+		],
+		"Juvenile Mimic": [
+			{
+				"path": "img/bestiary/token-subjects/TCE/Juvenile Mimic.webp"
+			}
+		],
+		"Bestial Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/TCE/Bestial Spirit.webp"
+			}
+		],
+		"Mighty Servant of Leuk-o": [
+			{
+				"path": "img/bestiary/token-subjects/TCE/Mighty Servant of Leuk-o.webp"
+			}
+		],
+		"Beast of the Land": [
+			{
+				"path": "img/bestiary/token-subjects/TCE/Beast of the Land.webp"
+			}
+		],
+		"Steel Defender": [
+			{
+				"path": "img/bestiary/token-subjects/TCE/Steel Defender.webp"
+			}
+		],
+		"Wildfire Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/TCE/Wildfire Spirit.webp"
+			}
+		]
+	},
+	"MPMM": {
+		"Star Spawn Larva Mage": [
+			{
+				"path": "img/bestiary/token-subjects/MPMM/Star Spawn Larva Mage.webp"
+			}
+		]
+	},
+	"XMM": {
+		"Githyanki Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Githyanki Warrior.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Aarakocra Aeromancer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Aarakocra Aeromancer.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Aarakocra Skirmisher": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Aarakocra Skirmisher.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Aberrant Cultist": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Aberrant Cultist.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Aboleth": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Aboleth.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Abominable Yeti": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Abominable Yeti.webp"
+			}
+		],
+		"Adult Black Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Adult Black Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Adult Blue Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Adult Blue Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Adult Brass Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Adult Brass Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Adult Bronze Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Adult Bronze Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Adult Copper Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Adult Copper Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Adult Gold Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Adult Gold Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Adult Green Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Adult Green Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Adult Red Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Adult Red Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Adult Silver Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Adult Silver Dragon.webp"
+			}
+		],
+		"Adult White Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Adult White Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Air Elemental": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Air Elemental.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Allosaurus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Allosaurus.webp"
+			}
+		],
+		"Ancient Black Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ancient Black Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ancient Blue Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ancient Blue Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ancient Brass Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ancient Brass Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ancient Bronze Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ancient Bronze Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ancient Copper Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ancient Copper Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ancient Gold Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ancient Gold Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ancient Green Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ancient Green Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ancient Red Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ancient Red Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ancient Silver Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ancient Silver Dragon.webp"
+			}
+		],
+		"Ancient White Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ancient White Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Animal Lord": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Animal Lord.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Animal Lord (Variant 1).webp"
+			}
+		],
+		"Animated Armor": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Animated Armor.webp"
+			}
+		],
+		"Animated Broom": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Animated Broom.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Animated Broom (Variant 1).webp"
+			}
+		],
+		"Animated Flying Sword": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Animated Flying Sword.webp"
+			}
+		],
+		"Animated Rug of Smothering": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Animated Rug of Smothering.webp"
+			}
+		],
+		"Ankheg": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ankheg.webp"
+			}
+		],
+		"Ankylosaurus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ankylosaurus.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ape": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ape.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ape (Variant 1).webp"
+			}
+		],
+		"Arcanaloth": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Arcanaloth.webp"
+			}
+		],
+		"Archelon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Archelon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Arch-hag": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Arch-hag.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Arch-hag (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Archmage": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Archmage.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Archpriest": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Archpriest.webp"
+			}
+		],
+		"Assassin": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Assassin.webp"
+			}
+		],
+		"Awakened Shrub": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Awakened Shrub.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Awakened Shrub (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Awakened Shrub (Variant 2).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Awakened Shrub (Variant 3).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Awakened Shrub (Variant 4).webp"
+			}
+		],
+		"Awakened Tree": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Awakened Tree.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Axe Beak": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Axe Beak.webp"
+			}
+		],
+		"Azer Pyromancer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Azer Pyromancer.webp"
+			}
+		],
+		"Azer Sentinel": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Azer Sentinel.webp"
+			}
+		],
+		"Baboon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Baboon.webp"
+			}
+		],
+		"Badger": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Badger.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Badger (Variant 1).webp"
+			}
+		],
+		"Balor": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Balor.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Bandit": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bandit.webp"
+			}
+		],
+		"Bandit Captain": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bandit Captain.webp"
+			}
+		],
+		"Bandit Crime Lord": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bandit Crime Lord.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Bandit Deceiver": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bandit Deceiver.webp"
+			}
+		],
+		"Banshee": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Banshee.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Banshee (Variant 1).webp"
+			}
+		],
+		"Barbed Devil": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Barbed Devil.webp"
+			}
+		],
+		"Barlgura": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Barlgura.webp"
+			}
+		],
+		"Basilisk": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Basilisk.webp"
+			}
+		],
+		"Bat": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bat.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bat (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Bearded Devil": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bearded Devil.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Behir": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Behir.webp"
+			}
+		],
+		"Beholder": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Beholder.webp"
+			}
+		],
+		"Beholder Zombie": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Beholder Zombie.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Berserker": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Berserker.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Berserker (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Berserker (Variant 2).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Berserker (Variant 3).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Berserker Commander": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Berserker Commander.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Black Bear": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Black Bear.webp"
+			}
+		],
+		"Black Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Black Dragon Wyrmling.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Black Pudding": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Black Pudding.webp"
+			}
+		],
+		"Blink Dog": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Blink Dog.webp"
+			}
+		],
+		"Blob of Annihilation": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Blob of Annihilation.webp"
+			}
+		],
+		"Blood Hawk": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Blood Hawk.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Blue Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Blue Dragon Wyrmling.webp"
+			}
+		],
+		"Blue Slaad": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Blue Slaad.webp"
+			}
+		],
+		"Boar": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Boar.webp"
+			}
+		],
+		"Bone Devil": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bone Devil.webp"
+			}
+		],
+		"Bone Naga": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bone Naga.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Brass Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Brass Dragon Wyrmling.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Brazen Gorgon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Brazen Gorgon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Bronze Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bronze Dragon Wyrmling.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Brown Bear": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Brown Bear.webp"
+			}
+		],
+		"Bugbear Stalker": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bugbear Stalker.webp"
+			}
+		],
+		"Bugbear Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bugbear Warrior.webp"
+			}
+		],
+		"Bulette": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bulette.webp"
+			}
+		],
+		"Bulette Pup": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bulette Pup.webp"
+			}
+		],
+		"Bullywug Bog Sage": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bullywug Bog Sage.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Bullywug Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Bullywug Warrior.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Cambion": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cambion.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cambion (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Camel": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Camel.webp"
+			}
+		],
+		"Carrion Crawler": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Carrion Crawler.webp"
+			}
+		],
+		"Cat": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cat.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cat (Variant 1).webp"
+			}
+		],
+		"Centaur Trooper": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Centaur Trooper.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Centaur Warden": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Centaur Warden.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Chain Devil": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Chain Devil.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Chasme": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Chasme.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Chimera": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Chimera.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Chuul": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Chuul.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Clay Golem": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Clay Golem.webp"
+			}
+		],
+		"Cloaker": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cloaker.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Cloud Giant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cloud Giant.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cloud Giant (Variant 1).webp"
+			}
+		],
+		"Cockatrice": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cockatrice.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Cockatrice Regent": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cockatrice Regent.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Colossus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Colossus.webp"
+			}
+		],
+		"Commoner": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Commoner.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Commoner (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Commoner (Variant 2).webp"
+			}
+		],
+		"Constrictor Snake": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Constrictor Snake.webp"
+			}
+		],
+		"Copper Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Copper Dragon Wyrmling.webp"
+			}
+		],
+		"Couatl": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Couatl.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Crab": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Crab.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Crawling Claw": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Crawling Claw.webp"
+			}
+		],
+		"Crocodile": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Crocodile.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Crocodile (Variant 1).webp"
+			}
+		],
+		"Cultist": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cultist.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Cultist Fanatic": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cultist Fanatic.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cultist Fanatic (Variant 1).webp"
+			}
+		],
+		"Cultist Hierophant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cultist Hierophant.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Cyclops Oracle": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cyclops Oracle.webp"
+			}
+		],
+		"Cyclops Sentry": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Cyclops Sentry.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Dao": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Dao.webp"
+			}
+		],
+		"Darkmantle": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Darkmantle.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Death Cultist": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Death Cultist.webp"
+			}
+		],
+		"Death Dog": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Death Dog.webp"
+			}
+		],
+		"Death Knight": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Death Knight.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Death Knight Aspirant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Death Knight Aspirant.webp"
+			}
+		],
+		"Death Slaad": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Death Slaad.webp"
+			}
+		],
+		"Death Tyrant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Death Tyrant.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Deer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Deer.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Demilich": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Demilich.webp"
+			}
+		],
+		"Deva": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Deva.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Dire Wolf": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Dire Wolf.webp"
+			}
+		],
+		"Dire Worg": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Dire Worg.webp"
+			}
+		],
+		"Displacer Beast": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Displacer Beast.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Djinni": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Djinni.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Doppelganger": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Doppelganger.webp"
+			}
+		],
+		"Dracolich": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Dracolich.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Draft Horse": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Draft Horse.webp"
+			}
+		],
+		"Dragon Turtle": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Dragon Turtle.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Dretch": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Dretch.webp"
+			}
+		],
+		"Drider": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Drider.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Druid": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Druid.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Druid (Variant 1).webp"
+			}
+		],
+		"Dryad": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Dryad.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Dryad (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Dust Mephit": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Dust Mephit.webp"
+			}
+		],
+		"Eagle": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Eagle.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Earth Elemental": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Earth Elemental.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Efreeti": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Efreeti.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Elemental Cataclysm": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Elemental Cataclysm.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Elemental Cultist": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Elemental Cultist.webp"
+			}
+		],
+		"Elk": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Elk.webp"
+			}
+		],
+		"Empyrean": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Empyrean.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Empyrean Iota": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Empyrean Iota.webp"
+			}
+		],
+		"Erinyes": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Erinyes.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ettercap": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ettercap.webp"
+			}
+		],
+		"Ettin": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ettin.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Faerie Dragon Adult": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Faerie Dragon Adult.webp"
+			}
+		],
+		"Faerie Dragon Youth": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Faerie Dragon Youth.webp"
+			}
+		],
+		"Fiend Cultist": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Fiend Cultist.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Fiend Cultist (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Fire Elemental": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Fire Elemental.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Fire Giant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Fire Giant.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Fire Giant (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Flameskull": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Flameskull.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Flameskull (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Flameskull (Variant 2).webp"
+			}
+		],
+		"Flaming Skeleton": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Flaming Skeleton.webp"
+			}
+		],
+		"Flesh Golem": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Flesh Golem.webp"
+			}
+		],
+		"Flumph": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Flumph.webp"
+			}
+		],
+		"Flying Snake": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Flying Snake.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Fomorian": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Fomorian.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Fomorian (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Frog": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Frog.webp"
+			}
+		],
+		"Frost Giant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Frost Giant.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Frost Giant (Variant 1).webp"
+			}
+		],
+		"Galeb Duhr": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Galeb Duhr.webp"
+			}
+		],
+		"Gargoyle": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gargoyle.webp"
+			}
+		],
+		"Gas Spore Fungus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gas Spore Fungus.webp"
+			}
+		],
+		"Gelatinous Cube": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gelatinous Cube.webp"
+			}
+		],
+		"Ghast": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ghast.webp"
+			}
+		],
+		"Ghast Gravecaller": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ghast Gravecaller.webp"
+			}
+		],
+		"Ghost": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ghost.webp"
+			}
+		],
+		"Ghoul": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ghoul.webp"
+			}
+		],
+		"Giant Ape": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Ape.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Axe Beak": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Axe Beak.webp"
+			}
+		],
+		"Giant Badger": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Badger.webp"
+			}
+		],
+		"Giant Bat": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Bat.webp",
+				"scaleCorrection": 3,
+				"scale": 3
+			}
+		],
+		"Giant Boar": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Boar.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Centipede": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Centipede.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Constrictor Snake": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Constrictor Snake.webp"
+			}
+		],
+		"Giant Crab": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Crab.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Crocodile": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Crocodile.webp"
+			}
+		],
+		"Giant Eagle": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Eagle.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Elk": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Elk.webp"
+			}
+		],
+		"Giant Fire Beetle": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Fire Beetle.webp"
+			}
+		],
+		"Giant Frog": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Frog.webp"
+			}
+		],
+		"Giant Goat": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Goat.webp"
+			}
+		],
+		"Giant Hyena": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Hyena.webp"
+			}
+		],
+		"Giant Lizard": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Lizard.webp"
+			}
+		],
+		"Giant Octopus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Octopus.webp"
+			}
+		],
+		"Giant Owl": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Owl.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Owl (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Owl (Variant 2).webp"
+			}
+		],
+		"Giant Rat": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Rat.webp"
+			}
+		],
+		"Giant Scorpion": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Scorpion.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Seahorse": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Seahorse.webp"
+			}
+		],
+		"Giant Shark": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Shark.webp"
+			}
+		],
+		"Giant Spider": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Spider.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Spider (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Squid": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Squid.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Toad": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Toad.webp"
+			}
+		],
+		"Giant Venomous Snake": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Venomous Snake.webp"
+			}
+		],
+		"Giant Vulture": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Vulture.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Wasp": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Wasp.webp"
+			}
+		],
+		"Giant Weasel": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Weasel.webp"
+			}
+		],
+		"Giant Wolf Spider": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Giant Wolf Spider.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Gibbering Mouther": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gibbering Mouther.webp"
+			}
+		],
+		"Githyanki Dracomancer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Githyanki Dracomancer.webp"
+			}
+		],
+		"Githyanki Knight": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Githyanki Knight.webp"
+			}
+		],
+		"Githzerai Monk": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Githzerai Monk.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Githzerai Psion": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Githzerai Psion.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Githzerai Zerth": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Githzerai Zerth.webp"
+			}
+		],
+		"Glabrezu": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Glabrezu.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Gladiator": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gladiator.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Gnoll Demoniac": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gnoll Demoniac.webp"
+			}
+		],
+		"Gnoll Fang of Yeenoghu": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gnoll Fang of Yeenoghu.webp"
+			}
+		],
+		"Gnoll Pack Lord": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gnoll Pack Lord.webp"
+			}
+		],
+		"Gnoll Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gnoll Warrior.webp"
+			}
+		],
+		"Goat": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Goat.webp"
+			}
+		],
+		"Goblin Boss": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Goblin Boss.webp"
+			}
+		],
+		"Goblin Hexer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Goblin Hexer.webp"
+			}
+		],
+		"Goblin Minion": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Goblin Minion.webp"
+			}
+		],
+		"Goblin Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Goblin Warrior.webp"
+			}
+		],
+		"Gold Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gold Dragon Wyrmling.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Gorgon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gorgon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Goristro": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Goristro.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Graveyard Revenant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Graveyard Revenant.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Gray Ooze": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gray Ooze.webp"
+			}
+		],
+		"Gray Slaad": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gray Slaad.webp"
+			}
+		],
+		"Green Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Green Dragon Wyrmling.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Green Hag": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Green Hag.webp"
+			}
+		],
+		"Green Slaad": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Green Slaad.webp"
+			}
+		],
+		"Grell": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Grell.webp"
+			}
+		],
+		"Grick": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Grick.webp"
+			}
+		],
+		"Grick Ancient": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Grick Ancient.webp"
+			}
+		],
+		"Griffon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Griffon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Grimlock": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Grimlock.webp"
+			}
+		],
+		"Guard": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Guard.webp"
+			}
+		],
+		"Guard Captain": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Guard Captain.webp"
+			}
+		],
+		"Guardian Naga": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Guardian Naga.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Gulthias Blight": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Gulthias Blight.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Half-Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Half-Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Harpy": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Harpy.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Haunting Revenant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Haunting Revenant.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Hawk": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hawk.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Hell Hound": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hell Hound.webp"
+			}
+		],
+		"Helmed Horror": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Helmed Horror.webp"
+			}
+		],
+		"Hezrou": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hezrou.webp"
+			}
+		],
+		"Hill Giant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hill Giant.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hill Giant (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Hippogriff": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hippogriff.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Hippopotamus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hippopotamus.webp"
+			}
+		],
+		"Hobgoblin Captain": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hobgoblin Captain.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Hobgoblin Warlord": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hobgoblin Warlord.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Hobgoblin Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hobgoblin Warrior.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Homunculus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Homunculus.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Homunculus (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Homunculus (Variant 2).webp"
+			}
+		],
+		"Hook Horror": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hook Horror.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Horned Devil": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Horned Devil.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Hunter Shark": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hunter Shark.webp"
+			}
+		],
+		"Hydra": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hydra.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Hyena": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Hyena.webp"
+			}
+		],
+		"Ice Devil": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ice Devil.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ice Mephit": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ice Mephit.webp"
+			}
+		],
+		"Imp": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Imp.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Incubus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Incubus.webp"
+			}
+		],
+		"Intellect Devourer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Intellect Devourer.webp"
+			}
+		],
+		"Invisible Stalker": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Invisible Stalker.webp"
+			}
+		],
+		"Iron Golem": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Iron Golem.webp"
+			}
+		],
+		"Jackal": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Jackal.webp"
+			}
+		],
+		"Jackalwere": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Jackalwere.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Jackalwere (Variant 1).webp"
+			}
+		],
+		"Juvenile Shadow Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Juvenile Shadow Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Kenku": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Kenku.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Killer Whale": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Killer Whale.webp"
+			}
+		],
+		"Knight": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Knight.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Kobold Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Kobold Warrior.webp"
+			}
+		],
+		"Kraken": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Kraken.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Kuo-toa": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Kuo-toa.webp"
+			}
+		],
+		"Kuo-toa Archpriest": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Kuo-toa Archpriest.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Kuo-toa Monitor": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Kuo-toa Monitor.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Kuo-toa Whip": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Kuo-toa Whip.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Lacedon Ghoul": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Lacedon Ghoul.webp"
+			}
+		],
+		"Lamia": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Lamia.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Larva": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Larva.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Larva (Variant 1).webp"
+			}
+		],
+		"Lemure": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Lemure.webp"
+			}
+		],
+		"Lich": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Lich.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Lizard": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Lizard.webp"
+			}
+		],
+		"Lizardfolk Geomancer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Lizardfolk Geomancer.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Lizardfolk Sovereign": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Lizardfolk Sovereign.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Mage": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mage.webp"
+			}
+		],
+		"Mage Apprentice": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mage Apprentice.webp"
+			}
+		],
+		"Magma Mephit": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Magma Mephit.webp"
+			}
+		],
+		"Magmin": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Magmin.webp"
+			}
+		],
+		"Mammoth": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mammoth.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Manes": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Manes.webp"
+			}
+		],
+		"Manes Vaporspawn": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Manes Vaporspawn.webp"
+			}
+		],
+		"Manticore": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Manticore.webp",
+				"scaleCorrection": 3,
+				"scale": 3
+			}
+		],
+		"Marid": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Marid.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Marilith": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Marilith.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Mastiff": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mastiff.webp"
+			}
+		],
+		"Medusa": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Medusa.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Medusa (Variant 1).webp"
+			}
+		],
+		"Merfolk Skirmisher": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Merfolk Skirmisher.webp"
+			}
+		],
+		"Merfolk Wavebender": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Merfolk Wavebender.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Merrow": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Merrow.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Mezzoloth": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mezzoloth.webp"
+			}
+		],
+		"Mimic": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mimic.webp"
+			}
+		],
+		"Mind Flayer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mind Flayer.webp"
+			}
+		],
+		"Mind Flayer Arcanist": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mind Flayer Arcanist.webp"
+			}
+		],
+		"Minotaur of Baphomet": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Minotaur of Baphomet.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Minotaur Skeleton": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Minotaur Skeleton.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Modron Duodrone": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Modron Duodrone.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Modron Monodrone": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Modron Monodrone.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Modron Pentadrone": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Modron Pentadrone.webp"
+			}
+		],
+		"Modron Quadrone": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Modron Quadrone.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Modron Tridrone": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Modron Tridrone.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Mud Mephit": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mud Mephit.webp"
+			}
+		],
+		"Mule": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mule.webp"
+			}
+		],
+		"Mummy": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mummy.webp"
+			}
+		],
+		"Mummy Lord": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Mummy Lord.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Myconid Adult": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Myconid Adult.webp"
+			}
+		],
+		"Myconid Sovereign": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Myconid Sovereign.webp"
+			}
+		],
+		"Myconid Spore Servant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Myconid Spore Servant.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Myconid Spore Servant (Variant 1).webp"
+			}
+		],
+		"Myconid Sprout": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Myconid Sprout.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Myconid Sprout (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Myconid Sprout (Variant 2).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Myconid Sprout (Variant 3).webp"
+			}
+		],
+		"Nalfeshnee": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Nalfeshnee.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Needle Blight": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Needle Blight.webp"
+			}
+		],
+		"Night Hag": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Night Hag.webp"
+			}
+		],
+		"Nightmare": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Nightmare.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Nightmare (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Nightmare (Variant 2).webp"
+			}
+		],
+		"Noble": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Noble.webp"
+			}
+		],
+		"Noble Prodigy": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Noble Prodigy.webp"
+			}
+		],
+		"Nothic": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Nothic.webp"
+			}
+		],
+		"Nycaloth": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Nycaloth.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ochre Jelly": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ochre Jelly.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ochre Jelly (Variant 1).webp"
+			}
+		],
+		"Octopus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Octopus.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Octopus (Variant 1).webp"
+			}
+		],
+		"Ogre": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ogre.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ogre Zombie": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ogre Zombie.webp"
+			}
+		],
+		"Ogrillon Ogre": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ogrillon Ogre.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Oni": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Oni.webp"
+			}
+		],
+		"Otyugh": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Otyugh.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Owl": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Owl.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Owl (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Owl (Variant 2).webp"
+			}
+		],
+		"Owlbear": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Owlbear.webp"
+			}
+		],
+		"Panther": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Panther.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Pegasus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Pegasus.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Performer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Performer.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Performer (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Performer (Variant 2).webp"
+			}
+		],
+		"Performer Legend": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Performer Legend.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Performer Legend (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Performer Legend (Variant 2).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Performer Maestro": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Performer Maestro.webp"
+			}
+		],
+		"Peryton": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Peryton.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Phase Spider": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Phase Spider.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Piercer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Piercer.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Piranha": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Piranha.webp"
+			}
+		],
+		"Pirate": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Pirate.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Pirate Admiral": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Pirate Admiral.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Pirate Captain": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Pirate Captain.webp"
+			}
+		],
+		"Pit Fiend": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Pit Fiend.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Pixie": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Pixie.webp"
+			}
+		],
+		"Pixie Wonderbringer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Pixie Wonderbringer.webp"
+			}
+		],
+		"Planetar": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Planetar.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Plesiosaurus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Plesiosaurus.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Polar Bear": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Polar Bear.webp"
+			}
+		],
+		"Poltergeist": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Poltergeist.webp"
+			}
+		],
+		"Pony": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Pony.webp"
+			}
+		],
+		"Priest": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Priest.webp"
+			}
+		],
+		"Priest Acolyte": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Priest Acolyte.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Priest Acolyte (Variant 1).webp"
+			}
+		],
+		"Primeval Owlbear": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Primeval Owlbear.webp"
+			}
+		],
+		"Pseudodragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Pseudodragon.webp"
+			}
+		],
+		"Psychic Gray Ooze": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Psychic Gray Ooze.webp"
+			}
+		],
+		"Pteranodon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Pteranodon.webp"
+			}
+		],
+		"Purple Worm": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Purple Worm.webp"
+			}
+		],
+		"Quaggoth": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Quaggoth.webp"
+			}
+		],
+		"Quaggoth Thonot": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Quaggoth Thonot.webp"
+			}
+		],
+		"Quasit": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Quasit.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Quasit (Variant 1).webp"
+			}
+		],
+		"Questing Knight": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Questing Knight.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Rakshasa": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Rakshasa.webp"
+			}
+		],
+		"Rat": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Rat.webp"
+			}
+		],
+		"Raven": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Raven.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Raven (Variant 1).webp"
+			}
+		],
+		"Red Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Red Dragon Wyrmling.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Red Slaad": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Red Slaad.webp"
+			}
+		],
+		"Reef Shark": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Reef Shark.webp"
+			}
+		],
+		"Remorhaz": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Remorhaz.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Revenant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Revenant.webp"
+			}
+		],
+		"Rhinoceros": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Rhinoceros.webp"
+			}
+		],
+		"Riding Horse": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Riding Horse.webp"
+			}
+		],
+		"Roc": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Roc.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Roper": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Roper.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Rust Monster": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Rust Monster.webp"
+			}
+		],
+		"Saber-Toothed Tiger": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Saber-Toothed Tiger.webp"
+			}
+		],
+		"Sahuagin Baron": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sahuagin Baron.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Sahuagin Priest": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sahuagin Priest.webp"
+			}
+		],
+		"Sahuagin Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sahuagin Warrior.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Salamander": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Salamander.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Salamander Fire Snake": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Salamander Fire Snake.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Salamander Inferno Master": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Salamander Inferno Master.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Satyr": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Satyr.webp"
+			}
+		],
+		"Satyr Revelmaster": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Satyr Revelmaster.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Scarecrow": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Scarecrow.webp"
+			}
+		],
+		"Scorpion": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Scorpion.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Scout": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Scout.webp"
+			}
+		],
+		"Scout Captain": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Scout Captain.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Sea Hag": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sea Hag.webp"
+			}
+		],
+		"Seahorse": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Seahorse.webp"
+			}
+		],
+		"Shadow": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Shadow.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Shadow Demon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Shadow Demon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Shadow Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Shadow Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Shambling Mound": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Shambling Mound.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Shield Guardian": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Shield Guardian.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Shrieker Fungus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Shrieker Fungus.webp"
+			}
+		],
+		"Silver Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Silver Dragon Wyrmling.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Slaad Tadpole": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Slaad Tadpole.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Slaad Tadpole (Variant 1).webp"
+			}
+		],
+		"Smoke Mephit": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Smoke Mephit.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Solar": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Solar.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Spectator": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Spectator.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Specter": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Specter.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Specter (Variant 1).webp"
+			}
+		],
+		"Sphinx of Lore": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sphinx of Lore.webp"
+			}
+		],
+		"Sphinx of Secrets": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sphinx of Secrets.webp"
+			}
+		],
+		"Sphinx of Valor": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sphinx of Valor.webp"
+			}
+		],
+		"Sphinx of Wonder": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sphinx of Wonder.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sphinx of Wonder (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Spider": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Spider.webp"
+			}
+		],
+		"Spined Devil": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Spined Devil.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Spined Devil (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Spined Devil (Variant 2).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Spirit Naga": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Spirit Naga.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Sprite": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sprite.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sprite (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sprite (Variant 2).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Sprite (Variant 3).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Spy": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Spy.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Spy (Variant 1).webp"
+			}
+		],
+		"Spy Master": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Spy Master.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Spy Master (Variant 1).webp"
+			}
+		],
+		"Steam Mephit": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Steam Mephit.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Stirge": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Stirge.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Stone Giant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Stone Giant.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Stone Giant (Variant 1).webp"
+			}
+		],
+		"Stone Golem": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Stone Golem.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Storm Giant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Storm Giant.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Succubus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Succubus.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Succubus (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Swarm of Bats": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Bats.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Swarm of Crawling Claws": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Crawling Claws.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Swarm of Dretches": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Dretches.webp"
+			}
+		],
+		"Swarm of Insects": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Insects.webp"
+			}
+		],
+		"Swarm of Larvae": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Larvae.webp"
+			}
+		],
+		"Swarm of Lemures": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Lemures.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Swarm of Piranhas": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Piranhas.webp"
+			}
+		],
+		"Swarm of Rats": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Rats.webp"
+			}
+		],
+		"Swarm of Ravens": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Ravens.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Swarm of Stirges": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Stirges.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Swarm of Venomous Snakes": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Swarm of Venomous Snakes.webp"
+			}
+		],
+		"Tarrasque": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Tarrasque.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Tarrasque (Variant 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Thri-kreen Marauder": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Thri-kreen Marauder.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Thri-kreen Psion": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Thri-kreen Psion.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Tiger": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Tiger.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Tiger (Variant 1).webp"
+			}
+		],
+		"Tough": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Tough.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Tough Boss": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Tough Boss.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Treant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Treant.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Tree Blight": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Tree Blight.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Triceratops": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Triceratops.webp"
+			}
+		],
+		"Troglodyte": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Troglodyte.webp"
+			}
+		],
+		"Troll": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Troll.webp"
+			}
+		],
+		"Troll Limb": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Troll Limb.webp"
+			}
+		],
+		"Twig Blight": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Twig Blight.webp"
+			}
+		],
+		"Tyrannosaurus Rex": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Tyrannosaurus Rex.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ultroloth": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Ultroloth.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Umber Hulk": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Umber Hulk.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Unicorn": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Unicorn.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Vampire": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vampire.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vampire (Variant 1).webp"
+			}
+		],
+		"Vampire Familiar": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vampire Familiar.webp"
+			}
+		],
+		"Vampire Nightbringer": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vampire Nightbringer.webp"
+			}
+		],
+		"Vampire Spawn": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vampire Spawn.webp"
+			}
+		],
+		"Vampire Umbral Lord": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vampire Umbral Lord.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vampire Umbral Lord (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vampire Umbral Lord (Variant 2).webp"
+			}
+		],
+		"Venomous Snake": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Venomous Snake.webp"
+			}
+		],
+		"Vine Blight": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vine Blight.webp"
+			}
+		],
+		"Violet Fungus": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Violet Fungus.webp"
+			}
+		],
+		"Violet Fungus Necrohulk": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Violet Fungus Necrohulk.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Vrock": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vrock.webp"
+			}
+		],
+		"Vulture": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Vulture.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Warhorse": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Warhorse.webp"
+			}
+		],
+		"Warhorse Skeleton": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Warhorse Skeleton.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Warrior Commander": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Warrior Commander.webp"
+			}
+		],
+		"Warrior Infantry": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Warrior Infantry.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Warrior Veteran": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Warrior Veteran.webp"
+			}
+		],
+		"Water Elemental": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Water Elemental.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Water Weird": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Water Weird.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Weasel": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Weasel.webp"
+			}
+		],
+		"Werebear": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Werebear.webp"
+			}
+		],
+		"Wereboar": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Wereboar.webp"
+			}
+		],
+		"Wererat": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Wererat.webp"
+			}
+		],
+		"Weretiger": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Weretiger.webp"
+			}
+		],
+		"Werewolf": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Werewolf.webp"
+			}
+		],
+		"White Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/White Dragon Wyrmling.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Wight": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Wight.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Will-o'-Wisp": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Will-o'-Wisp.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Will-o'-Wisp (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Will-o'-Wisp (Variant 2).webp"
+			}
+		],
+		"Winged Kobold": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Winged Kobold.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Winter Wolf": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Winter Wolf.webp"
+			}
+		],
+		"Wolf": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Wolf.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Wolf (Variant 1).webp"
+			}
+		],
+		"Worg": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Worg.webp"
+			}
+		],
+		"Wraith": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Wraith.webp"
+			}
+		],
+		"Wyvern": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Wyvern.webp",
+				"scaleCorrection": 3,
+				"scale": 3
+			}
+		],
+		"Xorn": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Xorn.webp"
+			}
+		],
+		"Yeti": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Yeti.webp"
+			}
+		],
+		"Yochlol": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Yochlol.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Young Black Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young Black Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Young Blue Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young Blue Dragon.webp"
+			}
+		],
+		"Young Brass Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young Brass Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Young Bronze Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young Bronze Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Young Copper Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young Copper Dragon.webp"
+			}
+		],
+		"Young Gold Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young Gold Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Young Green Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young Green Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Young Red Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young Red Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Young Remorhaz": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young Remorhaz.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Young Silver Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young Silver Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Young White Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Young White Dragon.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Yuan-ti Abomination": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Yuan-ti Abomination.webp"
+			}
+		],
+		"Yuan-ti Infiltrator": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Yuan-ti Infiltrator.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Yuan-ti Infiltrator (Variant 1).webp"
+			}
+		],
+		"Yuan-ti Malison (Type 1)": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Yuan-ti Malison (Type 1).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Yuan-ti Malison (Type 2)": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Yuan-ti Malison (Type 2).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Yuan-ti Malison (Type 3)": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Yuan-ti Malison (Type 3).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Zombie": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Zombie.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Zombie (Variant 1).webp"
+			}
+		],
+		"Elephant": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Elephant.webp"
+			}
+		],
+		"Lion": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Lion.webp"
+			}
+		],
+		"Skeleton": [
+			{
+				"path": "img/bestiary/token-subjects/XMM/Skeleton.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XMM/Skeleton (Variant 1).webp"
+			}
+		]
+	},
+	"XPHB": {
+		"Beast of the Land": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Beast of the Land.webp"
+			}
+		],
+		"Beast of the Sea": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Beast of the Sea.webp"
+			}
+		],
+		"Beast of the Sky": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Beast of the Sky.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Aberrant Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Aberrant Spirit.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Aberrant Spirit (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Aberrant Spirit (Variant 2).webp"
+			}
+		],
+		"Bestial Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Bestial Spirit.webp",
+				"scaleCorrection": 2,
+				"scale": 1.3
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Bestial Spirit (Variant 1).webp",
+				"scale": 0.7
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Bestial Spirit (Variant 2).webp",
+				"scale": 0.7
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Bestial Spirit (Variant 3).webp",
+				"scale": 0.7
+			}
+		],
+		"Celestial Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Celestial Spirit.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Celestial Spirit (Variant 1).webp"
+			}
+		],
+		"Construct Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Construct Spirit.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Construct Spirit (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Construct Spirit (Variant 2).webp"
+			}
+		],
+		"Elemental Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Elemental Spirit.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Elemental Spirit (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Elemental Spirit (Variant 2).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Elemental Spirit (Variant 3).webp"
+			}
+		],
+		"Fey Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Fey Spirit.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Fey Spirit (Variant 1).webp"
+			}
+		],
+		"Fiendish Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Fiendish Spirit.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Fiendish Spirit (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Fiendish Spirit (Variant 2).webp"
+			}
+		],
+		"Giant Insect": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Giant Insect.webp"
+			}
+		],
+		"Animated Object": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Animated Object.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Draconic Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Draconic Spirit.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Otherworldly Steed": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Otherworldly Steed.webp"
+			}
+		],
+		"Undead Spirit": [
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Undead Spirit.webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Undead Spirit (Variant 1).webp"
+			},
+			{
+				"path": "img/bestiary/token-subjects/XPHB/Undead Spirit (Variant 2).webp"
+			}
+		]
+	},
+	"XDMG": {
+		"Avatar of Death": [
+			{
+				"path": "img/bestiary/token-subjects/XDMG/Avatar of Death.webp"
+			}
+		],
+		"Giant Fly": [
+			{
+				"path": "img/bestiary/token-subjects/XDMG/Giant Fly.webp"
+			}
+		]
+	},
+	"HotB": {
+		"Curate": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Curate.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ivlis": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Ivlis.webp"
+			}
+		],
+		"Jacko": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Jacko.webp"
+			}
+		],
+		"Kuo-toa Marauder": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Kuo-toa Marauder.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Lizardfolk Warden": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Lizardfolk Warden.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Narthus": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Narthus.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Pral": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Pral.webp",
+				"scaleCorrection": 3,
+				"scale": 3
+			}
+		],
+		"Vinx": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Vinx.webp"
+			}
+		],
+		"Gray Ooze Glob": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Gray Ooze Glob.webp"
+			}
+		],
+		"Sprite Skirmisher": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Sprite Skirmisher.webp",
+				"scaleCorrection": 3,
+				"scale": 3
+			}
+		],
+		"Wight Lifedrinker": [
+			{
+				"path": "img/bestiary/token-subjects/HotB/Wight Lifedrinker.webp"
+			}
+		]
+	},
+	"FRAiF": {
+		"Adult Spirit Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/FRAiF/Adult Spirit Dragon.webp",
+				"scaleCorrection": 3,
+				"scale": 3
+			}
+		],
+		"Ancient Spirit Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/FRAiF/Ancient Spirit Dragon.webp",
+				"scaleCorrection": 3,
+				"scale": 3
+			}
+		],
+		"Sammaster (Dracolich Form)": [
+			{
+				"path": "img/bestiary/token-subjects/FRAiF/Sammaster (Dracolich Form).webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Drow Elite Warrior of Lolth": [
+			{
+				"path": "img/bestiary/token-subjects/FRAiF/Drow Elite Warrior of Lolth.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Polar Serpent": [
+			{
+				"path": "img/bestiary/token-subjects/FRAiF/Polar Serpent.webp"
+			}
+		],
+		"Queen Forfallen": [
+			{
+				"path": "img/bestiary/token-subjects/FRAiF/Queen Forfallen.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Rusted Berserker": [
+			{
+				"path": "img/bestiary/token-subjects/FRAiF/Rusted Berserker.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Spirit Dragon Wyrmling": [
+			{
+				"path": "img/bestiary/token-subjects/FRAiF/Spirit Dragon Wyrmling.webp",
+				"scaleCorrection": 3,
+				"scale": 3
+			}
+		],
+		"Young Spirit Dragon": [
+			{
+				"path": "img/bestiary/token-subjects/FRAiF/Young Spirit Dragon.webp",
+				"scaleCorrection": 3,
+				"scale": 3
+			}
+		],
+		"Zlan": [
+			{
+				"path": "img/bestiary/token-subjects/FRAiF/Zlan.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		]
+	},
+	"ToA": {
+		"Dragonbait": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Dragonbait.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Ekene-Afa": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Ekene-Afa.webp"
+			}
+		],
+		"Liara Portyr": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Liara Portyr.webp"
+			}
+		],
+		"Giant Four-Armed Gargoyle": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Giant Four-Armed Gargoyle.webp"
+			}
+		],
+		"Jobal": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Jobal.webp"
+			}
+		],
+		"Kupalué": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Kupalue.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Giant Snapping Turtle": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Giant Snapping Turtle.webp"
+			}
+		],
+		"Tabaxi Hunter": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Tabaxi Hunter.webp"
+			}
+		],
+		"Mantrap": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Mantrap.webp"
+			}
+		],
+		"Flying Monkey": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Flying Monkey.webp"
+			}
+		],
+		"Jessamine": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Jessamine.webp"
+			}
+		],
+		"Eku": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Eku.webp"
+			}
+		],
+		"Albino Dwarf Spirit Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Albino Dwarf Spirit Warrior.webp"
+			}
+		],
+		"Su-monster": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Su-monster.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Xandala": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Xandala.webp"
+			}
+		],
+		"Chwinga": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Chwinga.webp"
+			}
+		],
+		"Shago": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Shago.webp"
+			}
+		],
+		"Pterafolk": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Pterafolk.webp"
+			}
+		],
+		"Qawasha": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Qawasha.webp"
+			}
+		],
+		"Zhanthi": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Zhanthi.webp"
+			}
+		],
+		"Atropal": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Atropal.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Eblis": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Eblis.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Stone Juggernaut": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Stone Juggernaut.webp"
+			}
+		],
+		"Artus Cimber": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Artus Cimber.webp"
+			}
+		],
+		"Tri-flower Frond": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Tri-flower Frond.webp"
+			}
+		],
+		"Mister Threadneedle": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Mister Threadneedle.webp"
+			}
+		],
+		"Mwaxanaré": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Mwaxanare.webp"
+			}
+		],
+		"Almiraj": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Almiraj.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Albino Dwarf Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Albino Dwarf Warrior.webp"
+			}
+		],
+		"Musharib": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Musharib.webp"
+			}
+		],
+		"Aldani (Lobsterfolk)": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Aldani (Lobsterfolk).webp"
+			}
+		],
+		"Jaculi": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Jaculi.webp"
+			}
+		],
+		"Salida": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Salida.webp"
+			}
+		],
+		"Tabaxi Minstrel": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Tabaxi Minstrel.webp"
+			}
+		],
+		"Wakanga O'tamu": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Wakanga O'tamu.webp"
+			}
+		],
+		"Acererak": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Acererak.webp"
+			}
+		],
+		"Asharra": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Asharra.webp"
+			}
+		],
+		"Bag of Nails": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Bag of Nails.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Blind Artist": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Blind Artist.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Bosco Daggerhand": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Bosco Daggerhand.webp"
+			}
+		],
+		"Clay Gladiator": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Clay Gladiator.webp"
+			}
+		],
+		"Drufi": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Drufi.webp"
+			}
+		],
+		"Elok Jaharwon": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Elok Jaharwon.webp"
+			}
+		],
+		"Faroul": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Faroul.webp"
+			}
+		],
+		"Fenthaza": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Fenthaza.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Flask of Wine": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Flask of Wine.webp"
+			}
+		],
+		"Girallon Zombie": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Girallon Zombie.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Gondolo": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Gondolo.webp"
+			}
+		],
+		"Grandfather Zitembe": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Grandfather Zitembe.webp"
+			}
+		],
+		"Hew Hackinstone": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Hew Hackinstone.webp"
+			}
+		],
+		"King of Feathers": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/King of Feathers.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Laskilar": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Laskilar.webp"
+			}
+		],
+		"Nepartak": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Nepartak.webp"
+			}
+		],
+		"Niles Breakbone": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Niles Breakbone.webp"
+			}
+		],
+		"Ortimay Swift and Dark": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Ortimay Swift and Dark.webp"
+			}
+		],
+		"Orvex Ocrammas": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Orvex Ocrammas.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"River Mist": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/River Mist.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Sekelok": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Sekelok.webp"
+			}
+		],
+		"Skeleton Key": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Skeleton Key.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Syndra Silvane": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Syndra Silvane.webp"
+			}
+		],
+		"Terracotta Warrior": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Terracotta Warrior.webp"
+			}
+		],
+		"Tomb Dwarf": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Tomb Dwarf.webp"
+			}
+		],
+		"Tomb Guardian": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Tomb Guardian.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Valindra Shadowmantle": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Valindra Shadowmantle.webp"
+			}
+		],
+		"Wild Dog": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Wild Dog.webp"
+			}
+		],
+		"Wine Weird": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Wine Weird.webp"
+			}
+		],
+		"Withers": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Withers.webp"
+			}
+		],
+		"Yellow Musk Creeper": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Yellow Musk Creeper.webp"
+			}
+		],
+		"Yellow Musk Zombie": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Yellow Musk Zombie.webp"
+			}
+		],
+		"Yuan-ti Priest": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Yuan-ti Priest.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Zalkoré": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Zalkore.webp"
+			}
+		],
+		"Zaroum Al-Saryak": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Zaroum Al-Saryak.webp"
+			}
+		],
+		"Zindar": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Zindar.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		],
+		"Zorbo": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Zorbo.webp"
+			}
+		],
+		"Azaka Stormfang": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Azaka Stormfang.webp"
+			}
+		],
+		"Kamadan": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Kamadan.webp"
+			}
+		],
+		"Kwayothé": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Kwayothe.webp"
+			}
+		],
+		"Ras Nsi": [
+			{
+				"path": "img/bestiary/token-subjects/ToA/Ras Nsi.webp",
+				"scaleCorrection": 2,
+				"scale": 2
+			}
+		]
+	}
+}

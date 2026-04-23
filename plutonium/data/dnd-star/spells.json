@@ -1,0 +1,25 @@
+{
+	"TCE": {
+		"Blade of Disaster": "icons/weapons/swords/sword-broad-serrated-blue.webp",
+		"Booming Blade": "icons/weapons/daggers/dagger-crooked-ice-blue.webp",
+		"Dream of the Blue Veil": "icons/commodities/cloth/cloth-worn-blue.webp",
+		"Green-Flame Blade": "icons/weapons/daggers/dagger-poisoned-curved-green.webp",
+		"Intellect Fortress": "icons/magic/symbols/cog-shield-white-blue.webp",
+		"Lightning Lure": "icons/magic/lightning/bolt-strike-beam-yellow.webp",
+		"Mind Sliver": "icons/magic/lightning/strike-arrow-spear-red.webp",
+		"Spirit Shroud": "icons/magic/unholy/silhouette-light-fire-blue.webp",
+		"Summon Aberration": "icons/creatures/unholy/demon-hairy-winged-pink.webp",
+		"Summon Beast": "icons/creatures/abilities/wolf-howl-moon-purple.webp",
+		"Summon Celestial": "icons/magic/holy/angel-winged-humanoid-blue.webp",
+		"Summon Construct": "icons/tools/smithing/furnace-fire-metal-orange.webp",
+		"Summon Elemental": "icons/magic/symbols/elements-air-earth-fire-water.webp",
+		"Summon Fey": "icons/creatures/magical/spirit-mischief-fire-blue.webp",
+		"Summon Fiend": "icons/creatures/unholy/demon-fire-horned-winged-roar.webp",
+		"Summon Shadowspawn": "icons/creatures/unholy/demon-horned-winged-laughing.webp",
+		"Summon Undead": "icons/magic/death/undead-zombie-grave-green.webp",
+		"Sword Burst": "icons/weapons/swords/sword-broad-crystal-paired.webp",
+		"Tasha's Caustic Brew": "icons/skills/toxins/cauldron-bubbles-overflow-green.webp",
+		"Tasha's Mind Whip": "icons/weapons/misc/whip-red-yellow.webp",
+		"Tasha's Otherworldly Guise": "icons/magic/holy/angel-wings-gray.webp"
+	}
+}

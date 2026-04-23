@@ -1,0 +1,58 @@
+[
+	{
+		"name": "ability score improvement",
+		"path": "icons/commodities/treasure/brooch-lightning-gold.webp"
+	},
+	{
+		"name": "ability score increase",
+		"path": "icons/commodities/treasure/brooch-lightning-gold.webp"
+	},
+	{
+		"name": "background",
+		"path": "icons/skills/trades/academics-book-study-purple.webp"
+	},
+	{
+		"name": "bonus cantrip",
+		"path": "icons/sundries/documents/document-symbol-eye.webp"
+	},
+	{
+		"name": "bonus cantrips",
+		"path": "icons/sundries/documents/document-symbol-eye.webp"
+	},
+	{
+		"name": "bonus proficiency",
+		"path": "icons/commodities/gems/gem-rough-navette-yellow-green.webp"
+	},
+	{
+		"name": "extra attack",
+		"path": "icons/magic/fire/dagger-rune-enchant-flame-orange.webp"
+	},
+	{
+		"name": "feat",
+		"path": "icons/magic/light/explosion-star-glow-yellow.webp"
+	},
+	{
+		"name": "languages",
+		"path": "icons/tools/scribal/ink-quill-red.webp"
+	},
+	{
+		"name": "proficiencies",
+		"path": "icons/commodities/gems/gem-rough-navette-yellow-green.webp"
+	},
+	{
+		"name": "size",
+		"path": "icons/equipment/back/cape-layered-blue-accent.webp"
+	},
+	{
+		"name": "speed",
+		"path": "icons/magic/acid/projectile-needles-salvo-green.webp"
+	},
+	{
+		"name": "tool proficiency",
+		"path": "icons/equipment/neck/amulet-carved-stone-hammer.webp"
+	},
+	{
+		"name": "unarmed strike",
+		"path": "icons/skills/melee/unarmed-punch-fist.webp"
+	}
+]

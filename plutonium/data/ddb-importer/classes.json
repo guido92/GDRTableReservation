@@ -1,0 +1,510 @@
+[
+	{
+		"name": "aberrant mind",
+		"path": "icons/creatures/magical/humanoid-silhouette-aliens-green.webp"
+	},
+	{
+		"name": "alchemist",
+		"path": "icons/tools/laboratory/vials-blue-pink.webp"
+	},
+	{
+		"name": "arcana domain",
+		"path": "icons/magic/light/orbs-firefly-hand-yellow.webp"
+	},
+	{
+		"name": "arcane archer",
+		"path": "icons/environment/people/archer.webp"
+	},
+	{
+		"name": "arcane trickster",
+		"path": "icons/magic/light/hand-sparks-smoke-green.webp"
+	},
+	{
+		"name": "armorer",
+		"path": "icons/equipment/chest/breastplate-layered-gilded-orange.webp"
+	},
+	{
+		"name": "artificer",
+		"path": "icons/commodities/tech/cog-bronze.webp"
+	},
+	{
+		"name": "artillerist",
+		"path": "icons/weapons/artillery/cannon-engraved-gold.webp"
+	},
+	{
+		"name": "assassin",
+		"path": "icons/skills/melee/strike-dagger-skull-white.webp"
+	},
+	{
+		"name": "banneret purple dragon knight",
+		"path": "icons/sundries/flags/banner-symbol-sun-gold-red.webp"
+	},
+	{
+		"name": "barbarian",
+		"path": "icons/skills/melee/hand-grip-sword-orange.webp"
+	},
+	{
+		"name": "bard",
+		"path": "icons/skills/toxins/cup-goblet-poisoned-spilled.webp"
+	},
+	{
+		"name": "battle master",
+		"path": "icons/environment/people/infantry-armored.webp"
+	},
+	{
+		"name": "battle smith",
+		"path": "icons/tools/smithing/anvil.webp"
+	},
+	{
+		"name": "beast master",
+		"path": "icons/creatures/abilities/paw-print-yellow.webp"
+	},
+	{
+		"name": "bladesinging",
+		"path": "icons/skills/melee/weapons-crossed-swords-teal.webp"
+	},
+	{
+		"name": "cavalier",
+		"path": "icons/environment/people/cavalry-heavy.webp"
+	},
+	{
+		"name": "champion",
+		"path": "icons/skills/melee/maneuver-greatsword-yellow.webp"
+	},
+	{
+		"name": "circle of dreams",
+		"path": "icons/magic/nature/meteorite-purple.webp"
+	},
+	{
+		"name": "circle of spores",
+		"path": "icons/magic/nature/mushrooms-fire-glow-blue.webp"
+	},
+	{
+		"name": "circle of stars",
+		"path": "icons/skills/trades/academics-astronomy-navigation-purple.webp"
+	},
+	{
+		"name": "circle of the land",
+		"path": "icons/environment/wilderness/island.webp"
+	},
+	{
+		"name": "circle of the moon",
+		"path": "icons/magic/nature/symbol-moon-stars-white.webp"
+	},
+	{
+		"name": "circle of the shepherd",
+		"path": "icons/creatures/mammals/spirit-deer-herd-blue.webp"
+	},
+	{
+		"name": "circle of wildfire",
+		"path": "icons/magic/fire/flame-burning-tree-stump.webp"
+	},
+	{
+		"name": "cleric",
+		"path": "icons/magic/life/ankh-gold-blue.webp"
+	},
+	{
+		"name": "clockwork soul",
+		"path": "icons/commodities/tech/watch.webp"
+	},
+	{
+		"name": "college of creation",
+		"path": "icons/magic/light/orb-hands-humanoid-yellow.webp"
+	},
+	{
+		"name": "college of eloquence",
+		"path": "icons/magic/control/mouth-smile-deception-purple.webp"
+	},
+	{
+		"name": "college of glamour",
+		"path": "icons/magic/nature/leaf-juggle-humanoid-green.webp"
+	},
+	{
+		"name": "college of lore",
+		"path": "icons/skills/trades/academics-book-study-runes.webp"
+	},
+	{
+		"name": "college of spirits",
+		"path": "icons/magic/death/undead-ghosts-trio-blue.webp"
+	},
+	{
+		"name": "college of swords",
+		"path": "icons/weapons/swords/sword-broad-serrated-blue.webp"
+	},
+	{
+		"name": "college of valor",
+		"path": "icons/skills/trades/music-singing-voice-blue.webp"
+	},
+	{
+		"name": "college of whispers",
+		"path": "icons/magic/control/fear-fright-white.webp"
+	},
+	{
+		"name": "death domain",
+		"path": "icons/magic/death/skeleton-skull-soul-blue.webp"
+	},
+	{
+		"name": "divine soul",
+		"path": "icons/magic/holy/angel-winged-humanoid-blue.webp"
+	},
+	{
+		"name": "draconic bloodline",
+		"path": "icons/creatures/reptiles/dragon-horned-blue.webp"
+	},
+	{
+		"name": "drakewarden",
+		"path": "icons/creatures/abilities/dragon-breath-purple.webp"
+	},
+	{
+		"name": "druid",
+		"path": "icons/creatures/mammals/elk-moose-marked-green.webp"
+	},
+	{
+		"name": "echo knight",
+		"path": "icons/magic/control/energy-stream-link-white.webp"
+	},
+	{
+		"name": "eldritch knight",
+		"path": "icons/magic/unholy/hand-weapon-glow-black-green.webp"
+	},
+	{
+		"name": "fey wanderer",
+		"path": "icons/environment/wilderness/portal.webp"
+	},
+	{
+		"name": "fighter",
+		"path": "icons/skills/melee/hand-grip-sword-red.webp"
+	},
+	{
+		"name": "forge domain",
+		"path": "icons/skills/trades/smithing-anvil-silver-red.webp"
+	},
+	{
+		"name": "gloom stalker",
+		"path": "icons/magic/nature/stealth-hide-eyes-pink.webp"
+	},
+	{
+		"name": "grave domain",
+		"path": "icons/magic/death/grave-tombstone-glow-teal.webp"
+	},
+	{
+		"name": "horizon walker",
+		"path": "icons/magic/lightning/bolt-strike-explosion-yellow.webp"
+	},
+	{
+		"name": "hunter",
+		"path": "icons/skills/targeting/crosshair-scope-sniper-green.webp"
+	},
+	{
+		"name": "inquisitive",
+		"path": "icons/creatures/eyes/human-single-brown.webp"
+	},
+	{
+		"name": "knowledge domain",
+		"path": "icons/skills/trades/academics-book-study-runes.webp"
+	},
+	{
+		"name": "life domain",
+		"path": "icons/magic/death/undead-ghosts-trio-blue.webp"
+	},
+	{
+		"name": "light domain",
+		"path": "icons/weapons/swords/sword-broad-serrated-blue.webp"
+	},
+	{
+		"name": "mastermind",
+		"path": "icons/skills/trades/music-singing-voice-blue.webp"
+	},
+	{
+		"name": "monk",
+		"path": "icons/magic/control/silhouette-hold-change-blue.webp"
+	},
+	{
+		"name": "monster slayer",
+		"path": "icons/magic/control/fear-fright-white.webp"
+	},
+	{
+		"name": "nature domain",
+		"path": "icons/magic/death/skeleton-skull-soul-blue.webp"
+	},
+	{
+		"name": "oath of conquest",
+		"path": "icons/magic/holy/angel-winged-humanoid-blue.webp"
+	},
+	{
+		"name": "oath of devotion",
+		"path": "icons/creatures/reptiles/dragon-horned-blue.webp"
+	},
+	{
+		"name": "oath of glory",
+		"path": "icons/creatures/abilities/dragon-breath-purple.webp"
+	},
+	{
+		"name": "oath of redemption",
+		"path": "icons/magic/control/energy-stream-link-white.webp"
+	},
+	{
+		"name": "oath of the ancients",
+		"path": "icons/magic/unholy/hand-weapon-glow-black-green.webp"
+	},
+	{
+		"name": "oath of the crown",
+		"path": "icons/environment/wilderness/portal.webp"
+	},
+	{
+		"name": "oath of the watchers",
+		"path": "icons/skills/trades/smithing-anvil-silver-red.webp"
+	},
+	{
+		"name": "oath of vengeance",
+		"path": "icons/magic/nature/stealth-hide-eyes-pink.webp"
+	},
+	{
+		"name": "oathbreaker",
+		"path": "icons/magic/death/grave-tombstone-glow-teal.webp"
+	},
+	{
+		"name": "order domain",
+		"path": "icons/magic/lightning/bolt-strike-explosion-yellow.webp"
+	},
+	{
+		"name": "order of scribes",
+		"path": "icons/skills/targeting/crosshair-scope-sniper-green.webp"
+	},
+	{
+		"name": "paladin",
+		"path": "icons/skills/melee/weapons-crossed-swords-yellow-teal.webp"
+	},
+	{
+		"name": "path of the ancestral guardian",
+		"path": "icons/creatures/eyes/human-single-brown.webp"
+	},
+	{
+		"name": "path of the battlerager",
+		"path": "icons/skills/trades/academics-book-study-runes.webp"
+	},
+	{
+		"name": "path of the beast",
+		"path": "icons/magic/death/undead-ghosts-trio-blue.webp"
+	},
+	{
+		"name": "path of the berserker",
+		"path": "icons/weapons/swords/sword-broad-serrated-blue.webp"
+	},
+	{
+		"name": "path of the storm herald",
+		"path": "icons/skills/trades/music-singing-voice-blue.webp"
+	},
+	{
+		"name": "path of the totem warrior",
+		"path": "icons/magic/control/fear-fright-white.webp"
+	},
+	{
+		"name": "path of the zealot",
+		"path": "icons/magic/death/skeleton-skull-soul-blue.webp"
+	},
+	{
+		"name": "path of wild magic",
+		"path": "icons/magic/holy/angel-winged-humanoid-blue.webp"
+	},
+	{
+		"name": "peace domain",
+		"path": "icons/creatures/reptiles/dragon-horned-blue.webp"
+	},
+	{
+		"name": "phantom",
+		"path": "icons/creatures/abilities/dragon-breath-purple.webp"
+	},
+	{
+		"name": "psi warrior",
+		"path": "icons/magic/control/energy-stream-link-white.webp"
+	},
+	{
+		"name": "ranger",
+		"path": "icons/weapons/bows/shortbow-recurve-yellow.webp"
+	},
+	{
+		"name": "rogue",
+		"path": "icons/skills/melee/strike-sword-stabbed-brown.webp"
+	},
+	{
+		"name": "rune knight",
+		"path": "icons/magic/unholy/hand-weapon-glow-black-green.webp"
+	},
+	{
+		"name": "samurai",
+		"path": "icons/environment/wilderness/portal.webp"
+	},
+	{
+		"name": "school of abjuration",
+		"path": "icons/skills/trades/smithing-anvil-silver-red.webp"
+	},
+	{
+		"name": "school of conjuration",
+		"path": "icons/magic/nature/stealth-hide-eyes-pink.webp"
+	},
+	{
+		"name": "school of divination",
+		"path": "icons/magic/death/grave-tombstone-glow-teal.webp"
+	},
+	{
+		"name": "school of enchantment",
+		"path": "icons/magic/lightning/bolt-strike-explosion-yellow.webp"
+	},
+	{
+		"name": "school of evocation",
+		"path": "icons/skills/targeting/crosshair-scope-sniper-green.webp"
+	},
+	{
+		"name": "school of illusion",
+		"path": "icons/creatures/eyes/human-single-brown.webp"
+	},
+	{
+		"name": "school of necromancy",
+		"path": "icons/skills/trades/academics-book-study-runes.webp"
+	},
+	{
+		"name": "school of transmutation",
+		"path": "icons/magic/death/undead-ghosts-trio-blue.webp"
+	},
+	{
+		"name": "school of war magic",
+		"path": "icons/weapons/swords/sword-broad-serrated-blue.webp"
+	},
+	{
+		"name": "scout",
+		"path": "icons/skills/trades/music-singing-voice-blue.webp"
+	},
+	{
+		"name": "shadow magic",
+		"path": "icons/magic/control/fear-fright-white.webp"
+	},
+	{
+		"name": "sorcerer",
+		"path": "icons/magic/earth/projectiles-magma-stone-orange.webp"
+	},
+	{
+		"name": "soulknife",
+		"path": "icons/magic/death/skeleton-skull-soul-blue.webp"
+	},
+	{
+		"name": "storm sorcery",
+		"path": "icons/magic/holy/angel-winged-humanoid-blue.webp"
+	},
+	{
+		"name": "swarmkeeper",
+		"path": "icons/creatures/reptiles/dragon-horned-blue.webp"
+	},
+	{
+		"name": "swashbuckler",
+		"path": "icons/creatures/abilities/dragon-breath-purple.webp"
+	},
+	{
+		"name": "tempest domain",
+		"path": "icons/magic/control/energy-stream-link-white.webp"
+	},
+	{
+		"name": "the archfey",
+		"path": "icons/magic/unholy/hand-weapon-glow-black-green.webp"
+	},
+	{
+		"name": "the celestial",
+		"path": "icons/environment/wilderness/portal.webp"
+	},
+	{
+		"name": "the fathomless",
+		"path": "icons/skills/trades/smithing-anvil-silver-red.webp"
+	},
+	{
+		"name": "the fiend",
+		"path": "icons/magic/nature/stealth-hide-eyes-pink.webp"
+	},
+	{
+		"name": "the genie",
+		"path": "icons/magic/death/grave-tombstone-glow-teal.webp"
+	},
+	{
+		"name": "the great old one",
+		"path": "icons/magic/lightning/bolt-strike-explosion-yellow.webp"
+	},
+	{
+		"name": "the hexblade",
+		"path": "icons/skills/targeting/crosshair-scope-sniper-green.webp"
+	},
+	{
+		"name": "the undead",
+		"path": "icons/creatures/eyes/human-single-brown.webp"
+	},
+	{
+		"name": "the undying",
+		"path": "icons/skills/trades/academics-book-study-runes.webp"
+	},
+	{
+		"name": "thief",
+		"path": "icons/magic/death/undead-ghosts-trio-blue.webp"
+	},
+	{
+		"name": "trickery domain",
+		"path": "icons/weapons/swords/sword-broad-serrated-blue.webp"
+	},
+	{
+		"name": "twilight domain",
+		"path": "icons/skills/trades/music-singing-voice-blue.webp"
+	},
+	{
+		"name": "war domain",
+		"path": "icons/magic/control/fear-fright-white.webp"
+	},
+	{
+		"name": "warlock",
+		"path": "icons/creatures/mammals/bat-giant-tattered-purple.webp"
+	},
+	{
+		"name": "way of mercy",
+		"path": "icons/magic/death/skeleton-skull-soul-blue.webp"
+	},
+	{
+		"name": "way of shadow",
+		"path": "icons/magic/holy/angel-winged-humanoid-blue.webp"
+	},
+	{
+		"name": "way of the ascendant dragon",
+		"path": "icons/creatures/reptiles/dragon-horned-blue.webp"
+	},
+	{
+		"name": "way of the astral self",
+		"path": "icons/creatures/abilities/dragon-breath-purple.webp"
+	},
+	{
+		"name": "way of the drunken master",
+		"path": "icons/magic/control/energy-stream-link-white.webp"
+	},
+	{
+		"name": "way of the four elements",
+		"path": "icons/magic/unholy/hand-weapon-glow-black-green.webp"
+	},
+	{
+		"name": "way of the kensei",
+		"path": "icons/environment/wilderness/portal.webp"
+	},
+	{
+		"name": "way of the long death",
+		"path": "icons/skills/trades/smithing-anvil-silver-red.webp"
+	},
+	{
+		"name": "way of the open hand",
+		"path": "icons/magic/nature/stealth-hide-eyes-pink.webp"
+	},
+	{
+		"name": "way of the sun soul",
+		"path": "icons/magic/death/grave-tombstone-glow-teal.webp"
+	},
+	{
+		"name": "wild magic",
+		"path": "icons/magic/lightning/bolt-strike-explosion-yellow.webp"
+	},
+	{
+		"name": "wizard",
+		"path": "icons/magic/air/wind-tornado-wall-blue.webp"
+	}
+]

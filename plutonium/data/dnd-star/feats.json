@@ -1,0 +1,18 @@
+{
+	"TCE": {
+		"Chef": "icons/consumables/food/bowl-stew-brown.webp",
+		"Crusher": "icons/skills/melee/strike-hammer-destructive-blue.webp",
+		"Eldritch Adept": "icons/magic/unholy/hand-light-pink.webp",
+		"Fey Touched": "icons/magic/nature/beam-hand-leaves-green.webp",
+		"Fighting Initiate": "icons/skills/melee/hand-grip-staff-blue.webp",
+		"Gunner": "icons/weapons/guns/gun-blunderbuss-gold.webp",
+		"Metamagic Adept": "icons/magic/unholy/orb-colllecting-energy-green.webp",
+		"Piercer": "icons/skills/melee/blade-tip-chipped-blood-red.webp",
+		"Poisoner": "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
+		"Shadow Touched": "icons/magic/death/hand-withered-gray.webp",
+		"Skill Expert": "icons/skills/trades/academics-merchant-scribe.webp",
+		"Slasher": "icons/skills/melee/blood-slash-foam-red.webp",
+		"Telekinetic": "icons/magic/air/air-smoke-casting.webp",
+		"Telepathic": "icons/magic/perception/third-eye-blue-red.webp"
+	}
+}

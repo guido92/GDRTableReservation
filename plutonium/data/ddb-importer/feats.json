@@ -1,0 +1,482 @@
+[
+	{
+		"name": "aberrant dragonmark",
+		"path": "icons/creatures/reptiles/serpent-horned-green.webp"
+	},
+	{
+		"name": "actor",
+		"path": "icons/commodities/currency/coin-engraved-sun-smile-copper.webp"
+	},
+	{
+		"name": "alert",
+		"path": "icons/creatures/eyes/human-single-blue.webp"
+	},
+	{
+		"name": "apothecary",
+		"path": "icons/tools/laboratory/alembic-glass-ball-blue.webp"
+	},
+	{
+		"name": "artificer initiate",
+		"path": "icons/equipment/head/goggles-leather-blue.webp"
+	},
+	{
+		"name": "athlete",
+		"path": "icons/skills/melee/hand-grip-staff-blue.webp"
+	},
+	{
+		"name": "bountiful luck",
+		"path": "icons/commodities/flowers/clover.webp"
+	},
+	{
+		"name": "charger",
+		"path": "icons/skills/melee/hand-grip-hammer-spiked-blue.webp"
+	},
+	{
+		"name": "chef",
+		"path": "icons/tools/cooking/knife-cleaver-steel-grey.webp"
+	},
+	{
+		"name": "crossbow expert",
+		"path": "icons/weapons/crossbows/handcrossbow-green.webp"
+	},
+	{
+		"name": "crusher",
+		"path": "icons/weapons/hammers/hammer-double-stone.webp"
+	},
+	{
+		"name": "defensive duelist",
+		"path": "icons/skills/melee/weapons-crossed-swords-white-blue.webp"
+	},
+	{
+		"name": "dragon fear",
+		"path": "icons/magic/acid/projectile-smoke-glowing.webp"
+	},
+	{
+		"name": "dragon hide",
+		"path": "icons/magic/defensive/armor-stone-skin.webp"
+	},
+	{
+		"name": "drow high magic",
+		"path": "icons/magic/unholy/silhouette-robe-evil-power.webp"
+	},
+	{
+		"name": "dual wielder",
+		"path": "icons/skills/melee/weapons-crossed-daggers-orange.webp"
+	},
+	{
+		"name": "dungeon delver",
+		"path": "icons/environment/traps/spike-skull-white-brown.webp"
+	},
+	{
+		"name": "durable",
+		"path": "icons/skills/targeting/target-strike-gray.webp"
+	},
+	{
+		"name": "dwarven fortitude",
+		"path": "icons/weapons/hammers/hammer-double-glowing-yellow.webp"
+	},
+	{
+		"name": "eldritch adept",
+		"path": "icons/creatures/slimes/slime-movement-dripping-purple.webp"
+	},
+	{
+		"name": "elemental adept",
+		"path": "icons/magic/fire/projectile-embers-orange.webp"
+	},
+	{
+		"name": "elemental adept (acid)",
+		"path": "icons/magic/acid/projectile-faceted-glob.webp"
+	},
+	{
+		"name": "elemental adept (cold)",
+		"path": "icons/magic/water/projectile-ice-chunk-blue.webp"
+	},
+	{
+		"name": "elemental adept (fire)",
+		"path": "icons/magic/fire/projectile-embers-orange.webp"
+	},
+	{
+		"name": "elemental adept (lightning)",
+		"path": "icons/magic/lightning/bolt-strike-blue.webp"
+	},
+	{
+		"name": "elemental adept (thunder)",
+		"path": "icons/magic/fire/projectile-fireball-purple.webp"
+	},
+	{
+		"name": "elven accuracy",
+		"path": "icons/magic/nature/leaf-arrowheads-glow-green.webp"
+	},
+	{
+		"name": "fade away",
+		"path": "icons/commodities/tech/smoke-bomb-purple.webp"
+	},
+	{
+		"name": "fey teleportation",
+		"path": "icons/magic/control/encase-creature-humanoid-hold.webp"
+	},
+	{
+		"name": "fey touched",
+		"path": "icons/creatures/mammals/elk-moose-marked-green.webp"
+	},
+	{
+		"name": "fey touched (charisma)",
+		"path": "icons/creatures/mammals/elk-moose-marked-green.webp"
+	},
+	{
+		"name": "fey touched (intelligence)",
+		"path": "icons/creatures/mammals/elk-moose-marked-green.webp"
+	},
+	{
+		"name": "fey touched (wisdom)",
+		"path": "icons/creatures/mammals/elk-moose-marked-green.webp"
+	},
+	{
+		"name": "fighting initiate",
+		"path": "icons/skills/melee/strike-weapons-orange.webp"
+	},
+	{
+		"name": "firearm specialist",
+		"path": "icons/weapons/guns/rifle-brown.webp"
+	},
+	{
+		"name": "flames of phlegethos",
+		"path": "icons/magic/lightning/bolt-strike-smoke-yellow.webp"
+	},
+	{
+		"name": "gift of the chromatic dragon",
+		"path": "icons/creatures/reptiles/dragon-horned-blue.webp"
+	},
+	{
+		"name": "gift of the gem dragon",
+		"path": "icons/commodities/gems/pearl-storm.webp"
+	},
+	{
+		"name": "gift of the metallic dragon",
+		"path": "icons/creatures/reptiles/dragon-winged-blue.webp"
+	},
+	{
+		"name": "grappler",
+		"path": "icons/skills/melee/unarmed-punch-fist.webp"
+	},
+	{
+		"name": "great weapon master",
+		"path": "icons/weapons/axes/axe-battle-skull-black.webp"
+	},
+	{
+		"name": "gunner",
+		"path": "icons/weapons/guns/gun-pistol-wood.webp"
+	},
+	{
+		"name": "healer",
+		"path": "icons/environment/people/cleric-grey.webp"
+	},
+	{
+		"name": "heavily armored",
+		"path": "icons/equipment/head/greathelm-slotted-steel.webp"
+	},
+	{
+		"name": "heavy armor master",
+		"path": "icons/environment/people/infantry-armored.webp"
+	},
+	{
+		"name": "infernal constitution",
+		"path": "icons/skills/social/intimidation-impressing.webp"
+	},
+	{
+		"name": "inspiring leader",
+		"path": "icons/magic/symbols/cog-shield-white-blue.webp"
+	},
+	{
+		"name": "keen mind",
+		"path": "icons/magic/water/ice-crystal-white.webp"
+	},
+	{
+		"name": "lightly armored",
+		"path": "icons/equipment/chest/breastplate-banded-leather-brown.webp"
+	},
+	{
+		"name": "linguist",
+		"path": "icons/sundries/scrolls/scroll-writing-brown-gold.webp"
+	},
+	{
+		"name": "lucky",
+		"path": "icons/equipment/neck/necklace-charm-clover.webp"
+	},
+	{
+		"name": "mage slayer",
+		"path": "icons/weapons/polearms/halberd-crescent-glowing.webp"
+	},
+	{
+		"name": "magic initiate",
+		"path": "icons/sundries/books/book-embossed-jewel-gold-purple.webp"
+	},
+	{
+		"name": "magic initiate (bard)",
+		"path": "icons/sundries/books/book-symbol-fire-gold-orange.webp"
+	},
+	{
+		"name": "magic initiate (cleric)",
+		"path": "icons/sundries/books/book-symbol-canterbury-cross.webp"
+	},
+	{
+		"name": "magic initiate (druid)",
+		"path": "icons/sundries/books/book-symbol-tree-silver-green.webp"
+	},
+	{
+		"name": "magic initiate (sorcerer)",
+		"path": "icons/sundries/books/book-reye-reptile-brown.webp"
+	},
+	{
+		"name": "magic initiate (warlock)",
+		"path": "icons/sundries/books/book-tooled-eye-gold-red.webp"
+	},
+	{
+		"name": "magic initiate (wizard)",
+		"path": "icons/sundries/books/book-eye-purple.webp"
+	},
+	{
+		"name": "martial adept",
+		"path": "icons/skills/melee/hand-grip-sword-orange.webp"
+	},
+	{
+		"name": "medium armor master",
+		"path": "icons/equipment/chest/breastplate-collared-steel-green.webp"
+	},
+	{
+		"name": "metamagic adept",
+		"path": "icons/commodities/gems/gem-rough-square-red.webp"
+	},
+	{
+		"name": "mobile",
+		"path": "icons/skills/movement/feet-winged-boots-brown.webp"
+	},
+	{
+		"name": "moderately armored",
+		"path": "icons/equipment/chest/breastplate-metal-scaled-grey.webp"
+	},
+	{
+		"name": "mounted combatant",
+		"path": "icons/environment/people/cavalry.webp"
+	},
+	{
+		"name": "observant",
+		"path": "icons/commodities/biological/eye-red-pink.webp"
+	},
+	{
+		"name": "orcish fury",
+		"path": "icons/skills/toxins/cup-goblet-poisoned-spilled.webp"
+	},
+	{
+		"name": "piercer",
+		"path": "icons/weapons/polearms/spear-ornate-gold.webp"
+	},
+	{
+		"name": "poisoner",
+		"path": "icons/skills/melee/strike-scythe-fire-green.webp"
+	},
+	{
+		"name": "polearm master",
+		"path": "icons/weapons/polearms/pike-flared-brown.webp"
+	},
+	{
+		"name": "prodigy",
+		"path": "icons/sundries/books/book-red-exclamation.webp"
+	},
+	{
+		"name": "resilient",
+		"path": "icons/magic/fire/flame-burning-fist-strike.webp"
+	},
+	{
+		"name": "resilient (charisma)",
+		"path": "icons/magic/fire/flame-burning-fist-strike.webp"
+	},
+	{
+		"name": "resilient (constitution)",
+		"path": "icons/magic/fire/flame-burning-fist-strike.webp"
+	},
+	{
+		"name": "resilient (dexterity)",
+		"path": "icons/magic/fire/flame-burning-fist-strike.webp"
+	},
+	{
+		"name": "resilient (intelligence)",
+		"path": "icons/magic/fire/flame-burning-fist-strike.webp"
+	},
+	{
+		"name": "resilient (strength)",
+		"path": "icons/magic/fire/flame-burning-fist-strike.webp"
+	},
+	{
+		"name": "resilient (wisdom)",
+		"path": "icons/magic/fire/flame-burning-fist-strike.webp"
+	},
+	{
+		"name": "revenant blade",
+		"path": "icons/skills/melee/strike-sword-blood-red.webp"
+	},
+	{
+		"name": "ritual caster",
+		"path": "icons/commodities/gems/pearl-glass-purple.webp"
+	},
+	{
+		"name": "ritual caster (bard)",
+		"path": "icons/commodities/gems/pearl-blue-gold.webp"
+	},
+	{
+		"name": "ritual caster (cleric)",
+		"path": "icons/commodities/gems/pearl-purple-smooth.webp"
+	},
+	{
+		"name": "ritual caster (druid)",
+		"path": "icons/commodities/gems/pearl-turquoise.webp"
+	},
+	{
+		"name": "ritual caster (sorcerer)",
+		"path": "icons/commodities/gems/pearl-red-gold.webp"
+	},
+	{
+		"name": "ritual caster (warlock)",
+		"path": "icons/commodities/gems/pearl-brown-red.webp"
+	},
+	{
+		"name": "ritual caster (wizard)",
+		"path": "icons/commodities/gems/pearl-glass-purple.webp"
+	},
+	{
+		"name": "savage attacker",
+		"path": "icons/skills/melee/strike-sword-blood-red.webp"
+	},
+	{
+		"name": "second chance",
+		"path": "icons/equipment/shield/buckler-wooden-boss-glowing-blue.webp"
+	},
+	{
+		"name": "sentinel",
+		"path": "icons/magic/symbols/runes-etched-steel-blade.webp"
+	},
+	{
+		"name": "shadow touched",
+		"path": "icons/magic/perception/silhouette-stealth-shadow.webp"
+	},
+	{
+		"name": "shadow touched (charisma)",
+		"path": "icons/magic/perception/silhouette-stealth-shadow.webp"
+	},
+	{
+		"name": "shadow touched (intelligence)",
+		"path": "icons/magic/perception/silhouette-stealth-shadow.webp"
+	},
+	{
+		"name": "shadow touched (wisdom)",
+		"path": "icons/magic/perception/silhouette-stealth-shadow.webp"
+	},
+	{
+		"name": "sharpshooter",
+		"path": "icons/skills/ranged/arrow-flying-white-blue.webp"
+	},
+	{
+		"name": "shield master",
+		"path": "icons/magic/defensive/shield-barrier-deflect-gold.webp"
+	},
+	{
+		"name": "skill expert",
+		"path": "icons/skills/melee/weapons-crossed-swords-white-blue.webp"
+	},
+	{
+		"name": "skilled",
+		"path": "icons/commodities/biological/organ-brain-pink.webp"
+	},
+	{
+		"name": "skulker",
+		"path": "icons/magic/nature/stealth-hide-eyes-green.webp"
+	},
+	{
+		"name": "slasher",
+		"path": "icons/skills/melee/blade-tips-triple-bent-white.webp"
+	},
+	{
+		"name": "spell sniper",
+		"path": "icons/magic/light/beam-red-orange.webp"
+	},
+	{
+		"name": "spell sniper (bard, sorcerer, warlock)",
+		"path": "icons/magic/light/beam-red-orange.webp"
+	},
+	{
+		"name": "spell sniper (cleric, druid)",
+		"path": "icons/magic/light/beam-red-orange.webp"
+	},
+	{
+		"name": "spell sniper (wizard)",
+		"path": "icons/magic/light/beam-red-orange.webp"
+	},
+	{
+		"name": "squat nimbleness",
+		"path": "icons/commodities/currency/coin-embossed-sword-copper.webp"
+	},
+	{
+		"name": "svirfneblin magic",
+		"path": "icons/commodities/stone/ore-pile-gold-orange.webp"
+	},
+	{
+		"name": "tavern brawler",
+		"path": "icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp"
+	},
+	{
+		"name": "telekinetic",
+		"path": "icons/magic/air/wind-vortex-swirl-purple.webp"
+	},
+	{
+		"name": "telekinetic (charisma)",
+		"path": "icons/magic/air/wind-vortex-swirl-purple.webp"
+	},
+	{
+		"name": "telekinetic (intelligence)",
+		"path": "icons/magic/air/wind-vortex-swirl-purple.webp"
+	},
+	{
+		"name": "telekinetic (wisdom)",
+		"path": "icons/magic/air/wind-vortex-swirl-purple.webp"
+	},
+	{
+		"name": "telekinetic adept: psi-powered leap",
+		"path": "icons/skills/movement/figure-running-gray.webp"
+	},
+	{
+		"name": "telekinetic adept: telekinetic thrust",
+		"path": "icons/magic/movement/trail-streak-impact-blue.webp"
+	},
+	{
+		"name": "telepathic",
+		"path": "icons/magic/perception/eye-slit-pink.webp"
+	},
+	{
+		"name": "telepathic (charisma)",
+		"path": "icons/magic/perception/eye-slit-pink.webp"
+	},
+	{
+		"name": "telepathic (intelligence)",
+		"path": "icons/magic/perception/eye-slit-pink.webp"
+	},
+	{
+		"name": "telepathic (wisdom)",
+		"path": "icons/magic/perception/eye-slit-pink.webp"
+	},
+	{
+		"name": "tough",
+		"path": "icons/equipment/shoulder/pauldron-segmented-steel-yellow.webp"
+	},
+	{
+		"name": "war caster",
+		"path": "icons/weapons/wands/wand-totem.webp"
+	},
+	{
+		"name": "weapon master",
+		"path": "icons/skills/melee/hand-grip-sword-red.webp"
+	},
+	{
+		"name": "wood elf magic",
+		"path": "icons/consumables/plants/leaf-veins-glowing-green.webp"
+	}
+]
