@@ -17,6 +17,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN ls -d plutonium && echo "Plutonium directory found"
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
@@ -49,7 +50,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Copy data directory for persistence (includes db.json)
 COPY --from=builder --chown=nextjs:nodejs /app/src/data ./src/data
-COPY --from=builder --chown=nextjs:nodejs /app/plutonium ./plutonium
+# Copy plutonium data directory
+COPY --from=builder --chown=nextjs:nodejs plutonium ./plutonium
 
 # Ensure db.json exists and has correct permissions
 RUN mkdir -p src/data && \
