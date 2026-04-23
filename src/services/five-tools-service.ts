@@ -181,10 +181,8 @@ export class FiveToolsService {
     private items: RawItem[] = [];
     private classes: RawClass[] = [];
     private subclasses: RawSubclass[] = [];
-    private classFeatures: RawFeature[] = [];
-    private subclassFeatures: RawFeature[] = [];
-    private races: RawRace[] = [];
     private backgrounds: RawBackground[] = [];
+    private feats: RawFeature[] = [];
     private spellClassMapping: Record<string, Record<string, { class: { name: string; source: string }[] }>> = {};
     private initialized = false;
 
@@ -218,7 +216,8 @@ export class FiveToolsService {
                 this.loadItems(),
                 this.loadClasses(),
                 this.loadRaces(),
-                this.loadBackgrounds()
+                this.loadBackgrounds(),
+                this.loadFeats()
             ]);
 
             this.initialized = true;
@@ -294,14 +293,24 @@ export class FiveToolsService {
                     this.subclasses.push(...content.subclass);
                 }
                 if (content.classFeature) {
-                    this.classFeatures.push(...content.classFeature);
+                    this.feats.push(...content.classFeature);
                 }
                 if (content.subclassFeature) {
-                    this.subclassFeatures.push(...content.subclassFeature);
+                    this.feats.push(...content.subclassFeature);
                 }
             }
         }
-        console.log(`Loaded ${this.classes.length} classes, ${this.subclasses.length} subclasses and ${this.classFeatures.length + this.subclassFeatures.length} features from 5etools.`);
+        console.log(`Loaded ${this.classes.length} classes and ${this.subclasses.length} subclasses from 5etools.`);
+    }
+
+    // ========== FEATS ==========
+    private async loadFeats() {
+        const featsPath = path.join(DATA_DIR, 'feats.json');
+        if (await fs.pathExists(featsPath)) {
+            const content = await fs.readJson(featsPath);
+            if (content.feat) this.feats.push(...content.feat);
+        }
+        console.log(`Loaded ${this.feats.length} feats (talenti) from 5etools.`);
     }
 
     // ========== RACES ==========
@@ -513,9 +522,36 @@ export class FiveToolsService {
         const engName = getReverseTranslation(className, CLASS_TRANSLATIONS) || className;
         const expandedSources = expandSources(sources);
 
-        return this.classFeatures.filter(f =>
-            f.className.toLowerCase() === engName.toLowerCase() &&
-            f.level <= level &&
+        return this.feats.filter(f => {
+            const castF = f as any;
+            return castF.className?.toLowerCase() === engName.toLowerCase() &&
+                   castF.level <= level &&
+                   (expandedSources.length === 0 || expandedSources.includes(f.source));
+        }) as RawFeature[];
+    }
+
+    /**
+     * Get all general feats (talenti)
+     */
+    public getFeats(sources: string[] = SOURCES_2014): RawFeature[] {
+        const expandedSources = expandSources(sources);
+        return this.feats.filter(f => 
+            // Filter out class features, only keep standalone feats
+            !(f as any).className && 
+            (expandedSources.length === 0 || expandedSources.includes(f.source))
+        );
+    }
+
+    /**
+     * Get a feat by name (English or Italian)
+     */
+    public getFeatByName(name: string, sources: string[] = SOURCES_2014): RawFeature | undefined {
+        const clean = name.toLowerCase().trim();
+        const engName = getReverseTranslation(name, FEAT_TRANSLATIONS) || name;
+        const expandedSources = expandSources(sources);
+
+        return this.feats.find(f =>
+            (f.name.toLowerCase() === clean || f.name.toLowerCase() === engName.toLowerCase()) &&
             (expandedSources.length === 0 || expandedSources.includes(f.source))
         );
     }
