@@ -61,7 +61,7 @@ RUN mkdir -p public/uploads && chown -R nextjs:nodejs public/uploads
 COPY --from=builder --chown=nextjs:nodejs /app/plutonium ./plutonium
 
 # Final check to verify files exist in the runner stage
-RUN ls -d /app/plutonium/data/class && echo "Verification: Plutonium data is present"
+RUN ls -d /app/plutonium/data && echo "Verification: Plutonium data is present"
 
 # USER nextjs
 
