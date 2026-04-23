@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { CharacterData } from '@/types/dnd';
 import { CharacterLogic } from '@/lib/character-logic';
-import { FiveToolsService } from '@/services/five-tools-service';
+import { FiveToolsService, RawSpell } from '@/services/five-tools-service';
 import { UnifiedDataService } from '@/services/unified-data-service';
 import { getClassTemplate } from '@/data/class-templates';
 
@@ -51,32 +51,31 @@ function getSpellLimits(className: string, level: number): { cantrips: number; k
 }
 
 // Helper to build valid spells list for the prompt
-async function buildSpellContext(className: string, level: number): Promise<string> {
+async function buildSpellContext(className: string, level: number, sources: string[]): Promise<string> {
     const limits = getSpellLimits(className, level);
     if (limits.maxSpellLevel === 0) return '';
 
-    const template = getClassTemplate(className);
-    if (!template) return '';
-
-    // Build list of iconic/suggested spells from template
-    let spellSuggestions: string[] = [];
-    spellSuggestions.push(...template.iconicCantrips.slice(0, limits.cantrips));
-
-    for (let lvl = 1; lvl <= limits.maxSpellLevel; lvl++) {
-        const spellsAtLevel = template.iconicSpells[lvl] || [];
-        spellSuggestions.push(...spellsAtLevel.slice(0, 3));
+    const fiveTools = FiveToolsService.getInstance();
+    
+    // Get ALL valid spells for this class and level from the official database
+    const allCantrips = fiveTools.getSpells(className, 0, sources);
+    const allLeveledSpells: RawSpell[] = [];
+    for (let l = 1; l <= limits.maxSpellLevel; l++) {
+        allLeveledSpells.push(...fiveTools.getSpells(className, l, sources));
     }
 
+    // Select a representative sample for the AI (to avoid token overflow but provide real names)
+    const cantripNames = allCantrips.map(s => s.name).slice(0, 15);
+    const spellNames = allLeveledSpells.map(s => s.name).slice(0, 30);
+
     return `
-INCANTESIMI VALIDI per ${className} Livello ${level}:
+INCANTESIMI REALI DISPONIBILI per ${className} Livello ${level} (${sources.includes('XPHB') ? 'Edizione 2024' : 'Edizione 2014'}):
 - Trucchetti massimi: ${limits.cantrips}
 - Livello massimo incantesimi: ${limits.maxSpellLevel}
-- ${limits.known > 0 ? `Incantesimi conosciuti: ${limits.known}` : `Incantesimi preparabili: ~${limits.prepared}`}
+- ESEMPI DI TRUCCHETTI UFFICIALI (USA QUESTI): ${cantripNames.join(', ')}
+- ESEMPI DI INCANTESIMI LIVELLO 1-${limits.maxSpellLevel} (USA QUESTI): ${spellNames.join(', ')}
 
-INCANTESIMI ICONICI SUGGERITI (USA QUESTI, NON INVENTARE):
-${spellSuggestions.map(s => `  - ${s}`).join('\n')}
-
-IMPORTANTE: Usa SOLO incantesimi dalla lista ufficiale D&D 5e. Non inventare nomi.
+IMPORTANTE: DEVI usare SOLO incantesimi reali dai manuali D&D 5e. NON INVENTARE nomi di incantesimi.
 `;
 }
 
@@ -90,64 +89,62 @@ function getHitDie(className: string): number {
     return hitDieByClass[className] || 8;
 }
 
-// Validate and fix spells from AI output
-async function validateAndFixSpells(aiSpells: SpellEntry[], className: string, level: number): Promise<SpellEntry[]> {
+// Validate and fix spells from AI output using FiveToolsService
+async function validateAndFixSpells(aiSpells: SpellEntry[], className: string, level: number, sources: string[]): Promise<SpellEntry[]> {
     if (!aiSpells || aiSpells.length === 0) return [];
 
-    const template = getClassTemplate(className);
-    if (!template) return aiSpells;
-
+    const fiveTools = FiveToolsService.getInstance();
     const limits = getSpellLimits(className, level);
     const validatedSpells: SpellEntry[] = [];
 
-    // Build set of valid spell names from template (already in Italian)
-    const validSpellNames = new Set<string>();
-    template.iconicCantrips.forEach(s => validSpellNames.add(s.toLowerCase()));
-    Object.values(template.iconicSpells).forEach(spellList => {
-        spellList.forEach(s => validSpellNames.add(s.toLowerCase()));
-    });
-
-    // Process AI spells
     let cantripCount = 0;
     let leveledCount = 0;
 
     for (const spell of aiSpells) {
-        // Check spell level is valid for character level
-        if (spell.level > limits.maxSpellLevel) {
-            console.warn(`[validateAndFixSpells] Removing spell "${spell.name}" - level ${spell.level} too high for ${className} lv${level}`);
+        // 1. Find if the spell exists in 5etools (fuzzy match)
+        const officialSpell = fiveTools.getSpellByName(spell.name);
+        
+        if (!officialSpell) {
+            console.warn(`[AI-Generate] Unknown spell "${spell.name}" - skipping or replacing`);
+            continue; 
+        }
+
+        // 2. Check if the spell is valid for the class
+        const validForClass = fiveTools.getSpells(className, officialSpell.level, sources)
+            .some(s => s.name === officialSpell.name);
+
+        if (!validForClass) {
+            console.warn(`[AI-Generate] Spell "${officialSpell.name}" is not valid for ${className}`);
             continue;
         }
 
-        // Count spells by type
-        if (spell.level === 0) {
+        // 3. Check spell level
+        if (officialSpell.level > limits.maxSpellLevel) continue;
+
+        // 4. Enforce limits
+        if (officialSpell.level === 0) {
             if (cantripCount >= limits.cantrips) continue;
             cantripCount++;
         } else {
-            if (limits.known > 0 && leveledCount >= limits.known) continue;
-            if (limits.prepared > 0 && leveledCount >= limits.prepared) continue;
+            const limit = limits.known > 0 ? limits.known : limits.prepared;
+            if (leveledCount >= limit) continue;
             leveledCount++;
         }
 
-        // Check if spell name is valid (fuzzy match against known spells)
-        const spellNameLower = spell.name.toLowerCase();
-        const isKnownSpell = validSpellNames.has(spellNameLower) ||
-            Array.from(validSpellNames).some(valid =>
-                valid.includes(spellNameLower) || spellNameLower.includes(valid)
-            );
-
-        if (!isKnownSpell) {
-            console.warn(`[validateAndFixSpells] Unknown spell "${spell.name}" - keeping but flagged`);
-        }
-
-        validatedSpells.push(spell);
+        validatedSpells.push({
+            level: officialSpell.level,
+            name: officialSpell.name,
+            prepared: true
+        });
     }
 
-    // If not enough spells, add iconic ones from template
-    if (cantripCount < Math.min(2, limits.cantrips) && template.iconicCantrips.length > 0) {
-        for (const cantrip of template.iconicCantrips) {
+    // 5. If we don't have enough spells, fill with iconic ones
+    if (cantripCount < limits.cantrips) {
+        const officialCantrips = fiveTools.getSpells(className, 0, sources);
+        for (const c of officialCantrips) {
             if (cantripCount >= limits.cantrips) break;
-            if (!validatedSpells.some(s => s.name === cantrip)) {
-                validatedSpells.push({ level: 0, name: cantrip, prepared: true });
+            if (!validatedSpells.some(s => s.name === c.name)) {
+                validatedSpells.push({ level: 0, name: c.name, prepared: true });
                 cantripCount++;
             }
         }
@@ -177,7 +174,8 @@ export async function POST(req: NextRequest) {
         if (characterName) context += ` named "${characterName}"`;
 
         // Get spell context if class is a caster
-        const spellContext = await buildSpellContext(className || 'Mago', level || 1);
+        const sources = sourceFilter || (requestData.is2024 ? ['XPHB'] : ['PHB']);
+        const spellContext = await buildSpellContext(className || 'Mago', level || 1, sources);
 
         // Calculate expected HP range
         const hitDieByClass: Record<string, number> = {
@@ -199,14 +197,18 @@ Richiesta: Genera un ${context}.
 ═══════════════════════════════════════════════════
 📖 SEZIONE CREATIVA - PUOI INVENTARE LIBERAMENTE:
 ═══════════════════════════════════════════════════
-- **characterName**: Inventa un nome evocativo e originale
-- **personality.traits**: Crea tratti di personalità unici e interessanti
-- **personality.ideals**: Definisci ideali che guidano il personaggio
-- **personality.bonds**: Inventa legami emotivi profondi
-- **personality.flaws**: Crea difetti che rendono il personaggio umano
-- **personality.backstory**: SFRENA LA FANTASIA! Scrivi una storia avvincente di 3-5 paragrafi
-- **appearance**: Descrivi aspetto fisico dettagliato e distintivo
-- **alignment**: Scegli un allineamento coerente con la storia
+- **characterName**: Inventa un nome evocativo e originale (es. Thandor Silverhand, Elara Nightshade)
+- **personality.traits**: Crea 2 tratti distintivi che influenzano il gioco di ruolo
+- **personality.ideals**: Un ideale filosofico o morale forte
+- **personality.bonds**: Un legame con una persona, un luogo o un oggetto
+- **personality.flaws**: Un difetto significativo che possa creare spunti narrativi
+- **personality.backstory**: Scrivi una storia MATURA ed AVVINCENTE divisa in:
+  1. ORIGINI: Dove è cresciuto e chi era prima dell'avventura.
+  2. EVENTO SCATENANTE: Cosa lo ha spinto ad abbandonare la sua vita precedente.
+  3. OBIETTIVO: Cosa sta cercando o chi sta fuggendo ora.
+  EVITA i cliché banali e lo stile "fiabesco" infantile.
+- **appearance**: Descrizione fisica dettagliata (cicatrici, tatuaggi, portamento, equipaggiamento usurato)
+- **alignment**: Coerente con la storia e l'ideale.
 
 ═══════════════════════════════════════════════════
 ⚔️ SEZIONE MECCANICA - DEVI USARE DATI UFFICIALI:
@@ -313,7 +315,8 @@ RICORDA: Narrativa LIBERA e CREATIVA, meccaniche PRECISE e UFFICIALI.
         // 1. Validate and fix spells
         if (data.spells && Array.isArray(data.spells)) {
             data.spells = CharacterLogic.validateSpellLevels(data.spells);
-            data.spells = await validateAndFixSpells(data.spells, data.class, data.level);
+            const sources = sourceFilter || (data.is2024 ? ['XPHB'] : ['PHB']);
+            data.spells = await validateAndFixSpells(data.spells, data.class, data.level, sources);
         }
 
         // 2. Ensure HP is in valid range

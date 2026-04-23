@@ -125,7 +125,11 @@ export default function CharactermancerV2() {
 
             const charData = await response.json();
             setData(charData);
-            generatePDF(charData);
+            await generatePDF(charData);
+            
+            // Auto-reset after successful generation
+            setData(INITIAL_DATA);
+            setStep(0);
 
         } catch (error) {
             console.error(error);
@@ -150,6 +154,10 @@ export default function CharactermancerV2() {
             const finalData = await response.json();
             setData(finalData);
             await generatePDF(finalData);
+
+            // Auto-reset after successful generation
+            setData(INITIAL_DATA);
+            setStep(0);
         } catch (e) {
             console.error(e);
             alert("Errore nella generazione del personaggio.");
@@ -225,7 +233,29 @@ export default function CharactermancerV2() {
                         </div>
                     </div>
 
-                    <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                        {/* Reset Button */}
+                        <button
+                            onClick={() => {
+                                if (confirm("Sei sicuro di voler resettare tutto? Perderai i dati non salvati.")) {
+                                    setData(INITIAL_DATA);
+                                    setStep(0);
+                                    setActiveSources(['PHB24', 'TCE', 'XGE']);
+                                }
+                            }}
+                            className="btn-secondary"
+                            style={{
+                                padding: '0.4rem 1rem',
+                                fontSize: '0.7rem',
+                                color: '#ff6b6b',
+                                borderColor: 'rgba(255, 107, 107, 0.2)'
+                            }}
+                        >
+                            Nuova Scheda
+                        </button>
+
+                        <div style={{ width: '1px', height: '20px', background: 'var(--border)', margin: '0 0.5rem' }} />
+
                         {SOURCES_CONFIG.map(src => (
                             <button
                                 key={src.id}
@@ -397,6 +427,9 @@ export default function CharactermancerV2() {
                                         const finalData = await response.json();
                                         setData(finalData);
                                         await generatePDF(finalData);
+                                        // Auto-reset after successful generation
+                                        setData(INITIAL_DATA);
+                                        setStep(0);
                                     } catch (e) {
                                         console.error(e);
                                         // Fallback: use raw AI data if hydration fails

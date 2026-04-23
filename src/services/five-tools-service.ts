@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { SPELL_TRANSLATIONS, CLASS_TRANSLATIONS, RACE_TRANSLATIONS, BACKGROUND_TRANSLATIONS, getReverseTranslation } from '../data/translations';
+import { SPELL_TRANSLATIONS, CLASS_TRANSLATIONS, RACE_TRANSLATIONS, BACKGROUND_TRANSLATIONS, FEAT_TRANSLATIONS, getReverseTranslation } from '../data/translations';
 
 // 5etools Raw Types
 export interface RawSpell {
@@ -122,26 +122,35 @@ export interface RawBackground {
 let DATA_DIR = path.join(process.cwd(), 'plutonium', 'data');
 
 /**
- * Robustly find the plutonium data directory
+ * Robustly find the plutonium data directories (2014 and 2024)
  */
-async function resolveDataDir(): Promise<string> {
-    const possiblePaths = [
-        path.join(process.cwd(), 'plutonium', 'data'),
-        path.join(__dirname, 'plutonium', 'data'),
-        path.join(__dirname, '..', 'plutonium', 'data'),
-        path.join(__dirname, '..', '..', 'plutonium', 'data'),
-        '/app/plutonium/data'
+async function resolveDataDirs(): Promise<{ path2014: string; path2024: string }> {
+    const root = process.cwd();
+    const possibleRoots = [
+        root,
+        path.join(root, '.next', 'standalone'),
+        '/app'
     ];
 
-    for (const p of possiblePaths) {
-        if (await fs.pathExists(p)) {
-            console.log(`Found data directory at: ${p}`);
-            return p;
-        }
+    let path2014 = '';
+    let path2024 = '';
+
+    for (const r of possibleRoots) {
+        const p14 = path.join(r, 'plutonium', 'data', '2014');
+        const p24 = path.join(r, 'plutonium', 'data', '2024');
+        
+        if (!path2014 && await fs.pathExists(p14)) path2014 = p14;
+        if (!path2024 && await fs.pathExists(p24)) path2024 = p24;
     }
 
-    console.warn('Could not find plutonium data directory in any standard location. Falling back to default.');
-    return possiblePaths[0];
+    // Fallback if folders are not found (legacy structure)
+    if (!path2014 || !path2024) {
+        console.warn('Dedicated 2014/2024 folders not found. Falling back to shared data directory.');
+        const shared = path.join(root, 'plutonium', 'data');
+        return { path2014: path2014 || shared, path2024: path2024 || shared };
+    }
+
+    return { path2014, path2024 };
 }
 
 // Source lists for 2014 vs 2024 rules
@@ -181,8 +190,14 @@ export class FiveToolsService {
     private items: RawItem[] = [];
     private classes: RawClass[] = [];
     private subclasses: RawSubclass[] = [];
-    private backgrounds: RawBackground[] = [];
-    private feats: RawFeature[] = [];
+    private backgrounds: any[] = [];
+    private feats: any[] = [];
+    private skills: any[] = [];
+    private languages: any[] = [];
+    private conditions: any[] = [];
+    private variantRules: any[] = [];
+    private vehicles: any[] = [];
+    private races: RawRace[] = [];
     private spellClassMapping: Record<string, Record<string, { class: { name: string; source: string }[] }>> = {};
     private initialized = false;
 
@@ -206,19 +221,33 @@ export class FiveToolsService {
             console.log('Initializing FiveToolsService...');
             console.log('Current working directory:', process.cwd());
             
-            // Resolve the data directory dynamically
-            DATA_DIR = await resolveDataDir();
-            console.log('Using DATA_DIR:', DATA_DIR);
+            // Resolve the data directories dynamically
+            const { path2014, path2024 } = await resolveDataDirs();
+            console.log('Using 2014 path:', path2014);
+            console.log('Using 2024 path:', path2024);
 
-            // Load all data types in parallel for better performance
-            await Promise.all([
-                this.loadSpells(),
-                this.loadItems(),
-                this.loadClasses(),
-                this.loadRaces(),
-                this.loadBackgrounds(),
-                this.loadFeats()
-            ]);
+            // Function to load all data from a specific directory
+            const loadFromDir = async (dir: string) => {
+                await Promise.all([
+                    this.loadSpells(dir),
+                    this.loadItems(dir),
+                    this.loadClasses(dir),
+                    this.loadRaces(dir),
+                    this.loadBackgrounds(dir),
+                    this.loadFeats(dir),
+                    this.loadSkills(dir),
+                    this.loadLanguages(dir),
+                    this.loadConditions(dir),
+                    this.loadVariantRules(dir),
+                    this.loadVehicles(dir)
+                ]);
+            };
+
+            // Load both editions
+            await loadFromDir(path2014);
+            if (path2024 !== path2014) {
+                await loadFromDir(path2024);
+            }
 
             this.initialized = true;
             console.log('FiveToolsService initialized successfully.');
@@ -228,8 +257,12 @@ export class FiveToolsService {
     }
 
     // ========== SPELLS ==========
-    private async loadSpells() {
-        const spellsDir = path.join(DATA_DIR, 'spells');
+    private async loadSpells(targetDir: string) {
+        const spellsDir = path.join(targetDir, 'spells');
+        if (!await fs.pathExists(spellsDir)) {
+            console.warn('Spells directory not found:', spellsDir);
+            return;
+        }
 
         // Load Sources (Class Mapping)
         const sourcesPath = path.join(spellsDir, 'sources.json');
@@ -253,29 +286,29 @@ export class FiveToolsService {
                 }
             }
         }
-        console.log(`Loaded ${this.spells.length} spells from 5etools.`);
+        console.log(`Loaded ${this.spells.length} spells.`);
     }
 
     // ========== ITEMS ==========
-    private async loadItems() {
-        const itemsPath = path.join(DATA_DIR, 'items.json');
+    private async loadItems(targetDir: string) {
+        const itemsPath = path.join(targetDir, 'items.json');
         if (await fs.pathExists(itemsPath)) {
             const content = await fs.readJson(itemsPath);
             if (content.item) this.items.push(...content.item);
         }
 
-        const itemsBasePath = path.join(DATA_DIR, 'items-base.json');
+        const itemsBasePath = path.join(targetDir, 'items-base.json');
         if (await fs.pathExists(itemsBasePath)) {
             const content = await fs.readJson(itemsBasePath);
             if (content.item) this.items.push(...content.item);
             if (content.baseitem) this.items.push(...content.baseitem);
         }
-        console.log(`Loaded ${this.items.length} items from 5etools.`);
+        console.log(`Loaded ${this.items.length} items.`);
     }
 
     // ========== CLASSES ==========
-    private async loadClasses() {
-        const classDir = path.join(DATA_DIR, 'class');
+    private async loadClasses(targetDir: string) {
+        const classDir = path.join(targetDir, 'class');
         if (!await fs.pathExists(classDir)) {
             console.warn('Class directory not found:', classDir);
             return;
@@ -300,44 +333,95 @@ export class FiveToolsService {
                 }
             }
         }
-        console.log(`Loaded ${this.classes.length} classes and ${this.subclasses.length} subclasses from 5etools.`);
+        console.log(`Loaded ${this.classes.length} classes and ${this.subclasses.length} subclasses.`);
     }
 
     // ========== FEATS ==========
-    private async loadFeats() {
-        const featsPath = path.join(DATA_DIR, 'feats.json');
+    private async loadFeats(targetDir: string) {
+        const featsPath = path.join(targetDir, 'feats.json');
         if (await fs.pathExists(featsPath)) {
             const content = await fs.readJson(featsPath);
             if (content.feat) this.feats.push(...content.feat);
         }
-        console.log(`Loaded ${this.feats.length} feats (talenti) from 5etools.`);
+        console.log(`Loaded ${this.feats.length} feats.`);
     }
 
     // ========== RACES ==========
-    private async loadRaces() {
-        const racesPath = path.join(DATA_DIR, 'races.json');
+    private async loadRaces(targetDir: string) {
+        const racesPath = path.join(targetDir, 'races.json');
         if (await fs.pathExists(racesPath)) {
             const content = await fs.readJson(racesPath);
             if (content.race) {
                 this.races.push(...content.race);
             }
         }
-        console.log(`Loaded ${this.races.length} races from 5etools.`);
+        console.log(`Loaded ${this.races.length} races.`);
     }
 
     // ========== BACKGROUNDS ==========
-    private async loadBackgrounds() {
-        const bgPath = path.join(DATA_DIR, 'backgrounds.json');
+    private async loadBackgrounds(targetDir: string) {
+        const bgPath = path.join(targetDir, 'backgrounds.json');
         if (await fs.pathExists(bgPath)) {
             const content = await fs.readJson(bgPath);
             if (content.background) {
                 this.backgrounds.push(...content.background);
             }
         }
-        console.log(`Loaded ${this.backgrounds.length} backgrounds from 5etools.`);
+        console.log(`Loaded ${this.backgrounds.length} backgrounds.`);
     }
 
-    // ========== SPELL METHODS ==========
+    // ========== SKILLS ==========
+    private async loadSkills(targetDir: string) {
+        const skillsPath = path.join(targetDir, 'skills.json');
+        if (await fs.pathExists(skillsPath)) {
+            const content = await fs.readJson(skillsPath);
+            if (content.skill) this.skills.push(...content.skill);
+        }
+    }
+
+    // ========== LANGUAGES ==========
+    private async loadLanguages(targetDir: string) {
+        const languagesPath = path.join(targetDir, 'languages.json');
+        if (await fs.pathExists(languagesPath)) {
+            const content = await fs.readJson(languagesPath);
+            if (content.language) this.languages.push(...content.language);
+        }
+    }
+
+    // ========== CONDITIONS ==========
+    private async loadConditions(targetDir: string) {
+        const conditionsPath = path.join(targetDir, 'conditions.json');
+        if (await fs.pathExists(conditionsPath)) {
+            const content = await fs.readJson(conditionsPath);
+            if (content.condition) this.conditions.push(...content.condition);
+        }
+    }
+
+    // ========== VARIANT RULES ==========
+    private async loadVariantRules(targetDir: string) {
+        const rulesPath = path.join(targetDir, 'variantrules.json');
+        if (await fs.pathExists(rulesPath)) {
+            const content = await fs.readJson(rulesPath);
+            if (content.variantrule) this.variantRules.push(...content.variantrule);
+        }
+    }
+
+    // ========== VEHICLES ==========
+    private async loadVehicles(targetDir: string) {
+        const vehiclesPath = path.join(targetDir, 'vehicles.json');
+        if (await fs.pathExists(vehiclesPath)) {
+            const content = await fs.readJson(vehiclesPath);
+            if (content.vehicle) this.vehicles.push(...content.vehicle);
+        }
+    }
+
+    // ========== GETTERS ==========
+    public getSkills() { return this.skills; }
+    public getLanguages() { return this.languages; }
+    public getConditions() { return this.conditions; }
+    public getVariantRules() { return this.variantRules; }
+    public getVehicles() { return this.vehicles; }
+    public getItems() { return this.items; }
 
     /**
      * Get spells for a class and level.
