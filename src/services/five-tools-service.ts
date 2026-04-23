@@ -1,6 +1,14 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { SPELL_TRANSLATIONS, CLASS_TRANSLATIONS, RACE_TRANSLATIONS, BACKGROUND_TRANSLATIONS, FEAT_TRANSLATIONS, getReverseTranslation } from '../data/translations';
+import { 
+    SPELL_TRANSLATIONS, 
+    CLASS_TRANSLATIONS, 
+    RACE_TRANSLATIONS, 
+    BACKGROUND_TRANSLATIONS, 
+    FEAT_TRANSLATIONS, 
+    SKILL_TRANSLATIONS, 
+    getReverseTranslation 
+} from '../data/translations';
 
 // 5etools Raw Types
 export interface RawSpell {
