@@ -49,9 +49,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Copy data directory for persistence (includes db.json)
 COPY --from=builder --chown=nextjs:nodejs /app/src/data ./src/data
-# Copy plutonium data directory
-COPY --from=builder --chown=nextjs:nodejs /app/plutonium ./plutonium
-
 # Ensure db.json exists and has correct permissions
 RUN mkdir -p src/data && \
     if [ ! -f ./src/data/db.json ]; then echo '{"sessions":[]}' > ./src/data/db.json; fi && \
@@ -59,6 +56,12 @@ RUN mkdir -p src/data && \
 
 # Create uploads directory with correct permissions
 RUN mkdir -p public/uploads && chown -R nextjs:nodejs public/uploads
+
+# Copy plutonium data directory (moved to end to ensure it's not overwritten)
+COPY --from=builder --chown=nextjs:nodejs /app/plutonium ./plutonium
+
+# Final check to verify files exist in the runner stage
+RUN ls -d /app/plutonium/data/class && echo "Verification: Plutonium data is present"
 
 # USER nextjs
 

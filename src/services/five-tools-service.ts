@@ -183,6 +183,17 @@ export class FiveToolsService {
 
         try {
             console.log('Initializing FiveToolsService...');
+            console.log('Current working directory:', process.cwd());
+            try {
+                const rootFiles = await fs.readdir(process.cwd());
+                console.log('Root files in container:', rootFiles);
+                if (rootFiles.includes('plutonium')) {
+                    const plutContent = await fs.readdir(path.join(process.cwd(), 'plutonium'));
+                    console.log('Plutonium directory content:', plutContent);
+                }
+            } catch (e) {
+                console.error('Debug readdir failed:', e);
+            }
 
             // Load all data types in parallel for better performance
             await Promise.all([

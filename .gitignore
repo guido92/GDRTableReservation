@@ -48,7 +48,6 @@ schede dnd/
 # local debug
 error.json
 scripts/test-*.js
-plutonium/
 
 # cleanup from user request
 output/
