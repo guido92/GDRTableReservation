@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   web-app:
     container_name: tavoli-gdr
@@ -15,6 +13,9 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_PATH=/app/src/data/db.json
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
       - RESEND_API_KEY=${RESEND_API_KEY}
       - ADMIN_EMAIL=${ADMIN_EMAIL}
 
