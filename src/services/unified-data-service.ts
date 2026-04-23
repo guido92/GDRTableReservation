@@ -195,7 +195,7 @@ export class UnifiedDataService {
             armorProficiencies: raw.startingProficiencies?.armor || [],
             weaponProficiencies: raw.startingProficiencies?.weapons || [],
             toolProficiencies: this.extractToolProficiencies(raw.startingProficiencies?.tools),
-            skillChoices: this.fiveTools.getClassSkillChoices(raw.name),
+            skillChoices: this.fiveTools.getClassSkillChoices(raw.name, sources),
             equipment: this.extractEquipment(raw.startingEquipment?.default),
             features: this.extractClassFeatures(raw),
             subclasses: subclasses.map(sc => ({

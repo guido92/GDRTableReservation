@@ -576,22 +576,26 @@ export class FiveToolsService {
     /**
      * Get starting proficiencies for a class
      */
-    public getClassStartingProficiencies(className: string): RawClass['startingProficiencies'] | undefined {
-        const cls = this.getClassByName(className);
+    public getClassStartingProficiencies(className: string, sources: string[] = SOURCES_2014): RawClass['startingProficiencies'] | undefined {
+        const cls = this.getClassByName(className, sources);
         return cls?.startingProficiencies;
     }
 
     /**
      * Get skill choices for a class
      */
-    public getClassSkillChoices(className: string): { skills: string[]; count: number } {
-        const profs = this.getClassStartingProficiencies(className);
+    public getClassSkillChoices(className: string, sources: string[] = SOURCES_2014): { skills: string[]; count: number } {
+        const profs = this.getClassStartingProficiencies(className, sources);
         if (!profs?.skills) return { skills: [], count: 2 };
 
         for (const skillEntry of profs.skills) {
             if (typeof skillEntry === 'object' && skillEntry.choose) {
+                // Translate skills to Italian for the UI
+                const translatedSkills = skillEntry.choose.from.map((s: string) => 
+                    SKILL_TRANSLATIONS[s.toLowerCase()] || s
+                );
                 return {
-                    skills: skillEntry.choose.from,
+                    skills: translatedSkills,
                     count: skillEntry.choose.count
                 };
             }

@@ -30,6 +30,7 @@ export async function GET(request: Request) {
             hitDie: c.hitDie,
             savingThrows: c.savingThrows,
             numSkills: c.skillChoices.count,
+            skillChoices: c.skillChoices, // Include the skills list!
             armorProficiencies: c.armorProficiencies,
             weaponProficiencies: c.weaponProficiencies,
             spellcasting: c.spellcastingAbility ? {
