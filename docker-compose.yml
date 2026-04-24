@@ -14,6 +14,8 @@ services:
       - NODE_ENV=production
       - DATABASE_PATH=/app/src/data/db.json
       - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
       - SMTP_USER=${SMTP_USER}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - RESEND_API_KEY=${RESEND_API_KEY}
