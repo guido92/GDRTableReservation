@@ -180,7 +180,10 @@ export const SOURCE_MAPPING: Record<string, string[]> = {
     'XGE': ['XGE'],
     'TCE': ['TCE'],
     'DMG': ['DMG', 'XDMG'],
-    'MM': ['MM', 'XMM']
+    'MM': ['MM', 'XMM'],
+    'VGTM': ['VGM'],
+    'MTOF': ['MTF'],
+    'SJA': ['AAG']
 };
 
 /**
