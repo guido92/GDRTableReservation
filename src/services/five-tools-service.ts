@@ -701,8 +701,8 @@ export class FiveToolsService {
         const expandedSources = expandSources(sources);
         return this.races.filter(r => {
             if (expandedSources.length > 0 && !expandedSources.includes(r.source)) return false;
-            // Optionally exclude lineage/variant races
-            if (!includeVariants && r.lineage) return false;
+            // Removed r.lineage check: in 5etools 'lineage' means the race uses flexible ability scores 
+            // (+2/+1 from VRGR/MPMM rules) and shouldn't be excluded as a variant
             return true;
         });
     }
