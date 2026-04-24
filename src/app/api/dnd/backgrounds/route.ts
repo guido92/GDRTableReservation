@@ -9,6 +9,9 @@ export async function GET(request: Request) {
 
         const unifiedService = UnifiedDataService.getInstance();
         const backgrounds = await unifiedService.getBackgrounds(sources);
+        
+        console.log(`[API Backgrounds] Requested sources: ${sourcesParam}`);
+        console.log(`[API Backgrounds] Returning ${backgrounds.length} backgrounds`);
 
         return NextResponse.json({
             backgrounds: backgrounds,

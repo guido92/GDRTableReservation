@@ -35,7 +35,7 @@ function createGeminiProvider(): AIProvider {
     const generate = async (prompt: string, jsonMode: boolean = false): Promise<string> => {
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({
-            model: 'gemini-2.0-flash',
+            model: 'gemini-3-flash',
             generationConfig: {
                 ...(jsonMode ? { responseMimeType: 'application/json' } : {}),
                 maxOutputTokens: 8192,
@@ -48,7 +48,7 @@ function createGeminiProvider(): AIProvider {
     const chat = async (systemPrompt: string, history: ChatMessage[], message: string): Promise<string> => {
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({
-            model: 'gemini-3-flash-preview',
+            model: 'gemini-3-flash',
             systemInstruction: {
                 role: 'system',
                 parts: [{ text: systemPrompt }]
