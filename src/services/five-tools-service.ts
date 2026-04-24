@@ -824,18 +824,36 @@ export class FiveToolsService {
     // ========== UTILITY METHODS ==========
 
     /**
-     * Convert 5etools entries array to a string description
+     * Convert 5etools entries array to a string description.
+     * Properly handles all entry types and strips 5etools tags.
      */
     private entriesToString(entries: any[]): string {
         if (!entries) return '';
 
         return entries.map(entry => {
             if (typeof entry === 'string') {
-                // Remove 5etools formatting tags like {@spell fireball} -> fireball
                 return entry.replace(/\{@\w+\s+([^}|]+)(?:\|[^}]*)?\}/g, '$1');
             }
-            if (typeof entry === 'object' && entry.entries) {
-                return this.entriesToString(entry.entries);
+            if (typeof entry === 'object') {
+                // Named entries section
+                if (entry.type === 'entries' && entry.entries) {
+                    const inner = this.entriesToString(entry.entries);
+                    return entry.name ? `${entry.name}: ${inner}` : inner;
+                }
+                // Lists
+                if (entry.type === 'list' && Array.isArray(entry.items)) {
+                    return entry.items.map((it: any) => {
+                        if (typeof it === 'string') return it.replace(/\{@\w+\s+([^}|]+)(?:\|[^}]*)?\}/g, '$1');
+                        if (it.name && it.entry) return `${it.name}: ${String(it.entry).replace(/\{@\w+\s+([^}|]+)(?:\|[^}]*)?\}/g, '$1')}`;
+                        return '';
+                    }).filter(Boolean).join('; ');
+                }
+                // Skip tables, refs, insets
+                if (['table', 'refOptionalfeature', 'refSubclassFeature', 'refClassFeature', 'inset', 'insetReadaloud', 'options'].includes(entry.type)) {
+                    return '';
+                }
+                // Fallback: recurse if has entries
+                if (entry.entries) return this.entriesToString(entry.entries);
             }
             return '';
         }).filter(Boolean).join(' ');

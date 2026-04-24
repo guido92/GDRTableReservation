@@ -628,28 +628,122 @@ export class UnifiedDataService {
     }
 
     private extractClassFeatures(raw: RawClass): Feature[] {
-        // Ottieni tutti i feature per questa classe fino al livello 20
+        // Get all features for this class up to level 20
         const rawFeatures = this.fiveTools.getClassFeatures(raw.name, 20, [raw.source]);
         
-        return rawFeatures.map(rf => ({
-            name: rf.name,
-            source: rf.source,
-            level: rf.level,
-            description: this.entriesToMarkdown(rf.entries)
-        }));
+        // Skip verbose/structural features that bloat the character sheet
+        const SKIP_FEATURES = [
+            'Spellcasting',           // Too long, describes entire spell system
+            'Metamagic Options',      // Lists all metamagic options with JSON
+            'Pact Boon',              // Lists all pact boon options
+            'Eldritch Invocations',   // Lists all invocations
+            'Fighting Style Options', // Lists all fighting styles
+            'Maneuver Options',       // Lists all maneuvers
+            'Infusion Recipes',       // Lists all infusions
+            'Primal Companion',       // Detailed stat block
+        ];
+
+        return rawFeatures
+            .filter(rf => !SKIP_FEATURES.includes(rf.name))
+            .map(rf => ({
+                name: rf.name,
+                source: rf.source,
+                level: rf.level,
+                description: this.entriesToCleanText(rf.entries)
+            }));
     }
 
-    private entriesToMarkdown(entries: any[]): string {
+    /**
+     * Convert 5etools entries to clean readable text.
+     * Strips all 5etools markup, skips tables/references, and caps length.
+     */
+    private entriesToCleanText(entries: any[], maxLength: number = 500): string {
         if (!entries) return '';
-        return entries.map(e => {
-            if (typeof e === 'string') return e;
-            if (e.type === 'entries') return `**${e.name}**: ${this.entriesToMarkdown(e.entries)}`;
-            if (e.type === 'list') return e.items.map((it: any) => `- ${typeof it === 'string' ? it : this.entriesToMarkdown([it])}`).join('\n');
-            // Basic replacement for tags
-            let text = JSON.stringify(e);
-            if (typeof e === 'object' && e.entries) text = this.entriesToMarkdown(e.entries);
-            return text.replace(/\{@\w+\s+([^}|]+)(?:\|[^}]*)?\}/g, '$1');
-        }).join('\n\n');
+        
+        const parts: string[] = [];
+
+        for (const entry of entries) {
+            if (typeof entry === 'string') {
+                parts.push(this.strip5eToolsTags(entry));
+            } else if (typeof entry === 'object') {
+                switch (entry.type) {
+                    case 'entries':
+                        // Named sub-section: include name + content
+                        if (entry.name) {
+                            const subText = this.entriesToCleanText(entry.entries, maxLength);
+                            if (subText) parts.push(`${entry.name}: ${subText}`);
+                        } else if (entry.entries) {
+                            parts.push(this.entriesToCleanText(entry.entries, maxLength));
+                        }
+                        break;
+
+                    case 'list':
+                        // Bullet list: join items briefly
+                        if (Array.isArray(entry.items)) {
+                            const items = entry.items.map((it: any) => {
+                                if (typeof it === 'string') return this.strip5eToolsTags(it);
+                                if (it.name && it.entry) return `${it.name}: ${this.strip5eToolsTags(String(it.entry))}`;
+                                if (it.entries) return this.entriesToCleanText(it.entries, 200);
+                                return '';
+                            }).filter(Boolean);
+                            if (items.length > 0) parts.push(items.join('; '));
+                        }
+                        break;
+
+                    case 'table':
+                        // Skip tables entirely — they bloat character sheets
+                        break;
+
+                    case 'refOptionalfeature':
+                    case 'refSubclassFeature':
+                    case 'refClassFeature':
+                        // Skip references to other features — they're structural
+                        break;
+
+                    case 'inset':
+                    case 'insetReadaloud':
+                        // Skip insets (flavor text boxes)
+                        break;
+
+                    case 'options':
+                        // Skip option lists
+                        break;
+
+                    default:
+                        // For any other object with entries, recurse
+                        if (entry.entries) {
+                            parts.push(this.entriesToCleanText(entry.entries, maxLength));
+                        }
+                        // Otherwise skip — don't JSON.stringify
+                        break;
+                }
+            }
+        }
+
+        let result = parts.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+
+        // Cap at maxLength to prevent massive descriptions
+        if (result.length > maxLength) {
+            result = result.substring(0, maxLength).replace(/\s\S*$/, '') + '...';
+        }
+
+        return result;
+    }
+
+    /**
+     * Strip all 5etools formatting tags from a string.
+     * {@spell fireball|PHB} -> fireball
+     * {@variantrule Bonus Action|XPHB} -> Bonus Action
+     * {@dice 1d6} -> 1d6
+     * {@filter text|...} -> text
+     */
+    private strip5eToolsTags(text: string): string {
+        return text
+            .replace(/\{@\w+\s+([^}|]+)(?:\|[^}]*)?\}/g, '$1')  // {@type content|source} -> content
+            .replace(/\{@\w+\s+([^}]+)\}/g, '$1')                 // {@type content} -> content
+            .replace(/\*\*undefined\*\*/g, '')                      // Remove **undefined** artifacts
+            .replace(/\s+/g, ' ')
+            .trim();
     }
 
     private getDefaultSkillCount(className: string): number {
