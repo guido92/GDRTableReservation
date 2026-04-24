@@ -162,7 +162,13 @@ async function resolveDataDirs(): Promise<{ path2014: string; path2024: string }
 }
 
 // Source lists for 2014 vs 2024 rules
-export const SOURCES_2014 = ['PHB', 'XGE', 'TCE', 'SCAG', 'VGTM', 'MTOF', 'EGW', 'FTD', 'VRGR'];
+export const SOURCES_2014 = [
+    'PHB', 'XGE', 'TCE', 'SCAG', 
+    'VGM',   // Volo's Guide to Monsters (was incorrectly VGTM)
+    'MTF',   // Mordenkainen's Tome of Foes (was incorrectly MTOF)
+    'MPMM',  // Monsters of the Multiverse (updated races)
+    'EGW', 'FTD', 'VRGR', 'EEPC', 'MOT', 'GGR', 'DMG'
+];
 export const SOURCES_2024 = ['XPHB', 'PHB24']; // PHB24 is our UI id, XPHB is 5etools id
 
 /**
