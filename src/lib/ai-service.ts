@@ -26,7 +26,14 @@ interface ChatMessage {
     parts: { text: string }[];
 }
 
-// ─── Gemini Provider ────────────────────────────────────────────────
+// ─── Gemini Provider (internal model cascade) ──────────────────────
+
+// Models ordered from most powerful to lightest
+const GEMINI_MODELS = [
+    'gemini-3-flash-preview',      // Most powerful (Preview)
+    'gemini-2.5-flash',            // Stable production
+    'gemini-2.5-flash-lite',       // Budget fallback
+];
 
 function createGeminiProvider(): AIProvider {
     const apiKey = process.env.GEMINI_API_KEY || '';
@@ -34,32 +41,56 @@ function createGeminiProvider(): AIProvider {
 
     const generate = async (prompt: string, jsonMode: boolean = false): Promise<string> => {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({
-            model: 'gemini-2.5-flash',
-            generationConfig: {
-                ...(jsonMode ? { responseMimeType: 'application/json' } : {}),
-                maxOutputTokens: 8192,
+        let lastError: any;
+
+        for (const modelName of GEMINI_MODELS) {
+            try {
+                console.log(`[Gemini] Trying model: ${modelName}`);
+                const model = genAI.getGenerativeModel({
+                    model: modelName,
+                    generationConfig: {
+                        ...(jsonMode ? { responseMimeType: 'application/json' } : {}),
+                        maxOutputTokens: 8192,
+                    }
+                });
+                const result = await model.generateContent(prompt);
+                console.log(`[Gemini] ✅ ${modelName} succeeded`);
+                return result.response.text();
+            } catch (error: any) {
+                console.warn(`[Gemini] ❌ ${modelName} failed: ${error.message?.substring(0, 150)}`);
+                lastError = error;
             }
-        });
-        const result = await model.generateContent(prompt);
-        return result.response.text();
+        }
+        throw lastError;
     };
 
     const chat = async (systemPrompt: string, history: ChatMessage[], message: string): Promise<string> => {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({
-            model: 'gemini-2.5-flash',
-            systemInstruction: {
-                role: 'system',
-                parts: [{ text: systemPrompt }]
+        let lastError: any;
+
+        for (const modelName of GEMINI_MODELS) {
+            try {
+                console.log(`[Gemini] Trying chat model: ${modelName}`);
+                const model = genAI.getGenerativeModel({
+                    model: modelName,
+                    systemInstruction: {
+                        role: 'system',
+                        parts: [{ text: systemPrompt }]
+                    }
+                });
+                const chatSession = model.startChat({
+                    history,
+                    generationConfig: { maxOutputTokens: 8192 },
+                });
+                const result = await chatSession.sendMessage(message);
+                console.log(`[Gemini] ✅ ${modelName} chat succeeded`);
+                return result.response.text();
+            } catch (error: any) {
+                console.warn(`[Gemini] ❌ ${modelName} chat failed: ${error.message?.substring(0, 150)}`);
+                lastError = error;
             }
-        });
-        const chatSession = model.startChat({
-            history,
-            generationConfig: { maxOutputTokens: 8192 },
-        });
-        const result = await chatSession.sendMessage(message);
-        return result.response.text();
+        }
+        throw lastError;
     };
 
     return { name: 'Gemini', available, generate, chat };
