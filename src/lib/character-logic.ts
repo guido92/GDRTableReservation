@@ -397,10 +397,18 @@ export class CharacterLogic {
         const uds = UnifiedDataService.getInstance();
         await uds.initialize();
 
-        // Filter options based on available sources
-        const validClasses = CLASSES.filter(c => !c.source || sources.includes(c.source));
-        const validRaces = RACES.filter(r => !r.source || sources.includes(r.source));
-        const validBackgrounds = BACKGROUNDS.filter(b => !b.source || sources.includes(b.source));
+        // Normalize source tags: map legacy 'PHB14' → 'PHB' for filtering
+        const normalizedSources = sources.map(s => s === 'PHB14' ? 'PHB' : s);
+
+        // Filter options based on available sources (fall back to full list if filter produces empty)
+        let validClasses = CLASSES.filter(c => !c.source || normalizedSources.includes(c.source));
+        if (validClasses.length === 0) validClasses = [...CLASSES];
+
+        let validRaces = RACES.filter(r => !r.source || normalizedSources.includes(r.source));
+        if (validRaces.length === 0) validRaces = [...RACES];
+
+        let validBackgrounds = BACKGROUNDS.filter(b => !b.source || normalizedSources.includes(b.source));
+        if (validBackgrounds.length === 0) validBackgrounds = [...BACKGROUNDS];
 
         // Random Selection or Override
         let rClass = this.getRandomItem(validClasses);

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { CharacterData } from '@/types/dnd';
 import { CharacterLogic } from '@/lib/character-logic';
 import { FiveToolsService, RawSpell } from '@/services/five-tools-service';
 import { UnifiedDataService } from '@/services/unified-data-service';
 import { getClassTemplate } from '@/data/class-templates';
+import { getAIService } from '@/lib/ai-service';
 
 // Local type for spell validation
 interface SpellEntry {
@@ -12,8 +12,6 @@ interface SpellEntry {
     name: string;
     prepared?: boolean;
 }
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 // Helper to get spell limits for a class/level
 function getSpellLimits(className: string, level: number): { cantrips: number; known: number; prepared: number; maxSpellLevel: number } {
@@ -161,11 +159,6 @@ export async function POST(req: NextRequest) {
         requestData = await req.json();
         const { level, race, class: className, background, characterName, sourceFilter } = requestData;
 
-        // Direct Fallback check for dev/no-key environment
-        if (!process.env.GEMINI_API_KEY) {
-            throw new Error("No Gemini API Key configured - switching to fallback");
-        }
-
         // Construct dynamic prompt context
         let context = `Level ${level}`;
         if (race) context += ` ${race}`;
@@ -287,18 +280,13 @@ ${spellContext}
 }
 
 RICORDA: Narrativa LIBERA e CREATIVA, meccaniche PRECISE e UFFICIALI.
+Rispondi SOLO con il JSON, senza altri commenti o testo.
         `;
 
-        const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash",
-            generationConfig: {
-                responseMimeType: "application/json",
-                maxOutputTokens: 8192,
-            }
-        });
-
-        const result = await model.generateContent(prompt);
-        const responseText = result.response.text();
+        // Use the centralized AI service with cascading fallbacks
+        const aiService = getAIService();
+        const responseText = await aiService.generate(prompt, true);
+        
         const jsonMatch = responseText.match(/```json\s*(\{[\s\S]*?\})\s*```/) || responseText.match(/(\{[\s\S]*\})/);
 
         if (!jsonMatch) {
@@ -341,17 +329,17 @@ RICORDA: Narrativa LIBERA e CREATIVA, meccaniche PRECISE e UFFICIALI.
         return NextResponse.json(hydrated);
 
     } catch (error: any) {
-        console.error('AI Generation Error (Primary):', error.message);
+        console.error('AI Generation Error (All Providers):', error.message);
 
-        // FALLBACK LOGIC
-        console.warn('Attempting Fallback Generation...');
+        // FALLBACK LOGIC — Local generation without any AI
+        console.warn('Attempting Local Fallback Generation...');
         try {
             const { level, sourceFilter, race, class: className, characterName } = requestData;
 
             // Use the local logic to generate a valid character structure
             const fallbackChar = await CharacterLogic.generateQuickCharacter(
                 level || 1,
-                sourceFilter || ['PHB14'],
+                sourceFilter || ['PHB'],
                 { race: race, class: className } // Pass overrides
             );
 
