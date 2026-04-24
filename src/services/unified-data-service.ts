@@ -202,7 +202,7 @@ export class UnifiedDataService {
                 name: sc.shortName || sc.name,
                 nameEn: sc.name,
                 source: sc.source,
-                features: []  // Sarebbero necessari i dati di classFeature per popolare
+                features: this.extractSubclassFeatures(raw.name, sc.shortName || sc.name, sources)
             })),
             casterProgression: raw.casterProgression || null,
             spellcastingAbility: raw.spellcastingAbility || null,
@@ -641,6 +641,23 @@ export class UnifiedDataService {
             'Maneuver Options',       // Lists all maneuvers
             'Infusion Recipes',       // Lists all infusions
             'Primal Companion',       // Detailed stat block
+        ];
+
+        return rawFeatures
+            .filter(rf => !SKIP_FEATURES.includes(rf.name))
+            .map(rf => ({
+                name: rf.name,
+                source: rf.source,
+                level: rf.level,
+                description: this.entriesToCleanText(rf.entries)
+            }));
+    }
+
+    private extractSubclassFeatures(className: string, subclassName: string, sources: string[]): Feature[] {
+        const rawFeatures = this.fiveTools.getSubclassFeatures(className, subclassName, 20, sources);
+        
+        const SKIP_FEATURES = [
+            'Spellcasting'
         ];
 
         return rawFeatures

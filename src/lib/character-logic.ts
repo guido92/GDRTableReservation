@@ -694,11 +694,21 @@ export class CharacterLogic {
             cls.features.filter(f => f.level <= clsLevel).forEach(f => addUniqueFeature(f, classParts.length > 1 ? classParts[idx] : 'Classe'));
         });
         
-        // Subclass Features (Current logic only for primary class)
+        // Subclass Features
         if (subclassName && uClass) {
-            const fts = FiveToolsService.getInstance();
-            const rawSub = fts.getSubclassByName(primaryClassStr, subclassName, sources);
-            // ... logic could be expanded
+            // Find subclass in unified class
+            const uSub = uClass.subclasses.find(s => s.name === subclassName || s.nameEn === subclassName);
+            if (uSub && uSub.features) {
+                uSub.features.filter(f => f.level <= level).forEach(f => addUniqueFeature(f, 'Archetipo'));
+            } else {
+                // Fallback to searching all subclasses if direct match fails
+                const fts = FiveToolsService.getInstance();
+                const rawSub = fts.getSubclassByName(primaryClassStr, subclassName, sources);
+                if (rawSub) {
+                    const rawFeatures = fts.getSubclassFeatures(primaryClassStr, subclassName, level, sources);
+                    rawFeatures.forEach(f => addUniqueFeature({ name: f.name, description: '...', level: f.level }, 'Archetipo'));
+                }
+            }
         } else if (subclassName && sClass.suboptions) {
             const sSub = sClass.suboptions.find(s => s.name === subclassName);
             if (sSub?.features) {

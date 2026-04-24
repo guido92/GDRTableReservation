@@ -612,7 +612,7 @@ export class FiveToolsService {
     }
 
     /**
-     * Get features for a class up to a certain level
+     * Get features for a base class up to a certain level (excluding subclass features)
      */
     public getClassFeatures(className: string, level: number, sources: string[] = SOURCES_2014): RawFeature[] {
         const engName = getReverseTranslation(className, CLASS_TRANSLATIONS) || className;
@@ -621,6 +621,25 @@ export class FiveToolsService {
         return this.feats.filter(f => {
             const castF = f as any;
             return castF.className?.toLowerCase() === engName.toLowerCase() &&
+                   !castF.subclassShortName && // exclude subclass features
+                   castF.level <= level &&
+                   (expandedSources.length === 0 || expandedSources.includes(f.source));
+        }) as RawFeature[];
+    }
+
+    /**
+     * Get features for a specific subclass up to a certain level
+     */
+    public getSubclassFeatures(className: string, subclassName: string, level: number, sources: string[] = SOURCES_2014): RawFeature[] {
+        const engName = getReverseTranslation(className, CLASS_TRANSLATIONS) || className;
+        const cleanSubName = subclassName.toLowerCase().trim();
+        const expandedSources = expandSources(sources);
+
+        return this.feats.filter(f => {
+            const castF = f as any;
+            return castF.className?.toLowerCase() === engName.toLowerCase() &&
+                   castF.subclassShortName && 
+                   castF.subclassShortName.toLowerCase() === cleanSubName &&
                    castF.level <= level &&
                    (expandedSources.length === 0 || expandedSources.includes(f.source));
         }) as RawFeature[];
